@@ -1,4 +1,11 @@
 import OpeningSequence from './sections/opening'
+// import OpeningSection  from './sections/opening'
+import QuestionSection from './sections/question'
+// // import JourneySection  from './sections/journey'
+// import UnitySection    from './sections/unity'
+// import MeaningSection  from './sections/meaning'
+// import ClosingSection  from './sections/closing'
+// import MakeYourOwn    from './sections/makeyourown'
 import './App.css'
 
 function App() {
@@ -20,7 +27,13 @@ function App() {
           </p>
         </div>
       </section>
-
+      {/* <OpeningSection  /> */}
+      <QuestionSection />
+      {/* <JourneySection  /> */}
+      {/* <UnitySection    /> */}
+      {/* <MeaningSection  /> */}
+      {/* <ClosingSection  /> */}
+      {/* <MakeYourOwn     /> */}
     </main>
   )
 }
