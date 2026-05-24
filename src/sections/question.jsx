@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { storyContent } from '../data/storytext.js'
 
 import imgSereh      from '../assets/images/sereh.webp'
 import imgSoto       from '../assets/images/soto.webp'
@@ -37,12 +38,24 @@ const ING_POS = [
   { top: '42%', left: '8%'  },
 ]
 
+// -- Dynamic text bridging from storytext --
+const qLines = storyContent.question.lines;
+const q0Parts = qLines[0].split('…'); 
+const saLine1Words = q0Parts[0].trim().split(' '); // ["How", "can", "one", "dish"]
+const q0Part2Words = q0Parts[1].trim().split(' '); 
+const saLine2Word = (q0Part2Words.shift() || 'carry') + '…'; // removes first word ("carry") and appends "…"
+const sbWords = q0Part2Words; // ["so", "many", "different", "identities?"]
+
+const q1Parts = qLines[1].split('…');
+const scLine1Words = q1Parts[0].trim().split(' '); // ["What", "makes", "them", "all"]
+if (scLine1Words.length > 0) scLine1Words[scLine1Words.length - 1] += '…';
+const scSotoWord = q1Parts[1].trim(); // "soto?"
+
 export default function QuestionSection() {
   const pinWrapRef  = useRef(null)
   const stageRef    = useRef(null)
 
   // Scene A refs
-  const saEyebrowRef = useRef(null)
   const saLine1Ref   = useRef(null)
   const saLine2Ref   = useRef(null)
   const saRuleRef    = useRef(null)
@@ -65,7 +78,6 @@ export default function QuestionSection() {
   const scAsapRef    = useRef(null)
   const scEyebrowRef = useRef(null)
   const scDividerRef = useRef(null)
-  const scWordRefs   = useRef([null, null, null, null])
   const scSotoWordRef= useRef(null)
   const scSubRef     = useRef(null)
 
@@ -117,51 +129,55 @@ export default function QuestionSection() {
       /* ══ SCENE A helpers ═════════════════════════════════════════ */
       // reset A elements to hidden
       function resetA() {
-        gsap.set(saEyebrowRef.current, { opacity: 0 })
+        const saWords = stageRef.current?.querySelectorAll('.sa-word') ?? [];
+        gsap.killTweensOf([saRuleRef.current, saStampTL.current, saStampTR.current, saAsterisk.current, ...saWords]);
+        
         gsap.set(saRuleRef.current, { width: 0 })
-        gsap.set([saStampTL.current, saStampTR.current, saAsterisk.current], { opacity: 0 })
-        stageRef.current?.querySelectorAll('.sa-word').forEach(w => gsap.set(w, { opacity: 0 }))
-        ingRefs.current.forEach(r => {
-          if (r.img)   gsap.set(r.img,   { opacity: 0, scale: 0.5, rotation: gsap.utils.random(-20, 20) })
-          if (r.label) gsap.set(r.label, { opacity: 0 })
-        })
+        gsap.set([saStampTL.current, saStampTR.current, saAsterisk.current], { opacity: 0, scale: 1, x: 0, y: 0, rotation: 0 })
+        saWords.forEach(w => gsap.set(w, { opacity: 0, x: 0, y: 0, rotation: 0, scale: 1 }))
       }
 
       function playSceneA_In() {
         const tl = gsap.timeline()
-        tl.fromTo(saEyebrowRef.current, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 1.2, ease: 'power2.out' })
-        tl.add(jitter(
-          [...saLine1Ref.current.querySelectorAll('.sa-word'),
-           ...saLine2Ref.current.querySelectorAll('.sa-word')],
-          { stagger: 0.14, dur: 0.78 }
-        ), '-=0.8')
-        tl.to(saRuleRef.current, { width: 'clamp(120px,22vw,240px)', duration: 1, ease: 'power3.out' }, '-=0.4')
+        
+        // 1. Text crawl from edges staggered
+        const saWords = [
+          ...saLine1Ref.current.querySelectorAll('.sa-word'),
+          ...saLine2Ref.current.querySelectorAll('.sa-word')
+        ];
+        
+        tl.fromTo(saWords,
+          { 
+            opacity: 0, 
+            x: (i) => i % 2 === 0 ? -window.innerWidth / 1.5 : window.innerWidth / 1.5, // From left or right edges
+            y: () => gsap.utils.random(-60, 60),
+            rotation: (i) => i % 2 === 0 ? -45 : 45
+          },
+          { 
+            opacity: 1, 
+            x: 0, 
+            y: 0, 
+            rotation: 0, 
+            duration: 1.5, 
+            stagger: 0.15,
+            ease: 'steps(8)' // Scrapbook frame-by-frame effect
+          }, 
+          '-=0.8'
+        )
+
+        tl.to(saRuleRef.current, { width: 'clamp(120px,22vw,240px)', duration: 1, ease: 'steps(10)' }, '-=0.8')
         tl.fromTo([saStampTL.current, saStampTR.current],
           { opacity: 0, scale: 0.55 },
-          { opacity: 1, scale: 1, stagger: 0.35, duration: 0.8, ease: 'back.out(2)' }, '-=0.8')
+          { opacity: 1, scale: 1, stagger: 0.35, duration: 0.8, ease: 'steps(5)' }, '-=0.8')
         tl.fromTo(saAsterisk.current,
           { opacity: 0, scale: 0.3, rotation: -90 },
-          { opacity: 0.5, scale: 1, rotation: 0, duration: 1.5, ease: 'elastic.out(1,0.6)' }, '-=1')
-
-        // ingredients appear ONE BY ONE with staggered delay
-        ingRefs.current.forEach((r, i) => {
-          tl.fromTo(r.img,
-            { opacity: 0, scale: 0.4, rotation: gsap.utils.random(-25, 25), y: 30 },
-            { opacity: 1, scale: 1, rotation: INGREDIENTS[i].rot,
-              y: 0, duration: 1.0, ease: 'elastic.out(1,0.55)' },
-            `-=${i === 0 ? 0.3 : -0.1}` // each after the previous by 0.1s gap
-          )
-          tl.fromTo(r.label,
-            { opacity: 0, y: 8 },
-            { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.6')
-        })
+          { opacity: 0.5, scale: 1, rotation: 0, duration: 1.5, ease: 'steps(8)' }, '-=1')
 
         tl.call(() => {
-          stageRef.current?.querySelectorAll('.sa-word').forEach(w => microLive(w, 1.0, 3.5))
+          saWords.forEach(w => microLive(w, 1.0, 3.5))
           microLive(saAsterisk.current, 2.5, 6)
           microLive(saStampTL.current, 0.5, 4.5)
           microLive(saStampTR.current, 0.5, 5)
-          ingRefs.current.forEach((r, i) => microLive(r.img, 1.2 + i * 0.3, 4 + i * 0.5))
         })
       }
 
@@ -177,6 +193,74 @@ export default function QuestionSection() {
           stagger: { each: 0.06, from: 'random' },
           duration: 0.55, ease: 'power2.in',
         })
+        gsap.to([saRuleRef.current,
+                 saStampTL.current, saStampTR.current, saAsterisk.current],
+          { opacity: 0, duration: 0.4, stagger: 0.05 })
+      }
+
+      /* ══ SCENE B helpers ═════════════════════════════════════════ */
+      function resetB() {
+        const sbWords = sbWordRefs.current.filter(Boolean);
+        gsap.killTweensOf([sbLabelRef.current, sbBodyRef.current, ...sbWords]);
+        
+        gsap.set([sbLabelRef.current, sbBodyRef.current], { opacity: 0, x: 0, y: 0, scale: 1, rotation: 0 })
+        sbWords.forEach(w => gsap.set(w, { opacity: 0, x: 0, y: 0, scale: 1, rotation: 0 }))
+        
+        ingRefs.current.forEach(r => {
+          if (r.img) {
+            gsap.killTweensOf(r.img);
+            gsap.set(r.img, { opacity: 0, scale: 0.5, x: 0, y: 0, rotation: gsap.utils.random(-20, 20) })
+          }
+          if (r.label) {
+            gsap.killTweensOf(r.label);
+            gsap.set(r.label, { opacity: 0, x: 0, y: 0, scale: 1, rotation: 0 })
+          }
+        })
+      }
+
+      function playSceneB_In() {
+        gsap.set(sbSceneRef.current, { opacity: 1, pointerEvents: 'auto' })
+        const tl = gsap.timeline()
+        
+        // 1. Text fades in
+        tl.fromTo(sbLabelRef.current, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 1, ease: 'power2.out' })
+        tl.add(jitter(sbWordRefs.current.filter(Boolean), { stagger: 0.14, dur: 0.72 }), '-=0.5')
+        tl.fromTo(sbBodyRef.current, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 1.1, ease: 'power2.out' }, '-=0.3')
+
+        // 2. Ingredients crawl in quickly and neatly, like Scene A text
+        ingRefs.current.forEach((r, i) => {
+          const fromLeft = i % 2 !== 0; // Alternate sides
+          tl.fromTo(r.img,
+            { 
+              opacity: 0, 
+              scale: 0.8, 
+              rotation: fromLeft ? -45 : 45, 
+              x: fromLeft ? -window.innerWidth / 1.5 : window.innerWidth / 1.5,
+              y: gsap.utils.random(-60, 60)
+            },
+            { 
+              opacity: 1, 
+              scale: 1, 
+              rotation: INGREDIENTS[i].rot,
+              x: 0, 
+              y: 0, 
+              duration: 1.5, 
+              ease: 'steps(8)' // Same frame-by-frame speed as Scene A text
+            },
+            i === 0 ? '<' : '-=1.35' // Stagger of 0.15s (1.5 - 1.35) for a rapid and neat sequence
+          )
+          tl.fromTo(r.label,
+            { opacity: 0, y: 8 },
+            { opacity: 1, y: 0, duration: 0.5, ease: 'steps(4)' }, '-=1.2')
+        })
+
+        tl.call(() => {
+          sbWordRefs.current.filter(Boolean).forEach(w => microLive(w, 0.9, 3.2))
+          ingRefs.current.forEach((r, i) => microLive(r.img, 1.2 + i * 0.3, 4 + i * 0.5))
+        })
+      }
+
+      function playSceneB_Out(onDone) {
         // ingredients SPIN OUT dramatically
         ingRefs.current.forEach((r, i) => {
           gsap.to(r.img, {
@@ -189,33 +273,7 @@ export default function QuestionSection() {
           })
           gsap.to(r.label, { opacity: 0, duration: 0.3, delay: i * 0.05 })
         })
-        gsap.to([saEyebrowRef.current, saRuleRef.current,
-                 saStampTL.current, saStampTR.current, saAsterisk.current],
-          { opacity: 0, duration: 0.4, stagger: 0.05 })
-      }
 
-      /* ══ SCENE B helpers ═════════════════════════════════════════ */
-      function resetB() {
-        gsap.set([sbLabelRef.current, sbBodyRef.current, sbTicketRef.current,
-                  ...sbWordRefs.current.filter(Boolean)], { opacity: 0 })
-      }
-
-      function playSceneB_In() {
-        gsap.set(sbSceneRef.current, { opacity: 1, pointerEvents: 'auto' })
-        const tl = gsap.timeline()
-        tl.fromTo(sbLabelRef.current, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 1, ease: 'power2.out' })
-        tl.add(jitter(sbWordRefs.current.filter(Boolean), { stagger: 0.14, dur: 0.72 }), '-=0.5')
-        tl.fromTo(sbBodyRef.current, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 1.1, ease: 'power2.out' }, '-=0.3')
-        tl.fromTo(sbTicketRef.current,
-          { opacity: 0, scale: 0.5, rotation: -8 },
-          { opacity: 1, scale: 1, rotation: -1.5, duration: 0.8, ease: 'back.out(2)' }, '-=0.3')
-        tl.call(() => {
-          sbWordRefs.current.filter(Boolean).forEach(w => microLive(w, 0.9, 3.2))
-          microLive(sbTicketRef.current, 1, 5)
-        })
-      }
-
-      function playSceneB_Out(onDone) {
         gsap.to(sbSceneRef.current, {
           opacity: 0, duration: 0.45, ease: 'power2.in',
           onComplete() {
@@ -228,49 +286,51 @@ export default function QuestionSection() {
 
       /* ══ SCENE C helpers ═════════════════════════════════════════ */
       function resetC() {
-        gsap.set([scSotoRef.current, scAsapRef.current,
-                  scEyebrowRef.current, scDividerRef.current,
-                  scSotoWordRef.current, scSubRef.current,
-                  ...scWordRefs.current.filter(Boolean)], { opacity: 0 })
+        const chars = scSceneRef.current?.querySelectorAll('.sc-char') || [];
+        gsap.killTweensOf([scSotoRef.current, scAsapRef.current,
+                           scEyebrowRef.current, scDividerRef.current,
+                           scSotoWordRef.current, scSubRef.current,
+                           ...chars]);
+                           
+        gsap.set([scSotoRef.current, scAsapRef.current, scDividerRef.current], { opacity: 0, x: 0, y: 0, scale: 1, rotation: 0 })
+        gsap.set([scEyebrowRef.current, scSotoWordRef.current, scSubRef.current], { opacity: 1, x: 0, y: 0, scale: 1, rotation: 0 })
+        gsap.set(chars, { opacity: 0 }); // Semua karakter disembunyikan
       }
 
       function playSceneC_In() {
         gsap.set(scSceneRef.current, { opacity: 1, pointerEvents: 'auto' })
         const tl = gsap.timeline()
 
-        // soto bowl rises up with steam
+        // 1. soto bowl spins and rises up (mulai serentak di waktu 0)
         tl.fromTo(scSotoRef.current,
-          { opacity: 0, y: 60, scale: 0.75 },
-          { opacity: 1, y: 0, scale: 1, duration: 2, ease: 'power3.out' })
+          { opacity: 0, y: 150, scale: 0.3, rotation: -270 },
+          { opacity: 1, y: 0, scale: 1, rotation: 0, duration: 2.2, ease: 'back.out(1.2)' }, 0)
 
-        // asap (steam image) fades in and drifts upward forever
+        // 2. asap (steam image) fades in
         tl.fromTo(scAsapRef.current,
           { opacity: 0, y: 20 },
-          { opacity: 0.85, y: 0, duration: 1.5, ease: 'power2.out' }, '-=1.2')
+          { opacity: 0.85, y: 0, duration: 1.5, ease: 'power2.out' }, 0.5)
 
-        // start perpetual steam drift
-        gsap.to(scAsapRef.current, {
-          y: -30, opacity: 0.4, duration: 3.5,
-          ease: 'power1.inOut', yoyo: true, repeat: -1,
-        })
-        gsap.to(scAsapRef.current, {
-          x: 8, duration: 2.8, ease: 'sine.inOut', yoyo: true, repeat: -1,
-        })
-
-        tl.fromTo([scEyebrowRef.current, scDividerRef.current],
-          { opacity: 0, y: 14 },
-          { opacity: 1, y: 0, duration: 1.2, stagger: 0.3, ease: 'power2.out' }, '-=0.8')
-        tl.add(jitter(scWordRefs.current.filter(Boolean), { stagger: 0.14, dur: 0.72 }), '-=0.5')
-        tl.fromTo(scSotoWordRef.current,
-          { opacity: 0, y: 70, scaleY: 1.5, scaleX: 0.6 },
-          { opacity: 1, y: 0, scaleY: 1, scaleX: 1, duration: 1.4, ease: 'elastic.out(1,0.5)' }, '-=0.2')
-        tl.fromTo(scSubRef.current,
-          { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 1.2, ease: 'power2.out' }, '-=0.4')
+        // 3. Efek Mengetik / Typewriter pada tulisan (juga mulai secara bersamaan/awal)
+        const chars = scSceneRef.current?.querySelectorAll('.sc-char') || [];
+        
+        tl.fromTo(scDividerRef.current,
+          { opacity: 0, scaleY: 0 },
+          { opacity: 1, scaleY: 1, duration: 0.8, ease: 'power2.out' }, 0.2)
+          
+        tl.fromTo(chars,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.01, stagger: 0.04, ease: 'none' }, 0.4) // Muncul cepat huruf per huruf
 
         tl.call(() => {
-          microLive(scSotoRef.current, 1.5, 5)
-          scWordRefs.current.filter(Boolean).forEach(w => microLive(w, 0.9, 3.5))
+          // Efek mangkuk soto berputar tanpa henti secara perlahan
+          gsap.to(scSotoRef.current, {
+            rotation: 360,
+            duration: 35,
+            ease: 'none',
+            repeat: -1
+          })
+          
           microLive(scSotoWordRef.current, 1.6, 4)
           gsap.to(scSotoWordRef.current, {
             color: ['#ff9721', '#f63b1c', '#ff9721'],
@@ -297,20 +357,32 @@ export default function QuestionSection() {
       resetB()
       resetC()
 
-      pinWrapRef.current.style.height = window.innerHeight * 3.5 + 'px'
-
-      playSceneA_In()
       setPip(0)
 
       gsap.set(scrollCueRef.current, { opacity: 0 })
-      gsap.to(scrollCueRef.current, { opacity: 1, duration: 1.2, delay: 2.8 })
-      gsap.to(scrollCueRef.current, { y: 9, duration: 1.6, ease: 'sine.inOut', yoyo: true, repeat: -1 })
+
+      let hasPlayedA = false;
 
       /* ══ SCROLL ORCHESTRATION ════════════════════════════════════ */
       ScrollTrigger.create({
         trigger: pinWrapRef.current,
+        pin: true, // Let GSAP handle the pinning natively!
         start: 'top top',
-        end: 'bottom bottom',
+        end: '+=250%', // Scroll distance to complete all scenes
+        onEnter: () => {
+          if (!hasPlayedA && currentScene.current === 0) {
+            hasPlayedA = true;
+            playSceneA_In();
+            gsap.to(scrollCueRef.current, { opacity: 1, duration: 1.2, delay: 2.8 });
+            gsap.to(scrollCueRef.current, { y: 9, duration: 1.6, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+          }
+        },
+        onLeaveBack: () => {
+          if (hasPlayedA && currentScene.current === 0) {
+            resetA();
+            hasPlayedA = false;
+          }
+        },
         onUpdate(self) {
           const p = self.progress
           let target = 0
@@ -343,11 +415,23 @@ export default function QuestionSection() {
           // A → C fast scroll
           if (prev === 0 && target === 2) {
             playSceneA_Out()
-            setTimeout(() => playSceneC_In(), 520)
+            setTimeout(() => {
+              resetB();
+              playSceneB_In();
+              setTimeout(() => {
+                playSceneB_Out(() => playSceneC_In())
+              }, 700)
+            }, 400)
           }
-          // C → A
+          // C → A fast scroll
           if (prev === 2 && target === 0) {
-            playSceneC_Out(() => { resetA(); playSceneA_In() })
+            playSceneC_Out(() => { 
+              resetB(); 
+              playSceneB_In();
+              setTimeout(() => {
+                playSceneB_Out(() => { resetA(); playSceneA_In() })
+              }, 700)
+            })
           }
         },
       })
@@ -398,7 +482,29 @@ export default function QuestionSection() {
             </div>
             <div ref={saAsterisk} style={S.asterisk}>✳</div>
 
-            {/* ── floating ingredient images scattered around stage ── */}
+            {/* ── central headline ── */}
+            <div style={S.sceneAContent}>
+              <div style={S.lineWrap}>
+                <div ref={saLine1Ref} style={S.headlineLine}>
+                  {saLine1Words.map((w, i) => (
+                    <span key={w + i} className="sa-word" style={{
+                      ...S.headWord,
+                      ...(i === 1 ? S.wordAccent : {}),
+                      ...(i === 3 ? S.wordWarm   : {}),
+                    }}>{w}</span>
+                  ))}
+                </div>
+                <div ref={saLine2Ref} style={S.headlineLine}>
+                  <span className="sa-word" style={S.headWord}>{saLine2Word}</span>
+                </div>
+              </div>
+              <div ref={saRuleRef} style={S.rule} />
+            </div>
+          </div>
+
+          {/* ═══════ SCENE B — ingredients scattered + "so many different identities" ═══════ */}
+          <div ref={sbSceneRef} style={{ ...S.scene, flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            {/* ── floating ingredient images scattered around stage (Moved to Scene B) ── */}
             {INGREDIENTS.map((ing, i) => (
               <div key={ing.name} style={{ ...S.ingWrap, ...ING_POS[i] }}>
                 <img
@@ -412,41 +518,18 @@ export default function QuestionSection() {
               </div>
             ))}
 
-            {/* ── central headline ── */}
-            <div style={S.sceneAContent}>
-              <p ref={saEyebrowRef} style={S.eyebrow}>— Bab II : The Question —</p>
-              <div style={S.lineWrap}>
-                <div ref={saLine1Ref} style={S.headlineLine}>
-                  {['How', 'can', 'one', 'dish'].map((w, i) => (
-                    <span key={w} className="sa-word" style={{
-                      ...S.headWord,
-                      ...(i === 1 ? S.wordAccent : {}),
-                      ...(i === 3 ? S.wordWarm   : {}),
-                    }}>{w}</span>
-                  ))}
-                </div>
-                <div ref={saLine2Ref} style={S.headlineLine}>
-                  <span className="sa-word" style={S.headWord}>carry…</span>
-                </div>
-              </div>
-              <div ref={saRuleRef} style={S.rule} />
-            </div>
-          </div>
-
-          {/* ═══════ SCENE B — ingredients scattered + "so many different identities" ═══════ */}
-          <div ref={sbSceneRef} style={{ ...S.scene, flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <p ref={sbLabelRef} style={{ ...S.eyebrow, marginBottom: 16 }}>Dari seluruh penjuru nusantara</p>
             <div style={S.lineWrap}>
               {[
-                [['so', false], ['many', true]],
-                [['different', false]],
-                [['identities.', false]],
+                [[sbWords[0] || 'so', false], [sbWords[1] || 'many', true]],
+                [[sbWords[2] || 'different', false]],
+                [[sbWords.slice(3).join(' ') || 'identities.', false]],
               ].map((line, li) => (
                 <div key={li} style={S.headlineLine}>
                   {line.map(([w, it], wi) => {
                     const idx = li === 0 ? wi : li + 1
                     return (
-                      <span key={w}
+                      <span key={w + wi}
                         ref={el => sbWordRefs.current[li === 0 ? wi : li === 1 ? 2 : 3] = el}
                         style={{ ...S.headWord, fontSize: 'clamp(3rem,7.5vw,7rem)', ...(it ? S.wordAccent : {}) }}>
                         {w}
@@ -460,9 +543,6 @@ export default function QuestionSection() {
               Setiap daerah membawa rempahnya sendiri.<br />
               Setiap tangan meninggalkan jejaknya sendiri.
             </p>
-            <div ref={sbTicketRef} style={S.ticket}>
-              <span style={S.ticketText}>6 Rempah · 34 Provinsi · 1 Nama</span>
-            </div>
           </div>
 
           {/* ═══════ SCENE C — soto + asap + "What makes them all… soto?" ═══════ */}
@@ -477,24 +557,30 @@ export default function QuestionSection() {
 
               {/* right: text */}
               <div style={S.sceneСText}>
-                <p ref={scEyebrowRef} style={S.eyebrow}>— Pertanyaan Terakhir —</p>
+                <p ref={scEyebrowRef} style={S.eyebrow}>
+                  {'— Pertanyaan Terakhir —'.split('').map((c,i) => <span key={i} className="sc-char">{c === ' ' ? '\u00A0' : c}</span>)}
+                </p>
                 <div ref={scDividerRef} style={S.divider} />
                 <div style={S.lineWrap}>
                   <div style={S.headlineLine}>
-                    {['What', 'makes', 'them', 'all…'].map((w, i) => (
-                      <span key={w}
-                        ref={el => scWordRefs.current[i] = el}
+                    {scLine1Words.map((w, i) => (
+                      <span key={w + i}
                         style={{ ...S.headWord, fontSize: 'clamp(2.4rem,5vw,5rem)', ...(i >= 2 ? S.wordAccent : {}) }}>
-                        {w}
+                        {w.split('').map((c,ci) => <span key={ci} className="sc-char">{c}</span>)}
+                        &nbsp;
                       </span>
                     ))}
                   </div>
                   <div>
-                    <span ref={scSotoWordRef} style={S.sotoWord}>soto?</span>
+                    <span ref={scSotoWordRef} style={S.sotoWord}>
+                      {scSotoWord.split('').map((c,i) => <span key={i} className="sc-char">{c}</span>)}
+                    </span>
                   </div>
                 </div>
                 <p ref={scSubRef} style={{ ...S.bodyText, maxWidth: 360, marginTop: 18 }}>
-                  Jawaban ada di dalam mangkuk itu.<br />Selalu ada.
+                  {'Jawaban ada di dalam mangkuk itu.'.split('').map((c,i) => <span key={i} className="sc-char">{c === ' ' ? '\u00A0' : c}</span>)}
+                  <br />
+                  {'Selalu ada.'.split('').map((c,i) => <span key={i} className="sc-char">{c === ' ' ? '\u00A0' : c}</span>)}
                 </p>
               </div>
             </div>
@@ -517,11 +603,12 @@ const Q = {
 }
 
 const S = {
-  pinWrap : { position: 'relative', width: '100%' },
+  pinWrap : { position: 'relative', width: '100%', height: '100vh' }, // Added height for the GSAP pin wrapper
 
   stage: {
-    position: 'sticky', top: 0,
-    width: '100%', height: '100vh',
+    position: 'relative', // Removed sticky
+    top: 0,
+    width: '100%', height: '100%',
     overflow: 'hidden',
     backgroundColor: Q.cream,
   },
@@ -664,7 +751,7 @@ const S = {
   sotoImgWrap: {
     position: 'relative',
     flexShrink: 0,
-    width: 'clamp(220px,35vw,440px)',
+    width: 'clamp(280px,45vw,560px)', // Diperbesar ukurannya
     display: 'flex', alignItems: 'flex-end', justifyContent: 'center',
   },
   asapImg: {
