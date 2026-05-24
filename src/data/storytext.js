@@ -6,7 +6,7 @@ export const storyContent = {
       "Across thousands of islands…",
       "flavors are never the same.",
       "Different lands. Different cultures. Different hands.",
-      "Yet somehow… one name remains.",
+      "Yet one dish continues to appear.",
       "Soto.",
     ]
   },
