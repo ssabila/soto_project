@@ -1,7 +1,7 @@
 import OpeningSequence from './sections/opening'
 // import OpeningSection  from './sections/opening'
 import QuestionSection from './sections/question'
-// import JourneySection  from './sections/journey'
+import JourneySection  from './sections/journey'
 // import UnitySection    from './sections/unity'
 // import MeaningSection  from './sections/meaning'
 // import ClosingSection  from './sections/closing'
@@ -15,7 +15,7 @@ function App() {
       {/* OPENING SECTION */}
       <OpeningSequence />
       <QuestionSection />
-      {/* <JourneySection  /> */}
+      <JourneySection  />
       {/* <UnitySection    /> */}
       {/* <MeaningSection  /> */}
       {/* <ClosingSection  /> */}
