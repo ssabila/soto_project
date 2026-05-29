@@ -345,52 +345,57 @@ const S = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '88%',
-    maxWidth: '860px',
+    width: '92vw',
+    height: '86vh',
+    maxWidth: '1400px',
     zIndex: 2,
   },
 
   card: {
     backgroundColor: '#FFF2D6',
     backgroundImage: 'repeating-linear-gradient(45deg, rgba(255,233,195,0.45) 0, rgba(255,233,195,0.45) 6px, rgba(255,242,214,0.45) 6px, rgba(255,242,214,0.45) 12px)',
-    border: '2.5px solid #D9A65B',
-    borderRadius: '20px',
-    padding: '20px 22px',
-    boxShadow: '5px 5px 0 rgba(201,138,42,0.55), 0 8px 24px rgba(0,0,0,0.10)',
+    border: '3px solid #D9A65B',
+    borderRadius: '28px',
+    padding: '36px 40px',
+    boxShadow: '8px 8px 0 rgba(201,138,42,0.55), 0 16px 40px rgba(0,0,0,0.12)',
     width: '100%',
+    height: '100%',
     position: 'relative',
     transform: 'rotate(-0.5deg)',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    gap: '22px',
+    gap: '48px',
   },
 
   // ── Foto ──────────────────────────────────────────────────────────────────
 
+  // Hanya ubah 3 ini di objek S:
+
+  // frameContainer — kotak responsif
   frameContainer: {
     position: 'relative',
-    // ✅ Diperbesar dari 280 → 320px agar gambar lebih dominan
-    width: '320px',
-    height: '320px',
+    width: 'min(42vw, 66vh)',
+    height: 'min(42vw, 66vh)',
     flexShrink: 0,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   },
 
+  // frameBg — proporsional mengikuti container kotak
   frameBg: {
     position: 'absolute',
-    width: '128%',
-    height: '128%',
+    width: '130%',
+    height: '130%',
     objectFit: 'contain',
     zIndex: 3,
     pointerEvents: 'none',
   },
 
   imgWrapper: {
-    width: '72%',
-    height: '72%',
+    width: '100%',
+    height: '100%',
     overflow: 'hidden',
     position: 'relative',
     zIndex: 2,
@@ -398,7 +403,7 @@ const S = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: '6px',
+    borderRadius: '8px',
   },
 
   img: {
@@ -412,19 +417,22 @@ const S = {
 
   // ── Teks ──────────────────────────────────────────────────────────────────
 
+  // textContainer — konten teks mengisi sisa ruang dengan lebih baik
   textContainer: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    gap: '8px',
+    gap: '20px',          // dari 16px → 20px
     minWidth: 0,
+    height: '100%',
+    justifyContent: 'center',
   },
 
   indexBadge: {
     fontFamily: 'InriaSerif, serif',
-    fontSize: '0.75rem',
+    fontSize: '1rem',
     color: '#B8860B',
-    letterSpacing: '0.15em',
+    letterSpacing: '0.2em',
     fontStyle: 'italic',
     opacity: 0.8,
   },
@@ -435,7 +443,7 @@ const S = {
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'baseline',
-    lineHeight: 1.1,
+    lineHeight: 1.05,
     gap: 0,
   },
 
@@ -445,7 +453,7 @@ const S = {
    */
   titleFirstChar: {
     fontFamily: 'Beachfly, serif',
-    fontSize: 'clamp(2.4rem, 4.5vw, 3.6rem)',
+    fontSize: 'clamp(3.5rem, 6.5vw, 6rem)',
     color: '#1a1a1a',
     fontWeight: 'normal',
     lineHeight: 1,
@@ -453,7 +461,7 @@ const S = {
 
   titleRest: {
     fontFamily: 'InriaSerif, serif',
-    fontSize: 'clamp(1.8rem, 3.2vw, 2.6rem)',
+    fontSize: 'clamp(2.6rem, 5vw, 4.6rem)',
     color: '#1a1a1a',
     fontWeight: 'normal',
     lineHeight: 1,
@@ -474,18 +482,18 @@ const S = {
   ratingsGrid: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
-    gap: '6px 16px',
+    gap: '14px 32px',
   },
 
   ratingItem: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '2px',
+    gap: '5px',
   },
 
   ratingLabel: {
     fontFamily: 'InriaSerif, serif',
-    fontSize: '0.7rem',
+    fontSize: '0.85rem',
     color: '#8B6914',
     textTransform: 'uppercase',
     letterSpacing: '0.08em',
@@ -494,30 +502,30 @@ const S = {
 
   starsRow: {
     display: 'flex',
-    gap: '2px',
+    gap: '5px',
     flexWrap: 'nowrap',
   },
 
   linesWrapper: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '3px',
+    gap: '4px',
   },
 
   textLine: {
     fontFamily: 'InriaSerif, serif',
-    fontSize: '0.95rem',
+    fontSize: '1.15rem',
     color: '#444',
-    lineHeight: 1.45,
+    lineHeight: 1.55,
     margin: 0,
   },
 
   textLineQuote: {
     fontStyle: 'italic',
     color: '#8B6914',
-    fontSize: '0.9rem',
-    borderLeft: '3px solid #D9A65B',
-    paddingLeft: '8px',
-    marginTop: '2px',
+    fontSize: '1.1rem',
+    borderLeft: '4px solid #D9A65B',
+    paddingLeft: '12px',
+    marginTop: '4px',
   },
 }
