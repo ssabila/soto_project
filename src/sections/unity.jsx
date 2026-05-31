@@ -12,14 +12,15 @@ import sotoKudus from '../assets/images/soto-kudus.svg';
 import sotoLamongan from '../assets/images/soto-lamongan.svg';
 import sotoPadang from '../assets/images/soto-padang.svg';
 
-// Ingredients
+// Ingredients (Sesuai dengan permintaan yang baru)
+import rempah from '../assets/images/rempah.svg';
+import daging from '../assets/images/daging.svg';
+import santan from '../assets/images/santan.svg';
+import dagingSapi from '../assets/images/daging-sapi.svg';
+import jerukNipis from '../assets/images/jeruk-nipis.svg';
+// Kita tetap pakai beberapa yang lama untuk meramaikan efek konfeti
 import cabe from '../assets/images/cabe.svg';
 import bawangRetro from '../assets/images/bawang-retro.svg';
-import garlicRetro from '../assets/images/garlic-retro.svg';
-import jerukNipis from '../assets/images/jeruk-nipis.svg';
-import santan from '../assets/images/santan.svg';
-import rempah from '../assets/images/rempah.svg';
-import kacang from '../assets/images/kacang.svg';
 
 // Decors
 import bungaRetro from '../assets/images/bunga-retro.svg';
@@ -36,7 +37,7 @@ gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 // ─── Static constants ──────────────────────────────────────────────────────
 
 const BOWLS       = [sotoMakasar, sotoBanjar, sotoBetawi, sotoKudus, sotoLamongan, sotoPadang];
-const INGREDIENTS = [cabe, bawangRetro, garlicRetro, jerukNipis, santan, rempah, kacang];
+const INGREDIENTS = [rempah, daging, santan, dagingSapi, jerukNipis, cabe, bawangRetro];
 const DECORS      = [bungaRetro, starRetro, decorRetro, decorRetro2, globe];
 const COLORS      = ['#eab308', '#c2410c', '#4d7c0f', '#f97316', '#451a03', '#84cc16', '#fbbf24'];
 
@@ -68,21 +69,22 @@ const DECOR_POS = [
   { top: '70%', left: '62%', size: '7vw'  },
 ];
 
+// Target penyebaran konfeti (Diperbanyak agar memenuhi ruang)
 const ING_TARGETS = [
-  { x: -320, y: -220, r: 45,   s: 1.2  },
-  { x:  280, y: -180, r: -30,  s: 0.9  },
-  { x: -180, y:  240, r: 120,  s: 1.4  },
-  { x:  350, y:  200, r: -80,  s: 0.8  },
-  { x: -380, y:   40, r: 160,  s: 1.1  },
-  { x:  200, y: -300, r: -150, s: 1.3  },
-  { x:   60, y:  300, r:  90,  s: 0.95 },
-  { x: -260, y: -300, r: -45,  s: 0.7  },
-  { x:  310, y:  260, r:  30,  s: 1.0  },
-  { x: -400, y:  160, r: -120, s: 0.85 },
-  { x:  180, y: -240, r:  60,  s: 1.15 },
-  { x: -120, y:  320, r: -90,  s: 0.9  },
-  { x:  380, y:  -60, r:  45,  s: 1.25 },
-  { x:  -60, y: -340, r: -60,  s: 0.75 },
+  { x: -380, y: -250, r: 45,   s: 1.2  },
+  { x:  380, y: -220, r: -30,  s: 1.0  },
+  { x: -250, y:  300, r: 120,  s: 1.4  },
+  { x:  420, y:  260, r: -80,  s: 0.9  },
+  { x: -450, y:   40, r: 160,  s: 1.1  },
+  { x:  250, y: -350, r: -150, s: 1.3  },
+  { x:  120, y:  380, r:  90,  s: 1.0  },
+  { x: -320, y: -380, r: -45,  s: 0.8  },
+  { x:  480, y:  120, r:  30,  s: 1.1  },
+  { x: -500, y:  160, r: -120, s: 0.9  },
+  { x:  180, y: -400, r:  60,  s: 1.15 },
+  { x: -150, y:  400, r: -90,  s: 0.9  },
+  { x:  450, y:  -80, r:  45,  s: 1.25 },
+  { x:  -80, y: -420, r: -60,  s: 0.85 },
 ];
 
 const CULTURE_TARGETS = [
@@ -103,6 +105,15 @@ const BOWL_PHASE1 = [
   { x:  170, y:  -50, r:  20 },
 ];
 
+const PHASE1_TARGETS = [
+  { x: -200, y: -220, r: -30 },
+  { x:  260, y: -200, r:  20 },
+  { x: -180, y:  240, r: -40 },
+  { x:  280, y:  220, r:  30 },
+  { x: -240, y:   80, r: -20 },
+  { x:  220, y: -100, r:  45 },
+];
+
 const BOWL_PHASE2 = [
   { x: -350, y: -260, r: -25 },
   { x:  320, y: -280, r:  15 },
@@ -115,9 +126,7 @@ const BOWL_PHASE2 = [
 // ─── Component ─────────────────────────────────────────────────────────────
 
 export default function Unity() {
-  // Outer spacer: hanya memberikan scroll height
   const spacerRef  = useRef(null);
-  // Panel yang akan di-PIN oleh GSAP (bukan CSS sticky)
   const panelRef   = useRef(null);
 
   const bowlRefs    = useRef([]);
@@ -126,6 +135,7 @@ export default function Unity() {
   const islandRefs  = useRef([]);
   const ingRefs     = useRef([]);
   const cultureRefs = useRef([]);
+  const funkyLinesRef = useRef(null);
 
   const text1Ref = useRef(null);
   const text2Ref = useRef(null);
@@ -149,10 +159,15 @@ export default function Unity() {
               text4Ref.current, text5Ref.current], { autoAlpha: 0, y: 50 });
     gsap.set(sotoRef.current,  { autoAlpha: 0, scale: 0.3, rotation: -15 });
     gsap.set(islands,          { autoAlpha: 0, scale: 0 });
-    gsap.set(ings,             { autoAlpha: 0, x: 0, y: 0, scale: 1, rotation: 0 });
+    
+    // Bahan-bahan disiapkan sangat kecil di tengah sebelum konfeti
+    gsap.set(ings,             { autoAlpha: 0, x: 0, y: 0, scale: 0.1, rotation: 0 });
     gsap.set(cultures,         { autoAlpha: 0, scale: 0 });
+    
+    // Container wavy lines visible, tapi semua jalurnya "tersembunyi" pakai dashoffset
+    gsap.set(funkyLinesRef.current, { autoAlpha: 1 });
 
-    // ── Ambient float (time-based, independent of scroll) ───────────────
+    // ── Ambient float ───────────────────────────────────────────────────
     gsap.to(bowls, {
       y: 'random(-18, 18)', x: 'random(-10, 10)', rotation: 'random(-8, 8)',
       duration: 'random(2, 4)', repeat: -1, yoyo: true, ease: 'sine.inOut',
@@ -169,20 +184,15 @@ export default function Unity() {
       stagger: { each: 0.5, from: 'random' },
     });
 
-    // ── Scroll-driven timeline dengan PIN ───────────────────────────────
-    // pin: true → GSAP sendiri yang mengunci panelRef di viewport
-    // pinSpacing: true → GSAP otomatis tambahkan spacing (menggantikan height: 700vh)
-    // Tidak perlu CSS sticky, tidak terpengaruh parent overflow
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: panelRef.current,
         start: 'top top',
-        end: '+=500%',          // panjang scroll = 5× tinggi viewport
-        pin: true,              // ← GSAP yang pin, bukan CSS sticky
-        pinSpacing: true,       // ← GSAP yang tambah spacing otomatis
+        end: '+=500%',
+        pin: true,
+        pinSpacing: true,
         scrub: 1.2,
         anticipatePin: 1,
-        // markers: true,       // aktifkan untuk debug
       },
     });
 
@@ -196,24 +206,45 @@ export default function Unity() {
       }, 0.5)
       .to(text1Ref.current, { autoAlpha: 0, y: -40, duration: 1 }, '+=0.8');
 
-    // ═══ PHASE 1 ─ "Different islands." ════════════════════════════════
-    tl.to(text2Ref.current, { autoAlpha: 1, y: 0, duration: 1.4, ease: 'back.out(1.7)' })
+    // ═══ TRANSITION - Psychedelic funky lines appear! ══════════════════
+    tl.to('.funky-path', {
+      strokeDashoffset: 0, // Garis seakan-akan digambar pelan-pelan
+      duration: 2.5,
+      ease: 'power2.inOut',
+      stagger: 0.15
+    }, '-=0.5');
+
+    // ═══ PHASE 1 ─ "Different islands." (Motion Path Mangkuk) ══════════
+    tl.to(text2Ref.current, { autoAlpha: 1, y: 0, duration: 1.4, ease: 'back.out(1.7)' }, '<0.5')
       .to(bowls, {
-        x: (i) => [-200, 260, -180, 280, -240, 220][i] ?? 0,
-        y: (i) => [-220, -200, 240, 220, 80, -100][i] ?? 0,
-        rotation: (i) => [-30, 20, -40, 30, -20, 45][i] ?? 0,
-        ease: 'sine.inOut', duration: 3, stagger: 0.12,
-      }, '<0.3')
+        // Mangkuk menggunakan jalur melengkung (tidak lurus)
+        motionPath: {
+          path: (i) => {
+            const start = BOWL_PHASE1[i] || { x: 0, y: 0 };
+            const end = PHASE1_TARGETS[i] || { x: 0, y: 0 };
+            // Titik kendali untuk menciptakan kurva unik tiap mangkuk
+            const controlPointX = start.x + (i % 2 === 0 ? -120 : 120);
+            const controlPointY = start.y + (i % 2 === 0 ? 150 : -150);
+            return [
+              { x: controlPointX, y: controlPointY },
+              { x: end.x, y: end.y }
+            ];
+          },
+          curviness: 1.5,
+        },
+        rotation: (i) => PHASE1_TARGETS[i]?.r ?? 0,
+        ease: 'sine.inOut', duration: 3.5, stagger: 0.15,
+      }, '<0.2')
       .to(islands, {
         autoAlpha: 1, scale: 1,
         x: (i) => [-220, 200, -160, 180, -50][i] ?? 0,
         y: (i) => [-180, -140, 160, 170, -80][i] ?? 0,
         rotation: (i) => [-15, 10, -8, 18, -5][i] ?? 0,
         stagger: 0.1, duration: 1.4, ease: 'back.out(2)',
-      }, '-=1.5')
+      }, '-=1.8')
       .to(text2Ref.current, { autoAlpha: 0, y: -40, duration: 1 }, '+=0.5');
 
-    // ═══ PHASE 2 ─ "Different ingredients." ════════════════════════════
+    // ═══ PHASE 2 ─ "Different ingredients." (Confetti Burst!) ══════════
     tl.to(text3Ref.current, { autoAlpha: 1, y: 0, duration: 1.4, ease: 'back.out(1.7)' })
       .to(bowls, {
         x: (i) => BOWL_PHASE2[i]?.x ?? 0,
@@ -223,14 +254,16 @@ export default function Unity() {
       }, '<')
       .to(ings, {
         autoAlpha: 1,
-        x: (i) => ING_TARGETS[i % ING_TARGETS.length].x,
-        y: (i) => ING_TARGETS[i % ING_TARGETS.length].y,
-        rotation: (i) => ING_TARGETS[i % ING_TARGETS.length].r,
-        scale: (i) => ING_TARGETS[i % ING_TARGETS.length].s,
-        stagger: { amount: 0.6, from: 'random' },
-        duration: 2.5, ease: 'expo.out',
-      }, '-=2')
-      .to(text3Ref.current, { autoAlpha: 0, y: -40, duration: 1 }, '+=0.5');
+        // Menyebar jauh layaknya konfeti yang ringan & penuh energi
+        x: (i) => ING_TARGETS[i % ING_TARGETS.length].x * gsap.utils.random(1.2, 1.6),
+        y: (i) => ING_TARGETS[i % ING_TARGETS.length].y * gsap.utils.random(1.2, 1.6),
+        rotation: (i) => ING_TARGETS[i % ING_TARGETS.length].r + gsap.utils.random(-200, 200),
+        scale: (i) => ING_TARGETS[i % ING_TARGETS.length].s * gsap.utils.random(0.9, 1.4),
+        stagger: { amount: 0.4, from: 'center' }, // Meledak dari tengah!
+        duration: 2.8, 
+        ease: 'back.out(2.5)', // Spring effect tinggi (bouncy)
+      }, '-=2.2')
+      .to(text3Ref.current, { autoAlpha: 0, y: -40, duration: 1 }, '+=0.8');
 
     // ═══ PHASE 3 ─ "Different philosophies." ═══════════════════════════
     tl.to(text4Ref.current, { autoAlpha: 1, y: 0, duration: 1.4, ease: 'back.out(1.5)' })
@@ -269,6 +302,9 @@ export default function Unity() {
       .to(decors, {
         scale: 0.1, autoAlpha: 0, rotation: '+=180',
         stagger: 0.06, duration: 2.5, ease: 'power2.in',
+      }, '<0.5')
+      .to('.funky-path', {
+        autoAlpha: 0, duration: 1.5 // Garis menghilang
       }, '<0.5');
 
     // ═══ PHASE 5 ─ "Yet they all share the same name." ══════════════════
@@ -302,20 +338,16 @@ export default function Unity() {
         ...bowls, ...blobs, ...decors, ...islands, ...ings, ...cultures,
         text1Ref.current, text2Ref.current, text3Ref.current,
         text4Ref.current, text5Ref.current, sotoRef.current,
+        '.funky-path'
       ].filter(Boolean));
     };
   }, []);
 
-  // ── Styles ─────────────────────────────────────────────────────────────
   const S = {
-    // Outer wrapper: tidak perlu height atau overflow apapun
-    // GSAP pinSpacing akan inject spacer div otomatis
     outer: {
       position: 'relative',
       width: '100%',
     },
-
-    // Panel yang di-pin GSAP: full viewport, tidak ada overflow yg memotong
     panel: {
       width: '100%',
       height: '100vh',
@@ -326,7 +358,6 @@ export default function Unity() {
       justifyContent: 'center',
       position: 'relative',
     },
-
     textCenter: {
       position: 'absolute',
       inset: 0,
@@ -358,24 +389,27 @@ export default function Unity() {
           objectFit:'cover', opacity:0.22, mixBlendMode:'multiply', zIndex:0,
         }}/>
 
-        {/* ── Wavy Groovy Lines ─────────────────────────────────────── */}
-        <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg"
+        {/* ── Wavy Groovy Lines (Animate Draw) ─────────────────────── */}
+        <svg ref={funkyLinesRef} viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="xMidYMid slice"
           style={{ position:'absolute', inset:0, width:'100%', height:'100%',
-            opacity:0.18, zIndex:1, pointerEvents:'none' }}>
+            opacity:0.25, zIndex:1, pointerEvents:'none' }}>
           {[...Array(9)].map((_, i) => (
-            <path key={i}
+            <path key={i} className="funky-path"
               d={`M-100,${70 + i*85} C180,${30 + i*85} 420,${120 + i*85} 600,${75 + i*85} S920,${18 + i*85} 1300,${85 + i*85}`}
               fill="none" stroke={COLORS[i % COLORS.length]}
               strokeWidth={i%2===0 ? 3.5 : 2}
-              strokeDasharray={i%3===0 ? '14 8' : undefined}
+              // Trick untuk memunculkan garis dengan animasi GSAP strokeDashoffset
+              strokeDasharray="100" strokeDashoffset="100" pathLength="100"
             />
           ))}
           {[...Array(5)].map((_, i) => (
-            <circle key={i}
+            <circle key={`circle-${i}`} className="funky-path"
               cx={120 + i*240} cy={400 + (i%2===0 ? -140 : 140)}
               r={35 + i*18} fill="none" stroke={COLORS[(i+2)%COLORS.length]}
-              strokeWidth="2.5" strokeDasharray="7 6" opacity="0.75"/>
+              strokeWidth="2.5" 
+              strokeDasharray="100" strokeDashoffset="100" pathLength="100"
+              opacity="0.85"/>
           ))}
         </svg>
 
@@ -444,7 +478,7 @@ export default function Unity() {
           </div>
         ))}
 
-        {/* ── Ingredient Confetti ───────────────────────────────────── */}
+        {/* ── Ingredient Confetti (Diperbanyak) ─────────────────────── */}
         {[...INGREDIENTS, ...INGREDIENTS].map((ing, i) => (
           <img key={`ing-${i}`}
             ref={(el) => (ingRefs.current[i] = el)}
@@ -480,7 +514,6 @@ export default function Unity() {
         {/* ── Texts ─────────────────────────────────────────────────── */}
         <div style={S.textCenter}>
 
-          {/* TEXT 1 */}
           <p ref={text1Ref} style={{
             position:'absolute', opacity:0,
             fontFamily: 'var(--font-title)',
@@ -493,7 +526,6 @@ export default function Unity() {
             {lines[0]}
           </p>
 
-          {/* TEXT 2 */}
           <h2 ref={text2Ref} style={{
             position:'absolute', opacity:0,
             fontFamily: 'var(--font-title)',
@@ -506,7 +538,6 @@ export default function Unity() {
             {lines[1]}
           </h2>
 
-          {/* TEXT 3 */}
           <h2 ref={text3Ref} style={{
             position:'absolute', opacity:0,
             fontFamily: 'var(--font-title)',
@@ -519,7 +550,6 @@ export default function Unity() {
             {lines[2]}
           </h2>
 
-          {/* TEXT 4 */}
           <h2 ref={text4Ref} style={{
             position:'absolute', opacity:0,
             fontFamily: 'var(--font-title)',
@@ -531,7 +561,6 @@ export default function Unity() {
             {lines[3]}
           </h2>
 
-          {/* TEXT 5 */}
           <div ref={text5Ref} style={{ position:'absolute', opacity:0 }}>
             <h2 style={{
               fontFamily: 'var(--font-title)',
@@ -548,7 +577,6 @@ export default function Unity() {
             </h2>
           </div>
 
-          {/* SOTO */}
           <h1 ref={sotoRef} style={{
             position:'absolute', opacity:0,
             fontFamily: 'var(--font-title)',
