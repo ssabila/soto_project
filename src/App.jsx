@@ -3,7 +3,7 @@ import OpeningSequence from './sections/opening'
 import QuestionSection from './sections/question'
 import JourneySection  from './sections/journey'
 import UnitySection    from './sections/unity'
-// import MeaningSection  from './sections/meaning'
+import MeaningSection  from './sections/meaning'
 // import ClosingSection  from './sections/closing'
 // import MakeYourOwn    from './sections/makeyourown'
 import './App.css'
@@ -17,7 +17,7 @@ function App() {
       <QuestionSection />
       <JourneySection  />
       <UnitySection    />
-      {/* <MeaningSection  /> */}
+      <MeaningSection  />
       {/* <ClosingSection  /> */}
       {/* <MakeYourOwn     /> */}
     </main>
