@@ -3,49 +3,167 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { storyContent } from "../data/storytext";
 
 // Import Assets
-import sotoBetawi from "../assets/images/soto-betawi.svg";
-import sotoLamongan from "../assets/images/soto-lamongan.svg";
-import sotoKudus from "../assets/images/soto-kudus.svg";
-import sotoPadang from "../assets/images/soto-padang.svg";
-import sotoBanjar from "../assets/images/soto-banjar.svg";
-import cotoMakassar from "../assets/images/coto-makasar.svg";
+import sotoBetawi    from "../assets/images/soto-betawi.svg";
+import sotoLamongan  from "../assets/images/soto-lamongan.svg";
+import sotoKudus     from "../assets/images/soto-kudus.svg";
+import sotoPadang    from "../assets/images/soto-padang.svg";
+import sotoBanjar    from "../assets/images/soto-banjar.svg";
+import cotoMakassar  from "../assets/images/coto-makasar.svg";
+import bawangMerah   from "../assets/images/bawang-merah.webp";
+import cabe          from "../assets/images/cabe.svg";
+import bungaRetro    from "../assets/images/bunga-retro.svg";
+import starRetro     from "../assets/images/star.svg";
+import daunJeruk     from "../assets/images/daun-jeruk.webp";
+import asap          from "../assets/images/asap.webp";
+import bgDecor3      from "../assets/images/background-3.svg";
+import bgDecor4      from "../assets/images/background-4.svg";
+import bgDecor5      from "../assets/images/background-5.svg";
 
-// Decor Assets
-import bawangMerah from "../assets/images/bawang-merah.webp";
-import cabe from "../assets/images/cabe.svg";
-import bungaRetro from "../assets/images/bunga-retro.svg";
-import starRetro from "../assets/images/star.svg";
-import daunJeruk from "../assets/images/daun-jeruk.webp";
-import asap from "../assets/images/asap.webp";
+// ─────────────────────────────────────────────────────────────────────────────
+// SCROLL TIMELINE  (section height = 700vh)
+//
+// Background Colors:
+//  0.00 → 0.33   Cream  (#F9FDDA)
+//  0.33 → 0.66   Green  (#24A733)
+//  0.66 → 1.00   Orange (#FF9721)
+//
+// PERUBAHAN:
+//  - endX/endY diperkecil ~40-50% dari nilai asli agar dekorasi
+//    mengelilingi area teks, bukan pinggir layar
+//  - startOffX/Y dikurangi proporsional agar arah animasi tetap natural
+//  - sizeClass diperbesar: decor w-12 md:w-16 lg:w-20 (sebelumnya w-6 md:w-10 lg:w-12)
+// ─────────────────────────────────────────────────────────────────────────────
 
-// Background Assets
-import bgDecor1 from "../assets/images/background-1.svg";
-import bgDecor2 from "../assets/images/background-2.svg";
-import pattern from "../assets/images/retro-bg-pattern-v2.svg";
-
-const mapNodes = [
-  // Sumatra Area
-  { src: sotoPadang, startX: "-45vw", startY: "-40vh", endX: "-30vw", endY: "-15vh", delay: 0, rotate: -10, type: 'bowl' },
-  { src: cabe, startX: "-50vw", startY: "20vh", endX: "-35vw", endY: "-5vh", delay: 0.2, rotate: 15, type: 'decor' },
-  { src: bungaRetro, startX: "-30vw", startY: "-50vh", endX: "-22vw", endY: "-28vh", delay: 0.4, rotate: 45, type: 'decor' },
-
-  // Java Area
-  { src: sotoBetawi, startX: "-15vw", startY: "45vh", endX: "-15vw", endY: "18vh", delay: 0.3, rotate: 5, type: 'bowl' },
-  { src: sotoKudus, startX: "5vw", startY: "-40vh", endX: "-2vw", endY: "20vh", delay: 0.1, rotate: -5, type: 'bowl' },
-  { src: sotoLamongan, startX: "40vw", startY: "50vh", endX: "10vw", endY: "15vh", delay: 0.5, rotate: 8, type: 'bowl' },
-  { src: bawangMerah, startX: "-25vw", startY: "35vh", endX: "-8vw", endY: "28vh", delay: 0.7, rotate: -20, type: 'decor' },
-  { src: starRetro, startX: "0vw", startY: "45vh", endX: "5vw", endY: "30vh", delay: 0.6, rotate: 20, type: 'decor' },
-
-  // Kalimantan Area
-  { src: sotoBanjar, startX: "20vw", startY: "-50vh", endX: "2vw", endY: "-15vh", delay: 0.3, rotate: -12, type: 'bowl' },
-  { src: daunJeruk, startX: "35vw", startY: "-20vh", endX: "12vw", endY: "-10vh", delay: 0.2, rotate: 30, type: 'decor' },
-
-  // Sulawesi Area
-  { src: cotoMakassar, startX: "50vw", startY: "25vh", endX: "22vw", endY: "-2vh", delay: 0.6, rotate: 10, type: 'bowl' },
-  { src: starRetro, startX: "45vw", startY: "-40vh", endX: "35vw", endY: "-10vh", delay: 0.8, rotate: -45, type: 'decor' },
-  { src: bungaRetro, startX: "50vw", startY: "5vh", endX: "40vw", endY: "15vh", delay: 0.5, rotate: 90, type: 'decor' },
+const PHASE1_NODES = [
+  // Sebelumnya endX:"25vw" → sekarang "14vw", endY:"35vh" → "18vh"
+  { src: daunJeruk,    endX: "14vw",  endY: "18vh",  startOffX: "35vw",  startOffY: "40vh",  delay: 0.3, rotate: 25,  type: "decor" },
+  { src: bawangMerah,  endX: "22vw",  endY: "-16vh", startOffX: "40vw",  startOffY: "-35vh", delay: 0.5, rotate: 45,  type: "decor" },
+  { src: bungaRetro,   endX: "-22vw", endY: "-20vh", startOffX: "-45vw", startOffY: "-45vh", delay: 0.4, rotate: 60,  type: "decor" },
+  { src: cabe,         endX: "-18vw", endY: "16vh",  startOffX: "-38vw", startOffY: "35vh",  delay: 0.2, rotate: -15, type: "decor" },
+  { src: starRetro,    endX: "16vw",  endY: "-14vh", startOffX: "35vw",  startOffY: "-30vh", delay: 0.6, rotate: 35,  type: "decor" }
 ];
 
+const PHASE2_NODES = [
+  { src: cabe,         endX: "-28vw", endY: "-8vh",  startOffX: "-50vw", startOffY: "25vh",  delay: 0.2, rotate:  15, type: "decor" },
+  { src: bungaRetro,   endX: "-18vw", endY: "-24vh", startOffX: "-20vw", startOffY: "-50vh", delay: 0.4, rotate:  45, type: "decor" },
+  { src: bawangMerah,  endX: "-8vw",  endY: "22vh",  startOffX: "-30vw", startOffY: "45vh",  delay: 0.7, rotate: -20, type: "decor" },
+  { src: starRetro,    endX: "8vw",   endY: "22vh",  startOffX: "6vw",   startOffY: "50vh",  delay: 0.6, rotate:  20, type: "decor" },
+  { src: daunJeruk,    endX: "16vw",  endY: "-10vh", startOffX: "40vw",  startOffY: "-28vh", delay: 0.2, rotate:  30, type: "decor" },
+  { src: starRetro,    endX: "28vw",  endY: "-14vh", startOffX: "50vw",  startOffY: "-48vh", delay: 0.8, rotate: -45, type: "decor" },
+  { src: cabe,         endX: "10vw",  endY: "18vh",  startOffX: "28vw",  startOffY: "42vh",  delay: 0.3, rotate:  25, type: "decor" },
+  { src: bungaRetro,   endX: "-10vw", endY: "0vh",   startOffX: "-22vw", startOffY: "14vh",  delay: 0.5, rotate:  60, type: "decor" }
+];
+
+const PHASE3_NODES = [
+  { src: bungaRetro,   endX: "-20vw", endY: "20vh",  startOffX: "-38vw", startOffY: "42vh",  delay: 0.1, rotate: -20, type: "decor" },
+  { src: starRetro,    endX: "20vw",  endY: "-18vh", startOffX: "42vw",  startOffY: "-38vh", delay: 0.3, rotate:  15, type: "decor" },
+  { src: cabe,         endX: "18vw",  endY: "18vh",  startOffX: "34vw",  startOffY: "38vh",  delay: 0.5, rotate:  25, type: "decor" },
+  { src: bawangMerah,  endX: "-18vw", endY: "-20vh", startOffX: "-34vw", startOffY: "-42vh", delay: 0.2, rotate: -10, type: "decor" },
+  { src: starRetro,    endX: "0vw",   endY: "26vh",  startOffX: "0vw",   startOffY: "50vh",  delay: 0.4, rotate:  60, type: "decor" },
+  { src: daunJeruk,    endX: "-26vw", endY: "5vh",   startOffX: "-44vw", startOffY: "18vh",  delay: 0.6, rotate: -35, type: "decor" },
+  { src: bungaRetro,   endX: "5vw",   endY: "-22vh", startOffX: "8vw",   startOffY: "-55vh", delay: 0.2, rotate:  45, type: "decor" }
+];
+
+const AFTERGLOW = [
+  { src: bungaRetro, x:  "25vw", y: "-45vh", scale: 0.40, rotate:  30, spd: 5.2, op: 0.16 },
+  { src: starRetro,  x: "-45vw", y:  "40vh", scale: 0.32, rotate: -20, spd: 6.4, op: 0.13 },
+  { src: cabe,       x:  "45vw", y: "-30vh", scale: 0.28, rotate:  55, spd: 7.1, op: 0.12 },
+  { src: starRetro,  x: "-25vw", y: "-40vh", scale: 0.26, rotate: -60, spd: 4.8, op: 0.10 },
+  { src: bungaRetro, x:  "55vw", y:  "35vh", scale: 0.34, rotate:  75, spd: 8.0, op: 0.11 },
+  { src: daunJeruk,  x: "-50vw", y: "-20vh", scale: 0.28, rotate: -35, spd: 5.6, op: 0.09 },
+];
+
+// ── Komponen per-huruf dengan efek uap ───────────────────────────────────────
+function WavyText({ text, className, style }) {
+  return (
+    <motion.span
+      className={`inline-flex flex-wrap justify-center ${className}`}
+      style={style}
+    >
+      {text.split("").map((char, i) => (
+        <motion.span
+          key={i}
+          className="inline-block"
+          style={{ whiteSpace: char === " " ? "pre" : "normal" }}
+          animate={{
+            y: char === " " ? 0 : [0, -5, 1, -3, 0],
+          }}
+          transition={{
+            repeat: Infinity,
+            duration: 3.2 + (i % 4) * 0.35,
+            delay: i * 0.045,
+            ease: "easeInOut",
+          }}
+        >
+          {char}
+        </motion.span>
+      ))}
+    </motion.span>
+  );
+}
+
+// ── Single MapNode — hooks di top-level, bukan di dalam .map() ───────────────
+function MapNode({ node, scrollYProgress, inRange, outRange }) {
+  const [inStartRaw, inEndRaw] = inRange;
+  const [outStartRaw, outEndRaw] = outRange;
+
+  const inStart  = Math.max(0, inStartRaw);
+  const inEnd    = Math.min(1, Math.max(inStart, inEndRaw));
+  const outStart = Math.min(1, Math.max(inEnd, outStartRaw));
+  const outEnd   = Math.min(1, Math.max(outStart, outEndRaw));
+
+  const x      = useTransform(scrollYProgress, [inStart, inEnd], [node.startOffX, node.endX]);
+  const y      = useTransform(scrollYProgress, [inStart, inEnd], [node.startOffY, node.endY]);
+  const scale  = useTransform(scrollYProgress, [inStart, inEnd], [node.type === "bowl" ? 1.5 : 0.6, 1]);
+  const rotate = useTransform(scrollYProgress, [inStart, inEnd], [node.rotate * 3, node.rotate]);
+
+  const op1 = Math.max(0, inStart - 0.05);
+  const op2 = Math.max(op1, Math.min(1, inStart + 0.1));
+  const op3 = Math.max(op2, Math.min(1, outStart));
+  const op4 = Math.max(op3, Math.min(1, outEnd));
+
+  const opacity = useTransform(
+    scrollYProgress,
+    [op1, op2, op3, op4],
+    [0, 0.8, 1, 0]
+  );
+
+  // ── PERUBAHAN UTAMA: ukuran diperbesar ──────────────────────────────────
+  // bowl: w-20 md:w-32 lg:w-36  (sebelumnya w-14 md:w-24 lg:w-28)
+  // decor: w-12 md:w-16 lg:w-20 (sebelumnya w-6  md:w-10 lg:w-12)
+  const sizeClass =
+    node.type === "bowl"
+      ? "w-20 md:w-32 lg:w-36"
+      : "w-12 md:w-16 lg:w-20";
+
+  return (
+    <motion.div className="absolute" style={{ x, y, opacity, scale, rotate }}>
+      <motion.img
+        src={node.src}
+        alt=""
+        aria-hidden="true"
+        className={`object-contain drop-shadow-2xl cursor-pointer select-none ${sizeClass}`}
+        animate={{
+          y: ["-4%", "4%", "-4%"],
+          rotate: [node.rotate - 2, node.rotate + 2, node.rotate - 2],
+        }}
+        transition={{
+          repeat: Infinity,
+          duration: 4 + node.delay * 1.5,
+          ease: "easeInOut",
+          delay: node.delay,
+        }}
+        whileHover={{
+          scale: 1.2,
+          filter: "drop-shadow(0px 0px 18px rgba(255,151,33,0.8))",
+          transition: { duration: 0.2 },
+        }}
+      />
+    </motion.div>
+  );
+}
+
+// ── Komponen Utama ────────────────────────────────────────────────────────────
 export default function MeaningSection() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -53,152 +171,225 @@ export default function MeaningSection() {
     offset: ["start start", "end end"],
   });
 
-  const bg1Y = useTransform(scrollYProgress, [0, 1], ["-10%", "20%"]);
-  const bg1Rotate = useTransform(scrollYProgress, [0, 1], [0, 15]);
-  const bg2Y = useTransform(scrollYProgress, [0, 1], ["20%", "-10%"]);
-  const bg2Rotate = useTransform(scrollYProgress, [0, 1], [0, -15]);
-  const bgGlowOpacity = useTransform(scrollYProgress, [0.6, 0.9], [0, 0.6]);
+  const bg3Op = useTransform(scrollYProgress, [0.0, 0.25, 0.4],          [1, 1, 0]);
+  const bg4Op = useTransform(scrollYProgress, [0.3, 0.45, 0.55, 0.7],    [0, 1, 1, 0]);
+  const bg5Op = useTransform(scrollYProgress, [0.6, 0.75, 1.0],          [0, 1, 1]);
 
-  const t1Opacity = useTransform(scrollYProgress, [0, 0.05, 0.2, 0.25], [0, 1, 1, 0]);
-  const t1Blur = useTransform(scrollYProgress, [0, 0.1], ["blur(12px)", "blur(0px)"]);
-  const t1Y = useTransform(scrollYProgress, [0, 0.25], [40, -40]);
+  // ── PHASE 1: 0.00 → 0.32 ──────────────────────────────────────────────────
+  const t1Opacity = useTransform(scrollYProgress, [0.00, 0.10, 0.22, 0.32], [0, 1, 1, 0]);
+  const t1Y       = useTransform(scrollYProgress, [0.00, 0.10, 0.32],       [60, 0, -40]);
+  const t1Blur    = useTransform(scrollYProgress, [0.00, 0.12],              ["blur(20px)", "blur(0px)"]);
+  const t1Scale   = useTransform(scrollYProgress, [0.00, 0.10, 0.32],       [0.88, 1, 1.04]);
 
-  const steamOpacity = useTransform(scrollYProgress, [0, 0.1, 0.2, 0.25], [0, 0.8, 0.8, 0]);
-  const steamY = useTransform(scrollYProgress, [0, 0.25], [60, -150]);
-  const steamScale = useTransform(scrollYProgress, [0, 0.25], [1, 1.5]);
+  const steamOpacity = useTransform(scrollYProgress, [0.00, 0.08, 0.20, 0.32], [0, 0.65, 0.65, 0]);
+  const steamY       = useTransform(scrollYProgress, [0.00, 0.32],             [100, -200]);
+  const steamScale   = useTransform(scrollYProgress, [0.00, 0.32],             [0.9, 1.7]);
 
-  const t2Opacity = useTransform(scrollYProgress, [0.25, 0.35, 0.45, 0.55], [0, 1, 1, 0]);
-  const t2Scale = useTransform(scrollYProgress, [0.25, 0.4, 0.55], [0.8, 1, 1.1]);
-  const t2Y = useTransform(scrollYProgress, [0.25, 0.55], [20, -20]);
+  // ── PHASE 2: 0.30 → 0.62 ──────────────────────────────────────────────────
+  const t2Opacity = useTransform(scrollYProgress, [0.30, 0.40, 0.52, 0.62], [0, 1, 1, 0]);
+  const t2Y       = useTransform(scrollYProgress, [0.30, 0.40, 0.62],       [30, 0, -30]);
+  const t2Blur    = useTransform(scrollYProgress, [0.30, 0.42],              ["blur(10px)", "blur(0px)"]);
+  const t2Scale   = useTransform(scrollYProgress, [0.30, 0.40, 0.62],       [0.84, 1, 1.06]);
 
-  const lineOpacity = useTransform(scrollYProgress, [0.45, 0.6], [0, 0.8]);
-  const pathLength = useTransform(scrollYProgress, [0.45, 0.65], [0, 1]);
+  // ── PHASE 3: 0.60 → 1.00 ──────────────────────────────────────────────────
+  const t3aOpacity   = useTransform(scrollYProgress, [0.62, 0.70], [0, 1]);
+  const t3aY         = useTransform(scrollYProgress, [0.62, 0.70], [40, 0]);
+  const t3aBlur      = useTransform(scrollYProgress, [0.62, 0.70], ["blur(12px)", "blur(0px)"]);
 
-  const fullText3 = storyContent.meaning.lines[2] || "Diverse… yet deeply connected.";
-  const splitIndex = fullText3.indexOf("yet");
-  const text3Part1 = fullText3.slice(0, splitIndex); 
-  const text3Part2 = fullText3.slice(splitIndex);    
+  const t3yetOpacity = useTransform(scrollYProgress, [0.72, 0.80], [0, 1]);
+  const t3yetScale   = useTransform(scrollYProgress, [0.72, 0.80], [0.65, 1]);
+  const t3yetBlur    = useTransform(scrollYProgress, [0.72, 0.80], ["blur(8px)", "blur(0px)"]);
 
-  const t3aOpacity = useTransform(scrollYProgress, [0.65, 0.75], [0, 1]);
-  const t3aY = useTransform(scrollYProgress, [0.65, 0.75], [30, 0]);
-  const t3bOpacity = useTransform(scrollYProgress, [0.75, 0.85], [0, 1]);
-  const t3bScale = useTransform(scrollYProgress, [0.75, 0.85], [0.9, 1]);
+  const t3bOpacity   = useTransform(scrollYProgress, [0.82, 0.92], [0, 1]);
+  const t3bScale     = useTransform(scrollYProgress, [0.82, 0.94], [0.82, 1]);
+  const t3bBlur      = useTransform(scrollYProgress, [0.82, 0.92], ["blur(14px)", "blur(0px)"]);
 
   return (
-    <section ref={containerRef} className="relative h-[450vh] bg-[#2C1309] font-inria">
-      
-      {/* Sticky Viewport Container */}
+    <motion.section
+      ref={containerRef}
+      className="relative h-[700vh]"
+      style={{ fontFamily: "var(--font-body, 'InriaSerif', serif)" }}
+    >
       <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
 
-        <div
-          className="absolute inset-0 z-0 opacity-15"
-          style={{ backgroundImage: `url(${pattern})`, backgroundSize: "300px" }}
+        {/* Background SVGs */}
+        <motion.img src={bgDecor3} alt="" aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none z-[-1]"
+          style={{ opacity: bg3Op }}
+        />
+        <motion.img src={bgDecor4} alt="" aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none z-[-1]"
+          style={{ opacity: bg4Op }}
+        />
+        <motion.img src={bgDecor5} alt="" aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none z-[-1]"
+          style={{ opacity: bg5Op }}
         />
 
-        <motion.img
-          src={bgDecor1}
-          alt="Background Decor 1"
-          className="absolute w-[120vw] md:w-[80vw] opacity-10 object-contain mix-blend-color-dodge pointer-events-none"
-          style={{ y: bg1Y, rotate: bg1Rotate, left: "-10vw", top: "-10vh" }}
-        />
-        <motion.img
-          src={bgDecor2}
-          alt="Background Decor 2"
-          className="absolute w-[120vw] md:w-[80vw] opacity-10 object-contain mix-blend-color-dodge pointer-events-none"
-          style={{ y: bg2Y, rotate: bg2Rotate, right: "-10vw", bottom: "-10vh" }}
-        />
-
-        <motion.div 
-          className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(252,211,77,0.15)_0%,transparent_65%)] pointer-events-none"
-          style={{ opacity: bgGlowOpacity }}
-        />
-
-        <motion.svg
-          className="absolute inset-0 w-full h-full z-10 pointer-events-none drop-shadow-[0_0_12px_rgba(252,211,77,0.9)]"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-          style={{ opacity: lineOpacity }}
-          animate={{ filter: ["brightness(1)", "brightness(1.5)", "brightness(1)"] }}
-          transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-        >
-          <motion.path d="M 20 35 Q 35 45 35 68" fill="none" stroke="#FCD34D" strokeWidth="0.25" strokeDasharray="1 1" style={{ pathLength }} />
-          <motion.path d="M 35 68 Q 45 75 60 65" fill="none" stroke="#FCD34D" strokeWidth="0.25" strokeDasharray="1 1" style={{ pathLength }} />
-          <motion.path d="M 52 35 Q 50 50 60 65" fill="none" stroke="#FCD34D" strokeWidth="0.25" strokeDasharray="1 1" style={{ pathLength }} />
-          <motion.path d="M 52 35 Q 65 40 72 48" fill="none" stroke="#FCD34D" strokeWidth="0.25" strokeDasharray="1 1" style={{ pathLength }} />
-          <motion.path d="M 60 65 Q 68 58 72 48" fill="none" stroke="#FCD34D" strokeWidth="0.25" strokeDasharray="1 1" style={{ pathLength }} />
-        </motion.svg>
-
-        <div className="absolute inset-0 flex items-center justify-center z-20">
-          {mapNodes.map((node, i) => {
-            const x = useTransform(scrollYProgress, [0.25, 0.65], [node.startX, node.endX]);
-            const y = useTransform(scrollYProgress, [0.25, 0.65], [node.startY, node.endY]);
-            const opacity = useTransform(scrollYProgress, [0, 0.15, 0.65], [0.1, 0.3, 1]);
-            const scale = useTransform(scrollYProgress, [0.25, 0.65], [node.type === 'bowl' ? 1.3 : 0.8, 1]);
-            const nodeRotate = useTransform(scrollYProgress, [0.25, 0.65], [node.rotate * 2, node.rotate]);
-
-            return (
-              <motion.div 
-                key={i} 
-                style={{ x, y, opacity, scale, rotate: nodeRotate }} 
-                className="absolute"
-              >
-                <motion.img
-                  src={node.src}
-                  alt="Soto Element"
-                  className={`object-contain drop-shadow-2xl cursor-pointer ${
-                    node.type === 'bowl' ? 'w-16 md:w-28 lg:w-32' : 'w-8 md:w-12 lg:w-16'
-                  }`}
-                  animate={{ y: ["-5%", "5%", "-5%"], rotate: [node.rotate - 3, node.rotate + 3, node.rotate - 3] }}
-                  transition={{ repeat: Infinity, duration: 4 + node.delay * 2, ease: "easeInOut", delay: node.delay }}
-                  whileHover={{ 
-                    scale: 1.15, 
-                    filter: "drop-shadow(0px 0px 15px rgba(252,211,77,0.6))",
-                    transition: { duration: 0.2 } 
-                  }}
-                />
-              </motion.div>
-            );
-          })}
+        {/* Afterglow — sisa elemen Unity */}
+        <div className="absolute inset-0 pointer-events-none z-[5]">
+          {AFTERGLOW.map((item, i) => (
+            <motion.img key={`ag-${i}`} src={item.src} alt="" aria-hidden="true"
+              className="absolute object-contain"
+              style={{
+                width: "clamp(20px, 3.5vw, 44px)",
+                left: "50%", top: "50%",
+                x: item.x, y: item.y,
+                opacity: item.op,
+                scale: item.scale,
+                rotate: item.rotate,
+              }}
+              animate={{
+                y: [item.y, `calc(${item.y} - 14px)`, item.y],
+                rotate: [item.rotate, item.rotate + 10, item.rotate],
+              }}
+              transition={{ repeat: Infinity, duration: item.spd, ease: "easeInOut" }}
+            />
+          ))}
         </div>
 
-        <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none text-center px-6 md:px-12">
-          
-          <motion.div className="absolute flex flex-col items-center" style={{ opacity: t1Opacity, y: t1Y, filter: t1Blur }}>
-            <motion.img
-              src={asap}
-              alt="steam"
-              className="absolute -top-40 md:-top-56 w-[250%] max-w-[800px] object-contain mix-blend-screen pointer-events-none"
+        {/* ── Map Nodes ── */}
+        <div className="absolute inset-0 flex items-center justify-center z-[30]">
+          {PHASE1_NODES.map((node, i) => (
+            <MapNode key={`p1-${i}`} node={node} scrollYProgress={scrollYProgress} inRange={[0.0, 0.15]} outRange={[0.25, 0.33]} />
+          ))}
+          {PHASE2_NODES.map((node, i) => (
+            <MapNode key={`p2-${i}`} node={node} scrollYProgress={scrollYProgress} inRange={[0.33, 0.45]} outRange={[0.60, 0.65]} />
+          ))}
+          {PHASE3_NODES.map((node, i) => (
+            <MapNode key={`p3-${i}`} node={node} scrollYProgress={scrollYProgress} inRange={[0.65, 0.75]} outRange={[0.95, 1.0]} />
+          ))}
+        </div>
+
+        {/* ════════════════════════════════════════════════════════════════════
+            TEKS — z-40
+            ════════════════════════════════════════════════════════════════ */}
+        <div className="absolute inset-0 flex items-center justify-center z-[40] pointer-events-none text-center px-4 md:px-10">
+
+          {/* ── Phase 1: "Soto is more than a dish." ── */}
+          <motion.div
+            className="absolute flex flex-col items-center gap-2"
+            style={{ opacity: t1Opacity, y: t1Y, scale: t1Scale, filter: t1Blur }}
+          >
+            {/* Steam */}
+            <motion.img src={asap} alt="" aria-hidden="true"
+              className="absolute -top-36 md:-top-52 w-[260%] max-w-[700px] object-contain mix-blend-screen pointer-events-none"
               style={{ opacity: steamOpacity, y: steamY, scale: steamScale }}
             />
-            <h2 className="text-[#FFF5D1] font-inria font-bold italic text-3xl md:text-5xl lg:text-6xl tracking-wide leading-relaxed drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
-              {storyContent.meaning.lines[0]}
-            </h2>
+
+            {/* Eyebrow label */}
+            <motion.span
+              className="text-[11px] md:text-xs tracking-[0.38em] uppercase mb-1 italic opacity-70"
+              style={{ color: "#f63b1c", fontFamily: "var(--font-body, 'InriaSerif', serif)", fontWeight: "bold" }}
+              animate={{ opacity: [0.55, 0.80, 0.55] }}
+              transition={{ repeat: Infinity, duration: 3.5 }}
+            >
+              nusantara dalam semangkuk
+            </motion.span>
+
+            {/* Teks wavy utama */}
+            <WavyText
+              text={storyContent.meaning.lines[0] ?? "Soto is more than a dish."}
+              className="text-[#1A0B04] font-bold italic text-2xl md:text-4xl lg:text-5xl tracking-wide leading-relaxed"
+              style={{ fontFamily: "var(--font-body, 'InriaSerif', serif)" }}
+            />
+
+            {/* Garis bawah */}
+            <svg viewBox="0 0 300 18" className="w-48 md:w-72 mt-1 opacity-45" fill="none">
+              <path d="M10 9 Q75 2 150 9 Q225 16 290 9" stroke="#FF9721" strokeWidth="1.5" strokeLinecap="round"/>
+              <circle cx="10"  cy="9" r="2.5" fill="#FF9721" opacity="0.7"/>
+              <circle cx="290" cy="9" r="2.5" fill="#FF9721" opacity="0.7"/>
+              <circle cx="150" cy="9" r="2"   fill="#FFF073" opacity="0.9"/>
+            </svg>
           </motion.div>
 
-          <motion.h2
-            className="absolute text-[#FCD34D] font-beachfly text-4xl md:text-6xl lg:text-7xl tracking-widest drop-shadow-[0_8px_16px_rgba(0,0,0,0.9)]"
-            style={{ opacity: t2Opacity, scale: t2Scale, y: t2Y }}
+          {/* ── Phase 2: "It is a reflection of a nation." ── */}
+          <motion.div
+            className="absolute flex flex-col items-center gap-3"
+            style={{ opacity: t2Opacity, scale: t2Scale, y: t2Y, filter: t2Blur }}
           >
-            {storyContent.meaning.lines[1]}
-          </motion.h2>
+            <motion.h2
+              className="text-[#FFF073] font-bold text-3xl md:text-5xl lg:text-6xl tracking-widest leading-tight"
+              style={{
+                fontFamily: "var(--font-title, 'Beachfly', serif)",
+                textShadow: "0 0 40px rgba(255,240,115,0.30), 0 6px 20px rgba(0,0,0,0.8)",
+              }}
+            >
+              {storyContent.meaning.lines[1] ?? "It is a reflection of a nation."}
+            </motion.h2>
 
-          <div className="absolute flex flex-col items-center gap-3 md:gap-6 mt-40 md:mt-56">
-            <motion.h2
-              className="text-[#FFF5D1] font-inria font-bold italic text-3xl md:text-5xl lg:text-6xl tracking-wider drop-shadow-[0_5px_15px_rgba(0,0,0,0.6)]"
-              style={{ opacity: t3aOpacity, y: t3aY }}
-            >
-              {text3Part1}
-            </motion.h2>
-            <motion.h2
-              className="text-[#FCD34D] font-beachfly text-4xl md:text-6xl lg:text-7xl xl:text-8xl tracking-[0.1em] drop-shadow-[0_0_25px_rgba(252,211,77,0.5)]"
-              style={{ opacity: t3bOpacity, scale: t3bScale }}
-            >
-              {text3Part2}
-            </motion.h2>
-          </div>
+            <div className="flex items-center gap-4 opacity-45 mt-1">
+              <svg viewBox="0 0 24 24" className="w-4 md:w-5 fill-[#FF9721]">
+                <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
+              </svg>
+              <svg viewBox="0 0 40 6" className="w-24 md:w-32" fill="none">
+                <path d="M4 3 Q20 0.5 36 3" stroke="#FF9721" strokeWidth="1" strokeLinecap="round"/>
+              </svg>
+              <svg viewBox="0 0 24 24" className="w-4 md:w-5 fill-[#FF9721]">
+                <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
+              </svg>
+            </div>
+          </motion.div>
 
         </div>
+        {/* ── akhir layer teks (P1 + P2) ── */}
+
+        {/* ── Phase 3: layer TERPISAH z-[50] ── */}
+        <div className="absolute inset-0 flex items-center justify-center z-[50] pointer-events-none text-center px-4 md:px-10">
+          <div className="flex flex-col items-center gap-3 md:gap-5">
+
+            {/* "Diverse…" */}
+            <motion.h2
+              className="text-[#FFF5D1] font-bold italic text-2xl md:text-4xl lg:text-5xl tracking-wider"
+              style={{
+                opacity: t3aOpacity, y: t3aY, filter: t3aBlur,
+                fontFamily: "var(--font-body, 'InriaSerif', serif)",
+                textShadow: "0 4px 24px rgba(0,0,0,0.9), 0 2px 8px rgba(0,0,0,1)",
+              }}
+            >
+              Diverse…
+            </motion.h2>
+
+            {/* "yet" */}
+            <motion.span
+              className="text-[#FF9721] italic text-xl md:text-3xl lg:text-4xl"
+              style={{
+                opacity: t3yetOpacity, scale: t3yetScale, filter: t3yetBlur,
+                fontFamily: "var(--font-body, 'InriaSerif', serif)",
+                textShadow: "0 0 24px rgba(255,151,33,0.55), 0 2px 12px rgba(0,0,0,1)",
+              }}
+            >
+              yet
+            </motion.span>
+
+            {/* "deeply connected." */}
+            <motion.div className="flex flex-col items-center gap-1">
+              <motion.h2
+                className="font-bold text-3xl md:text-5xl lg:text-6xl xl:text-7xl tracking-[0.08em]"
+                style={{
+                  opacity: t3bOpacity, scale: t3bScale, filter: t3bBlur,
+                  fontFamily: "var(--font-title, 'Beachfly', serif)",
+                  color: "var(--color-brand-yellow, #fff073)",
+                  textShadow: "0 0 32px rgba(255,240,115,0.5), 0 0 64px rgba(255,151,33,0.28), 0 8px 32px rgba(0,0,0,1)",
+                }}
+              >
+                deeply connected.
+              </motion.h2>
+
+              <motion.svg
+                viewBox="0 0 400 14" className="w-56 md:w-96" fill="none"
+                style={{ opacity: t3bOpacity }}
+                animate={{ opacity: [0.35, 0.80, 0.35] }}
+                transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut" }}
+              >
+                <path d="M10 7 Q100 2 200 7 Q300 12 390 7"   stroke="#FFF073" strokeWidth="1.2" strokeLinecap="round"/>
+                <path d="M30 10 Q100 6 200 10 Q300 14 370 10" stroke="#FF9721" strokeWidth="0.6" strokeLinecap="round" opacity="0.5"/>
+              </motion.svg>
+            </motion.div>
+          </div>
+        </div>
+
       </div>
-    </section>
+    </motion.section>
   );
 }
