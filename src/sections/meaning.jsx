@@ -205,11 +205,12 @@ export default function MeaningSection() {
   const t3bBlur      = useTransform(scrollYProgress, [0.82, 0.92], ["blur(14px)", "blur(0px)"]);
 
   return (
-    <motion.section
-      ref={containerRef}
-      className="relative h-[700vh]"
-      style={{ fontFamily: "var(--font-body, 'InriaSerif', serif)" }}
-    >
+    <section 
+     id="meaning"
+  data-section="meaning"
+  ref={containerRef} className="relative h-[450vh] bg-[#2C1309] font-inria">
+      
+      {/* Sticky Viewport Container */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
 
         {/* Background SVGs */}
@@ -221,9 +222,11 @@ export default function MeaningSection() {
           className="absolute inset-0 w-full h-full object-cover pointer-events-none z-[-1]"
           style={{ opacity: bg4Op }}
         />
-        <motion.img src={bgDecor5} alt="" aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none z-[-1]"
-          style={{ opacity: bg5Op }}
+        <motion.img
+          src={bgDecor2}
+          alt="Background Decor 2"
+          className="absolute w-[120vw] md:w-[80vw] opacity-10 object-contain mix-blend-color-dodge pointer-events-none"
+          style={{ y: bg2Y, rotate: bg2Rotate, right: "-10vw", bottom: "10vh" }}
         />
 
         {/* Afterglow — sisa elemen Unity */}

@@ -371,8 +371,13 @@ export default function Unity() {
   };
 
   return (
-    <div ref={spacerRef} style={S.outer}>
-      <div ref={panelRef} style={S.panel}>
+    <section
+    id="unity"
+    data-section="unity"
+    ref={spacerRef}
+    style={S.outer}
+  >
+    <div ref={panelRef} style={S.panel}>
 
         {/* ── Texture Overlays ─────────────────────────────────────── */}
         <img src={retroPattern} alt="" style={{
@@ -589,6 +594,6 @@ export default function Unity() {
 
         </div>
       </div>
-    </div>
+    </section>
   );
 }
