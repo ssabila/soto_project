@@ -811,72 +811,81 @@ const OpeningSection = () => {
       </div>
 
       {/* TV SEQUENCE */}
-      <div className="absolute inset-0 z-40 overflow-hidden pointer-events-none">
-        <div
-          className={`
-            tv-sequence
-            absolute
-            left-0
-            flex
-            -translate-y-1/2
-            items-center
-            will-change-transform
+<div className="absolute inset-0 z-40 overflow-hidden pointer-events-none">
+  {/* CENTER ANCHOR*/}
+  <div
+    className={`
+      absolute
+      left-0
+      w-full
+      ${SCENE_ANCHOR_Y}
+    `}
+    style={{
+      transform: "translateY(calc(-50% + clamp(0px, 1.5vh, 14px)))",
+    }}
+  >
+    
+    <div
+      className={`
+        tv-sequence
+        flex
+        items-center
+        will-change-transform
 
-            ${SCENE_ANCHOR_Y}
+        gap-[clamp(2rem,6vw,5rem)]
+        px-[clamp(2rem,8vw,9rem)]
 
-            gap-[clamp(2rem,6vw,5rem)]
-            px-[clamp(2rem,8vw,9rem)]
+        md:gap-[clamp(3rem,5vw,5.5rem)]
+        md:px-[clamp(4rem,8vw,9rem)]
 
-            md:gap-[clamp(3rem,5vw,5.5rem)]
-            md:px-[clamp(4rem,8vw,9rem)]
+        xl:gap-[clamp(4rem,6vw,7rem)]
+        xl:px-[clamp(6rem,9vw,10rem)]
+      `}
+    >
+      {tvItems.map((item, index) => (
+        <div key={index} className="flex shrink-0 flex-col items-center">
+          <div
+            className="
+              mb-[clamp(-1rem,-1.5vw,-0.6rem)]
+              text-center
+              font-title
+              font-black
+              leading-none
+              tracking-[-0.025em]
+              text-[#2a1f0e]
+              [-webkit-text-stroke:0.35px_currentColor]
+              [text-shadow:1px_1px_0_rgba(42,31,14,0.16)]
 
-            xl:gap-[clamp(4rem,6vw,7rem)]
-            xl:px-[clamp(6rem,9vw,10rem)]
-          `}
-        >
-          {tvItems.map((item, index) => (
-            <div key={index} className="flex shrink-0 flex-col items-center">
-              <div
-                className="
-                  mb-[clamp(-1rem,-1.5vw,-0.6rem)]
-                  text-center
-                  font-title
-                  font-black
-                  leading-none
-                  tracking-[-0.025em]
-                  text-[#2a1f0e]
-                  [-webkit-text-stroke:0.35px_currentColor]
-                  [text-shadow:1px_1px_0_rgba(42,31,14,0.16)]
+              text-[clamp(2rem,9vw,3.5rem)]
+              sm:text-[clamp(2.4rem,8vw,4rem)]
+              md:text-[clamp(3rem,5.3vw,4.6rem)]
+              lg:text-[clamp(3.4rem,5.7vw,5.2rem)]
+              xl:text-[clamp(3.8rem,5.5vw,5.5rem)]
+            "
+          >
+            <span>{item.first}</span>
+            <br />
+            <span className="text-[#ff9721]">{item.second}</span>
+          </div>
 
-                  text-[clamp(2rem,9vw,3.5rem)]
-                  sm:text-[clamp(2.4rem,8vw,4rem)]
-                  md:text-[clamp(3rem,5.3vw,4.6rem)]
-                  lg:text-[clamp(3.4rem,5.7vw,5.2rem)]
-                  xl:text-[clamp(3.8rem,5.5vw,5.5rem)]
-                "
-              >
-                <span>{item.first}</span>
-                <br />
-                <span className="text-[#ff9721]">{item.second}</span>
-              </div>
+          <img
+            src={item.img}
+            alt=""
+            className="
+              object-contain
 
-              <img
-                src={item.img}
-                alt=""
-                className="
-                  object-contain
-
-                  w-[clamp(230px,72vw,360px)]
-                  sm:w-[clamp(270px,62vw,400px)]
-                  md:w-[clamp(330px,34vw,430px)]
-                  lg:w-[clamp(390px,35vw,480px)]
-                  xl:w-[clamp(420px,34vw,520px)]
-                "
-              />
-            </div>
-          ))}
+              w-[clamp(230px,72vw,360px)]
+              sm:w-[clamp(270px,62vw,400px)]
+              md:w-[clamp(330px,34vw,430px)]
+              lg:w-[clamp(390px,35vw,480px)]
+              xl:w-[clamp(420px,34vw,520px)]
+            "
+          />
         </div>
-      </div>
+      ))}
+    </div>
+  </div>
+</div>
 
       {/* ONE DISH SECTION */}
       <div className="one-dish-section pointer-events-none absolute inset-0 z-60">
