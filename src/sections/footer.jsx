@@ -214,7 +214,7 @@ export default function FooterSection() {
                 drop-shadow-[0_2px_0_rgba(250,253,218,0.25)]
               "
             >
-              Every bowl tells a story.
+              Soto Across the Islands
             </p>
 
             <p

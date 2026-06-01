@@ -74,20 +74,8 @@ const ScreenDebugger = () => {
   );
 };
 
-
-const COLOR_INK = "#2a1f0e";
-const COLOR_RUST = "#c2380f";
-const COLOR_ORANGE = "#ff9721";
-
 const SCENE_ANCHOR_Y = `
-  top-[38%]
-  min-[560px]:top-[42%]
-  min-[620px]:top-[46%]
-  sm:top-[45%]
-  md:top-[50%]
-  lg:top-[48%]
-  xl:top-[20%]
-  2xl:top-[50%]
+  top-1/2
 `;
 
 const STILL_ANCHOR_Y = `
@@ -108,13 +96,22 @@ const ONE_DISH_ANCHOR_Y = `
   2xl:top-[25%]
 `;
 
-const SOTO_ANCHOR_Y = `
-  top-[40%]
-  sm:top-[40%]
-  md:top-[40%]
-  lg:top-[40%]
-  xl:top-[40%]
-  2xl:top-[40%]
+const SOTO_TEXT_ANCHOR_Y = `
+  top-[27%]
+  sm:top-[31%]
+  md:top-[27%]
+  lg:top-[31%]
+  xl:top-[27%]
+  2xl:top-[27%]
+`;
+
+const LID_ANCHOR_Y = `
+  top-[57%]
+  sm:top-[57%]
+  md:top-[57%]
+  lg:top-[56%]
+  xl:top-[56%]
+  2xl:top-[56%]
 `;
 
 const floatingAssets = [
@@ -143,7 +140,6 @@ const floatingAssets = [
       xl:w-[clamp(340px,28vw,500px)]
     `,
   },
-
   {
     id: "cabe",
     src: cabeImg,
@@ -174,7 +170,6 @@ const floatingAssets = [
       2xl:w-[clamp(520px,34vw,720px)]
     `,
   },
-
   {
     id: "bawang",
     src: bawangImg,
@@ -205,7 +200,6 @@ const floatingAssets = [
       2xl:w-[clamp(300px,23vw,440px)]
     `,
   },
-
   {
     id: "garlic",
     src: garlicImg,
@@ -364,7 +358,6 @@ const OpeningSection = () => {
         },
       });
 
-      //globe masuk
       tl.to(
         "#globe-1",
         {
@@ -378,7 +371,6 @@ const OpeningSection = () => {
         0
       );
 
-      //globe keluar
       tl.to("#globe-1", {
         y: -850,
         opacity: 0,
@@ -388,7 +380,6 @@ const OpeningSection = () => {
         overwrite: "auto",
       });
 
-      //bahan masuk
       tl.to(
         ".ingredient",
         {
@@ -403,7 +394,6 @@ const OpeningSection = () => {
         "-=1.8"
       );
 
-      // teks masuk
       tl.to(
         ".line-3",
         {
@@ -426,7 +416,6 @@ const OpeningSection = () => {
         "-=0.5"
       );
 
-      // reks dan bahan keluar
       tl.to(
         [".ingredient", ".text-group"],
         {
@@ -440,7 +429,6 @@ const OpeningSection = () => {
         "+=0.4"
       );
 
-      // tv masuk
       tl.to(
         ".tv-sequence",
         {
@@ -452,7 +440,6 @@ const OpeningSection = () => {
         "-=2"
       );
 
-      // tv hold
       tl.to(".tv-sequence", {
         x: "8vw",
         duration: 0.8,
@@ -460,7 +447,6 @@ const OpeningSection = () => {
         overwrite: "auto",
       });
 
-      // tv keluar
       tl.to(
         ".tv-sequence",
         {
@@ -473,7 +459,6 @@ const OpeningSection = () => {
         ">"
       );
 
-      // one dish
       tl.to(
         ".one-dish-section",
         {
@@ -484,7 +469,6 @@ const OpeningSection = () => {
         "-=0.65"
       );
 
-      // still
       tl.to(
         ".text-still",
         {
@@ -498,7 +482,6 @@ const OpeningSection = () => {
         "-=1"
       );
 
-      // still keluar
       tl.to(
         ".text-still",
         {
@@ -511,7 +494,6 @@ const OpeningSection = () => {
         "+=0.45"
       );
 
-      // teks masuk
       tl.to(
         [".text-one-dish", ".text-continues"],
         {
@@ -525,7 +507,6 @@ const OpeningSection = () => {
         "-=0.1"
       );
 
-      // asset masuk
       tl.to(
         ".lid-1",
         {
@@ -536,10 +517,9 @@ const OpeningSection = () => {
           ease: "back.out(1.6)",
           overwrite: "auto",
         },
-        "+=0.6"
+        "+=0.85"
       );
 
-      // soto masuk
       tl.to(
         ".lid-soto",
         {
@@ -553,7 +533,6 @@ const OpeningSection = () => {
         "+=0.35"
       );
 
-      // asset keluar
       tl.to(
         ".lid-1",
         {
@@ -579,7 +558,6 @@ const OpeningSection = () => {
         "<"
       );
 
-      // teks soto final masuk
       tl.to(
         ".text-soto-final",
         {
@@ -592,7 +570,6 @@ const OpeningSection = () => {
         ">-0.2"
       );
 
-      // soto pop up
       tl.to(
         ".lid-soto",
         {
@@ -604,7 +581,6 @@ const OpeningSection = () => {
         "<0.15"
       );
 
-      
       let resizeTimer;
       let rafId;
 
@@ -659,19 +635,18 @@ const OpeningSection = () => {
 
   return (
     <section
-  id="opening"
-  data-section="opening"
-  ref={container}
-  className="
-    relative
-    h-screen
-    w-full
-    overflow-hidden
-    bg-brand-cream
-  "
->
-      
-
+      id="opening"
+      data-section="opening"
+      ref={container}
+      className="
+        relative
+        h-screen
+        min-h-[100svh]
+        w-full
+        overflow-hidden
+        bg-brand-cream
+      "
+    >
       {/* BACKGROUND */}
       <img
         src={bgImg}
@@ -692,12 +667,15 @@ const OpeningSection = () => {
           absolute
           z-30
 
-          left-[clamp(1rem,5vw,4rem)]
+          left-[clamp(0.75rem,4vw,4rem)]
+          right-[clamp(0.75rem,4vw,4rem)]
           top-[clamp(5rem,17vh,10rem)]
-          w-[calc(100%-2rem)]
+          w-auto
 
           md:left-[clamp(2rem,5vw,5rem)]
+          md:right-auto
           md:top-[clamp(8rem,22vh,13rem)]
+          md:w-[calc(100%-4rem)]
 
           lg:left-[clamp(3rem,5.5vw,6rem)]
           lg:top-[clamp(8rem,20vh,13rem)]
@@ -716,7 +694,7 @@ const OpeningSection = () => {
             [-webkit-text-stroke:0.45px_currentColor]
             [text-shadow:1px_1px_0_rgba(42,31,14,0.18)]
 
-            text-[clamp(3.6rem,10vw,7rem)]
+            text-[clamp(2.45rem,13vw,3.8rem)]
             sm:text-[clamp(4rem,9vw,7.5rem)]
             md:text-[clamp(4.2rem,7.5vw,8rem)]
             lg:text-[clamp(4.4rem,7vw,8.5rem)]
@@ -725,8 +703,7 @@ const OpeningSection = () => {
         >
           <div className="overflow-hidden">
             <div className="type-line line-1 whitespace-nowrap">
-              Across{" "}
-              <span className="text-[#25a734] italic">thousands</span>
+              Across <span className="text-[#25a734] italic">thousands</span>
             </div>
           </div>
 
@@ -738,8 +715,7 @@ const OpeningSection = () => {
 
           <div className="overflow-hidden">
             <div className="type-line line-3 whitespace-nowrap">
-              flavors are{" "}
-              <span className="text-[#c2380f] italic">never</span>
+              flavors are <span className="text-[#c2380f] italic">never</span>
             </div>
           </div>
 
@@ -761,7 +737,6 @@ const OpeningSection = () => {
             w-[min(100vw,1600px)]
           "
         >
-          {/* GLOBE */}
           <img
             id="globe-1"
             src={globeImg}
@@ -811,81 +786,79 @@ const OpeningSection = () => {
       </div>
 
       {/* TV SEQUENCE */}
-<div className="absolute inset-0 z-40 overflow-hidden pointer-events-none">
-  {/* CENTER ANCHOR*/}
-  <div
-    className={`
-      absolute
-      left-0
-      w-full
-      ${SCENE_ANCHOR_Y}
-    `}
-    style={{
-      transform: "translateY(calc(-50% + clamp(0px, 1.5vh, 14px)))",
-    }}
-  >
-    
-    <div
-      className={`
-        tv-sequence
-        flex
-        items-center
-        will-change-transform
-
-        gap-[clamp(2rem,6vw,5rem)]
-        px-[clamp(2rem,8vw,9rem)]
-
-        md:gap-[clamp(3rem,5vw,5.5rem)]
-        md:px-[clamp(4rem,8vw,9rem)]
-
-        xl:gap-[clamp(4rem,6vw,7rem)]
-        xl:px-[clamp(6rem,9vw,10rem)]
-      `}
-    >
-      {tvItems.map((item, index) => (
-        <div key={index} className="flex shrink-0 flex-col items-center">
+      <div className="absolute inset-0 z-40 overflow-hidden pointer-events-none">
+        <div
+          className={`
+            absolute
+            left-0
+            w-full
+            ${SCENE_ANCHOR_Y}
+          `}
+          style={{
+            transform: "translateY(calc(-50% + clamp(0px, 1.5vh, 14px)))",
+          }}
+        >
           <div
             className="
-              mb-[clamp(-1rem,-1.5vw,-0.6rem)]
-              text-center
-              font-title
-              font-black
-              leading-none
-              tracking-[-0.025em]
-              text-[#2a1f0e]
-              [-webkit-text-stroke:0.35px_currentColor]
-              [text-shadow:1px_1px_0_rgba(42,31,14,0.16)]
+              tv-sequence
+              flex
+              items-center
+              will-change-transform
 
-              text-[clamp(2rem,9vw,3.5rem)]
-              sm:text-[clamp(2.4rem,8vw,4rem)]
-              md:text-[clamp(3rem,5.3vw,4.6rem)]
-              lg:text-[clamp(3.4rem,5.7vw,5.2rem)]
-              xl:text-[clamp(3.8rem,5.5vw,5.5rem)]
+              gap-[clamp(2rem,6vw,5rem)]
+              px-[clamp(2rem,8vw,9rem)]
+
+              md:gap-[clamp(3rem,5vw,5.5rem)]
+              md:px-[clamp(4rem,8vw,9rem)]
+
+              xl:gap-[clamp(4rem,6vw,7rem)]
+              xl:px-[clamp(6rem,9vw,10rem)]
             "
           >
-            <span>{item.first}</span>
-            <br />
-            <span className="text-[#ff9721]">{item.second}</span>
+            {tvItems.map((item, index) => (
+              <div key={index} className="flex shrink-0 flex-col items-center">
+                <div
+                  className="
+                    mb-[clamp(-1rem,-1.5vw,-0.6rem)]
+                    text-center
+                    font-title
+                    font-black
+                    leading-none
+                    tracking-[-0.025em]
+                    text-[#2a1f0e]
+                    [-webkit-text-stroke:0.35px_currentColor]
+                    [text-shadow:1px_1px_0_rgba(42,31,14,0.16)]
+
+                    text-[clamp(2rem,9vw,3.5rem)]
+                    sm:text-[clamp(2.4rem,8vw,4rem)]
+                    md:text-[clamp(3rem,5.3vw,4.6rem)]
+                    lg:text-[clamp(3.4rem,5.7vw,5.2rem)]
+                    xl:text-[clamp(3.8rem,5.5vw,5.5rem)]
+                  "
+                >
+                  <span>{item.first}</span>
+                  <br />
+                  <span className="text-[#ff9721]">{item.second}</span>
+                </div>
+
+                <img
+                  src={item.img}
+                  alt=""
+                  className="
+                    object-contain
+
+                    w-[clamp(230px,72vw,360px)]
+                    sm:w-[clamp(270px,62vw,400px)]
+                    md:w-[clamp(330px,34vw,430px)]
+                    lg:w-[clamp(390px,35vw,480px)]
+                    xl:w-[clamp(420px,34vw,520px)]
+                  "
+                />
+              </div>
+            ))}
           </div>
-
-          <img
-            src={item.img}
-            alt=""
-            className="
-              object-contain
-
-              w-[clamp(230px,72vw,360px)]
-              sm:w-[clamp(270px,62vw,400px)]
-              md:w-[clamp(330px,34vw,430px)]
-              lg:w-[clamp(390px,35vw,480px)]
-              xl:w-[clamp(420px,34vw,520px)]
-            "
-          />
         </div>
-      ))}
-    </div>
-  </div>
-</div>
+      </div>
 
       {/* ONE DISH SECTION */}
       <div className="one-dish-section pointer-events-none absolute inset-0 z-60">
@@ -960,7 +933,6 @@ const OpeningSection = () => {
               tracking-[-0.025em]
               text-[#c2380f]
               italic
-              
               [-webkit-text-stroke:0.45px_currentColor]
 
               text-[clamp(3rem,14vw,5.5rem)]
@@ -992,7 +964,7 @@ const OpeningSection = () => {
           </div>
         </div>
 
-        {/* FINAL SOTO GROUP */}
+        {/* FINAL SOTO TEXT */}
         <div
           className={`
             absolute
@@ -1007,7 +979,7 @@ const OpeningSection = () => {
             justify-center
             px-4
 
-            ${SOTO_ANCHOR_Y}
+            ${SOTO_TEXT_ANCHOR_Y}
           `}
         >
           <div
@@ -1031,13 +1003,29 @@ const OpeningSection = () => {
           >
             Soto
           </div>
+        </div>
 
+        {/* FINAL SOTO ASSET */}
+        <div
+          className={`
+            absolute
+            left-1/2
+            z-[71]
+            flex
+            w-full
+            -translate-x-1/2
+            -translate-y-1/2
+            items-center
+            justify-center
+            px-4
+
+            ${LID_ANCHOR_Y}
+          `}
+        >
           <div
             className="
               soto-reveal-stage
               relative
-              mt-[-0.8rem]
-              -translate-y-30
               flex
               items-center
               justify-center
@@ -1045,62 +1033,71 @@ const OpeningSection = () => {
               h-[clamp(190px,36vh,400px)]
               w-[clamp(320px,82vw,620px)]
 
-              sm:mt-[-1rem]
               sm:h-[clamp(210px,36vh,430px)]
               sm:w-[clamp(360px,76vw,700px)]
 
-              md:mt-[-1.4rem]
               md:h-[clamp(260px,40vh,480px)]
               md:w-[clamp(460px,62vw,780px)]
 
-              lg:mt-[-1.8rem]
               lg:h-[clamp(300px,42vh,520px)]
               lg:w-[clamp(560px,58vw,840px)]
 
-              xl:mt-[-2.2rem]
               xl:h-[clamp(320px,42vh,540px)]
               xl:w-[clamp(640px,55vw,900px)]
             "
           >
-            <img
-              src={servinglidSoto}
-              alt=""
+            <div
               className="
-                lid-soto
+                lid-soto-wrap
                 absolute
                 left-1/2
                 top-1/2
-                xl:top-[10%]
-                2xl:top-[10%]
                 z-[65]
                 w-full
                 -translate-x-1/2
                 -translate-y-1/2
-                object-contain
               "
-            />
+            >
+              <img
+                src={servinglidSoto}
+                alt=""
+                className="
+                  lid-soto
+                  block
+                  w-full
+                  object-contain
+                "
+              />
+            </div>
 
-            <img
-              src={servinglid1}
-              alt=""
+            <div
               className="
-                lid-1
+                lid-1-wrap
                 absolute
                 left-1/2
                 top-1/2
-                xl:top-[20%]
-                2xl:top-[20%]
-                2xl:right-[60%]
                 z-[66]
                 w-[95%]
                 -translate-x-[53%]
                 -translate-y-1/2
-                object-contain
               "
-            />
+            >
+              <img
+                src={servinglid1}
+                alt=""
+                className="
+                  lid-1
+                  block
+                  w-full
+                  object-contain
+                "
+              />
+            </div>
           </div>
         </div>
       </div>
+
+     
     </section>
   );
 };
