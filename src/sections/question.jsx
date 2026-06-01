@@ -80,7 +80,6 @@ export default function QuestionSection() {
   const scSotoWordRef = useRef(null)
   const scSubRef      = useRef(null)
 
-  const pipRefs      = useRef([null, null, null, null])
   const scrollCueRef = useRef(null)
   const currentScene = useRef(0)
 
@@ -101,14 +100,6 @@ export default function QuestionSection() {
         gsap.to(el, { x: `+=${amp}`, y: `+=${amp * 0.5}`, rotation: `+=${amp * 0.4}`, duration: spd, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: Math.random() * 2 })
       }
 
-      function setPip(i) {
-        pipRefs.current.forEach((p, j) => {
-          if (!p) return
-          p.style.opacity    = j === i ? '0.9'  : '0.22'
-          p.style.transform  = j === i ? 'scale(1.6)' : 'scale(1)'
-          p.style.background = j === i ? '#c2380f' : '#5a4220'
-        })
-      }
 
       /* ══ SCENE A ════════════════════════════════════════════════════ */
       function resetA() {
@@ -438,7 +429,6 @@ export default function QuestionSection() {
       resetA()
       resetB()
       resetC()
-      setPip(0)
       gsap.set(scrollCueRef.current, { opacity: 0 })
       let hasPlayedA = false
 
@@ -472,7 +462,6 @@ export default function QuestionSection() {
           if (target === currentScene.current) return
           const prev = currentScene.current
           currentScene.current = target
-          setPip(target)
           gsap.to(scrollCueRef.current, { opacity: 0, duration: 0.3 })
 
           if (target === 1) {
@@ -516,15 +505,7 @@ export default function QuestionSection() {
   }, [])
 
   return (
-    <>
-      {/* Scroll progress pips */}
-      <div style={S.pips}>
-        {[0, 1, 2, 3].map(i => (
-          <div key={i} ref={el => pipRefs.current[i] = el}
-            style={{ ...S.pip, ...(i === 0 ? S.pipActive : {}) }} />
-        ))}
-      </div>
-
+    <section id="question" data-section="question" className="relative">
       {/* Scroll cue */}
       <div ref={scrollCueRef} style={S.scrollCue} aria-hidden="true">
         <span style={S.scrollTxt}>scroll</span>
@@ -672,7 +653,7 @@ export default function QuestionSection() {
 
         </div>
       </div>
-    </>
+    </section>
   )
 }
 
@@ -728,9 +709,6 @@ const S = {
   divider:    { width: 1, height: 24, marginBottom: 12, background: `linear-gradient(to bottom, transparent, ${Q.gold}, transparent)`, willChange: 'opacity' },
   sotoWord:   { display: 'inline-block', fontFamily: 'Beachfly, Playfair Display, serif', fontWeight: 900, color: Q.orange, fontStyle: 'italic', letterSpacing: '-0.025em', lineHeight: 1.0, willChange: 'transform, opacity' },
 
-  pips:      { position: 'fixed', right: 24, top: '50%', transform: 'translateY(-50%)', display: 'flex', flexDirection: 'column', gap: 10, zIndex: 999 },
-  pip:       { width: 6, height: 6, borderRadius: '50%' },
-  pipActive: { transform: 'scale(1.6)' },
   scrollCue: { position: 'fixed', bottom: 32, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, zIndex: 999, pointerEvents: 'none' },
   scrollTxt: { fontFamily: 'InriaSerif, Lora, serif', fontSize: '0.55rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: Q.rust },
   scrollLine:{ width: 1, height: 24, background: Q.rust },

@@ -196,7 +196,10 @@ export default function JourneySection() {
   // ─── RENDER ───────────────────────────────────────────────────────────────
 
   return (
-    <section ref={sectionRef} style={S.container}>
+    <section
+    id="journey"
+    data-section="journey" 
+    ref={sectionRef} style={S.container}>
       <div ref={bgRef} style={S.bgLayer} />
 
       <div ref={wrapperRef} style={S.wrapper}>

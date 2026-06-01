@@ -85,7 +85,10 @@ export default function MeaningSection() {
   const t3bScale = useTransform(scrollYProgress, [0.75, 0.85], [0.9, 1]);
 
   return (
-    <section ref={containerRef} className="relative h-[450vh] bg-[#2C1309] font-inria">
+    <section 
+     id="meaning"
+  data-section="meaning"
+  ref={containerRef} className="relative h-[450vh] bg-[#2C1309] font-inria">
       
       {/* Sticky Viewport Container */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
@@ -105,7 +108,7 @@ export default function MeaningSection() {
           src={bgDecor2}
           alt="Background Decor 2"
           className="absolute w-[120vw] md:w-[80vw] opacity-10 object-contain mix-blend-color-dodge pointer-events-none"
-          style={{ y: bg2Y, rotate: bg2Rotate, right: "-10vw", bottom: "-10vh" }}
+          style={{ y: bg2Y, rotate: bg2Rotate, right: "-10vw", bottom: "10vh" }}
         />
 
         <motion.div 
