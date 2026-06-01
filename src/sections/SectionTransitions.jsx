@@ -1,46 +1,31 @@
-/**
- * SectionTransitions.jsx  (FIXED)
- *
- * Perbaikan utama:
- * 1. Pakai ScrollTrigger GSAP (bukan IntersectionObserver) agar
- *    bekerja meski section di-pin oleh ScrollTrigger lain.
- * 2. Transisi question→journey pakai "liquid splash" yang
- *    berganti warna dengan gradasi agar lebih mulus.
- * 3. Gradasi lembut setiap transisi warna background.
- */
-
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ═══════════════════════════════════════
-   PALETTE
-═══════════════════════════════════════ */
+/* palet warna */
 const P = {
-  cream:   "#fafdda",
-  brown:   "#2c1309",
-  rust:    "#c2380f",
-  orange:  "#ff9721",
-  yellow:  "#fff073",
-  green:   "#24a733",
-  warmBg:  "#FFF1D6",
+  cream: "#fafdda",
+  brown: "#2c1309",
+  rust: "#c2380f",
+  orange: "#ff9721",
+  yellow: "#fff073",
+  green: "#24a733",
+  warmBg: "#FFF1D6",
   saffron: "#c9880a",
 };
 
-/* ═══════════════════════════════════════
-   OVERLAY FACTORY
-═══════════════════════════════════════ */
+/* overlay*/
 function createOverlay(styles = {}) {
   const el = document.createElement("div");
   Object.assign(el.style, {
-    position:      "fixed",
-    top:           "0",
-    left:          "0",
-    width:         "100vw",
-    height:        "100vh",
-    zIndex:        "99999",
+    position: "fixed",
+    top: "0",
+    left: "0",
+    width: "100vw",
+    height: "100vh",
+    zIndex: "99999",
     pointerEvents: "none",
     ...styles,
   });
@@ -48,59 +33,29 @@ function createOverlay(styles = {}) {
   return el;
 }
 
-/* ═══════════════════════════════════════
-   BACKGROUND GRADIENT TRANSITION
-   Buat transisi warna bg section lebih smooth
-   dengan overlay gradasi yg fade in/out.
-═══════════════════════════════════════ */
-function smoothBgTransition(fromColor, toColor, done) {
-  if (!fromColor || !toColor || fromColor === toColor) {
-    done?.();
-    return;
-  }
-
-  const overlay = createOverlay({
-    background: `linear-gradient(to bottom, ${fromColor} 0%, ${toColor} 100%)`,
-    opacity:    "0",
-  });
-
-  const tl = gsap.timeline({
-    onComplete: () => {
-      overlay.remove();
-      done?.();
-    },
-  });
-
-  tl.to(overlay, { opacity: 1,   duration: 0.4, ease: "power2.inOut" });
-  tl.to(overlay, { opacity: 0,   duration: 0.55, ease: "power2.inOut", delay: 0.08 });
-}
-
-/* ═══════════════════════════════════════
-   HANDLER: STEAM RISE
-   opening → question
-═══════════════════════════════════════ */
+/* steam rise */
 function steamRise({ color, done }) {
   const W = window.innerWidth;
   const H = window.innerHeight;
 
   const puffs = Array.from({ length: 7 }, (_, i) => {
     return createOverlay({
-      width:        `${80 + i * 30}px`,
-      height:       `${120 + i * 40}px`,
+      width: `${80 + i * 30}px`,
+      height: `${120 + i * 40}px`,
       borderRadius: "50% 50% 40% 40%",
-      background:   `radial-gradient(ellipse at 50% 60%, ${color}ee, ${color}00)`,
-      bottom:       "0",
-      top:          "auto",
-      left:         `${(W / 8) * i + W * 0.05}px`,
-      filter:       "blur(18px)",
-      opacity:      "0",
-      transform:    "scaleX(1.4)",
+      background: `radial-gradient(ellipse at 50% 60%, ${color}ee, ${color}00)`,
+      bottom: "0",
+      top: "auto",
+      left: `${(W / 8) * i + W * 0.05}px`,
+      filter: "blur(18px)",
+      opacity: "0",
+      transform: "scaleX(1.4)",
     });
   });
 
   const wipe = createOverlay({
     background: `linear-gradient(to bottom, ${color} 60%, ${P.brown}44 100%)`,
-    transform:  "translateY(100%)",
+    transform: "translateY(100%)",
   });
 
   const tl = gsap.timeline({
@@ -112,69 +67,75 @@ function steamRise({ color, done }) {
   });
 
   tl.to(puffs, {
-    opacity:  0.9,
-    y:        `-${H * 0.6}px`,
+    opacity: 0.9,
+    y: `-${H * 0.6}px`,
     duration: 0.7,
-    stagger:  0.07,
-    ease:     "power1.out",
+    stagger: 0.07,
+    ease: "power1.out",
   });
 
-  tl.to(wipe, {
-    y:        "0%",
-    duration: 0.55,
-    ease:     "power2.inOut",
-  }, "-=0.25");
+  tl.to(
+    wipe,
+    {
+      y: "0%",
+      duration: 0.55,
+      ease: "power2.inOut",
+    },
+    "-=0.25",
+  );
 
   tl.to(wipe, {
-    y:        "-100%",
+    y: "-100%",
     duration: 0.55,
-    ease:     "power2.inOut",
-    delay:    0.12,
+    ease: "power2.inOut",
+    delay: 0.12,
   });
 
   tl.to(puffs, { opacity: 0, duration: 0.3, stagger: 0.05 }, "<");
 }
 
-/* ═══════════════════════════════════════
-   HANDLER: LIQUID SPLASH (question → journey)
-   Air/rempah cair muncul dari tengah, menyebar ke seluruh layar,
-   warna berubah gradasi dari cream ke brown (retro filmstrip).
-═══════════════════════════════════════ */
+/* liquid splash question ke journey */
 function liquidSplash({ done }) {
   const W = window.innerWidth;
   const H = window.innerHeight;
 
-  /* Lingkaran utama yang "meledak" */
   const splashColors = [P.rust, P.orange, P.saffron, P.brown, P.cream];
 
-  const circles = splashColors.map((c, i) => {
+  const circles = splashColors.map((c) => {
     const el = createOverlay({
-      width:         "20px",
-      height:        "20px",
-      borderRadius:  "50%",
-      background:    c,
-      left:          `${W / 2 - 10}px`,
-      top:           `${H / 2 - 10}px`,
-      opacity:       "0",
+      width: "20px",
+      height: "20px",
+      borderRadius: "50%",
+      background: c,
+      left: `${W / 2 - 10}px`,
+      top: `${H / 2 - 10}px`,
+      opacity: "0",
       transformOrigin: "center center",
     });
     return el;
   });
 
   /* Partikel rempah kecil-kecil yang bertebaran */
-  const COLORS_SPLASH = [P.rust, P.orange, P.yellow, P.saffron, "#d05a1f", P.green];
+  const COLORS_SPLASH = [
+    P.rust,
+    P.orange,
+    P.yellow,
+    P.saffron,
+    "#d05a1f",
+    P.green,
+  ];
   const particles = Array.from({ length: 22 }, (_, i) => {
     const angle = (i / 22) * Math.PI * 2;
-    const dist  = 80 + Math.random() * 160;
-    const size  = 5 + Math.random() * 12;
-    const el    = createOverlay({
-      width:        `${size}px`,
-      height:       `${size}px`,
+    const dist = 80 + Math.random() * 160;
+    const size = 5 + Math.random() * 12;
+    const el = createOverlay({
+      width: `${size}px`,
+      height: `${size}px`,
       borderRadius: i % 3 === 0 ? "50%" : `${25 + Math.random() * 30}%`,
-      background:   COLORS_SPLASH[i % COLORS_SPLASH.length],
-      left:         `${W / 2 - size / 2}px`,
-      top:          `${H / 2 - size / 2}px`,
-      opacity:      "0",
+      background: COLORS_SPLASH[i % COLORS_SPLASH.length],
+      left: `${W / 2 - size / 2}px`,
+      top: `${H / 2 - size / 2}px`,
+      opacity: "0",
     });
     return { el, angle, dist };
   });
@@ -182,8 +143,8 @@ function liquidSplash({ done }) {
   /* Full-screen overlay gradasi cream → brown */
   const fullOverlay = createOverlay({
     background: `linear-gradient(160deg, ${P.cream} 0%, ${P.rust} 40%, ${P.brown} 100%)`,
-    opacity:    "0",
-    transform:  "scale(0.02)",
+    opacity: "0",
+    transform: "scale(0.02)",
     borderRadius: "50%",
     transformOrigin: "center center",
   });
@@ -197,86 +158,101 @@ function liquidSplash({ done }) {
     },
   });
 
-  /* 1. Partikel meledak dari tengah */
-  tl.to(particles.map((p) => p.el), {
-    opacity: 1,
-    x: (i) => Math.cos(particles[i].angle) * particles[i].dist * 3.0,
-    y: (i) => Math.sin(particles[i].angle) * particles[i].dist * 2.5,
-    scale:    "random(0.4, 2.2)",
-    rotation: "random(-200, 200)",
-    duration: 0.5,
-    stagger:  0.008,
-    ease:     "expo.out",
-  }, 0);
+  tl.to(
+    particles.map((p) => p.el),
+    {
+      opacity: 1,
+      x: (i) => Math.cos(particles[i].angle) * particles[i].dist * 3.0,
+      y: (i) => Math.sin(particles[i].angle) * particles[i].dist * 2.5,
+      scale: "random(0.4, 2.2)",
+      rotation: "random(-200, 200)",
+      duration: 0.5,
+      stagger: 0.008,
+      ease: "expo.out",
+    },
+    0,
+  );
 
-  /* 2. Lingkaran mekar bergantian dengan stagger kecil */
-  tl.to(circles, {
-    opacity:      1,
-    scale:        (i) => 25 + i * 5,
-    borderRadius: "0%",
-    duration:     0.55,
-    stagger:      0.04,
-    ease:         "power3.inOut",
-  }, 0);
+  tl.to(
+    circles,
+    {
+      opacity: 1,
+      scale: (i) => 25 + i * 5,
+      borderRadius: "0%",
+      duration: 0.55,
+      stagger: 0.04,
+      ease: "power3.inOut",
+    },
+    0,
+  );
 
-  /* 3. Fullscreen gradasi expand */
-  tl.to(fullOverlay, {
-    opacity:      1,
-    scale:        3.5,
-    borderRadius: "0%",
-    duration:     0.48,
-    ease:         "power3.inOut",
-  }, 0.12);
+  tl.to(
+    fullOverlay,
+    {
+      opacity: 1,
+      scale: 3.5,
+      borderRadius: "0%",
+      duration: 0.48,
+      ease: "power3.inOut",
+    },
+    0.12,
+  );
 
-  /* 4. Partikel menghilang */
-  tl.to(particles.map((p) => p.el), {
-    opacity:  0,
-    duration: 0.2,
-    stagger:  0.005,
-  }, 0.38);
+  tl.to(
+    particles.map((p) => p.el),
+    {
+      opacity: 0,
+      duration: 0.2,
+      stagger: 0.005,
+    },
+    0.38,
+  );
 
-  /* 5. Semua circles fade out */
-  tl.to(circles, {
-    opacity:  0,
-    duration: 0.15,
-    stagger:  0.02,
-  }, 0.4);
+  tl.to(
+    circles,
+    {
+      opacity: 0,
+      duration: 0.15,
+      stagger: 0.02,
+    },
+    0.4,
+  );
 
-  /* 6. Fullscreen overlay keluar ke atas dengan wipe smooth */
-  tl.to(fullOverlay, {
-    y:        "-105vh",
-    duration: 0.6,
-    ease:     "power3.inOut",
-    delay:    0.05,
-  }, 0.45);
+  tl.to(
+    fullOverlay,
+    {
+      y: "-105vh",
+      duration: 0.6,
+      ease: "power3.inOut",
+      delay: 0.05,
+    },
+    0.45,
+  );
 }
 
-/* ═══════════════════════════════════════
-   HANDLER: FILMSTRIP PULL (journey → unity)
-   Sekarang lebih smooth + gradasi warna
-═══════════════════════════════════════ */
+/* FILMSTRIP PULL (journey → unity)*/
 function filmstripPull({ color, done }) {
   const W = window.innerWidth;
   const H = window.innerHeight;
 
   /* Canvas filmstrip */
   const canvas = document.createElement("canvas");
-  canvas.width  = W;
+  canvas.width = W;
   canvas.height = H;
-  const ctx     = canvas.getContext("2d");
+  const ctx = canvas.getContext("2d");
 
   /* Background utama — gradasi sepia ke brown */
   const grad = ctx.createLinearGradient(0, 0, W, H);
-  grad.addColorStop(0,   color);
+  grad.addColorStop(0, color);
   grad.addColorStop(0.5, P.saffron + "cc");
-  grad.addColorStop(1,   P.brown);
+  grad.addColorStop(1, P.brown);
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, W, H);
 
   /* Lubang filmstrip atas & bawah */
-  const holeW  = Math.floor(W / 17);
-  const holeH  = 28;
-  const count  = 16;
+  const holeW = Math.floor(W / 17);
+  const holeH = 28;
+  const count = 16;
   for (let i = 0; i < count; i++) {
     const x = Math.floor((i * W) / (count - 1)) - holeW / 2;
     ctx.fillStyle = P.cream + "cc";
@@ -291,7 +267,7 @@ function filmstripPull({ color, done }) {
   /* Garis tengah */
   ctx.setLineDash([14, 10]);
   ctx.strokeStyle = P.orange + "55";
-  ctx.lineWidth   = 1.5;
+  ctx.lineWidth = 1.5;
   ctx.beginPath();
   ctx.moveTo(0, H / 2);
   ctx.lineTo(W, H / 2);
@@ -301,7 +277,7 @@ function filmstripPull({ color, done }) {
   /* Watermark SOTO */
   ctx.save();
   ctx.translate(W / 2, H / 2);
-  ctx.rotate(-6 * Math.PI / 180);
+  ctx.rotate((-6 * Math.PI) / 180);
   ctx.font = `900 ${W * 0.18}px serif`;
   ctx.fillStyle = P.rust + "14";
   ctx.textAlign = "center";
@@ -311,48 +287,56 @@ function filmstripPull({ color, done }) {
 
   const overlay = createOverlay({
     backgroundImage: `url(${canvas.toDataURL()})`,
-    backgroundSize:  "100% 100%",
-    transform:       "translateX(110%)",
+    backgroundSize: "100% 100%",
+    transform: "translateX(110%)",
   });
 
   const tl = gsap.timeline({
-    onComplete: () => { overlay.remove(); done(); },
+    onComplete: () => {
+      overlay.remove();
+      done();
+    },
   });
 
-  tl.to(overlay, { x: "0%",    duration: 0.6, ease: "power3.inOut" });
+  tl.to(overlay, { x: "0%", duration: 0.6, ease: "power3.inOut" });
   tl.to({}, { duration: 0.1 });
   tl.to(overlay, { x: "-110%", duration: 0.6, ease: "power3.inOut" });
 }
 
-/* ═══════════════════════════════════════
-   HANDLER: SPICE SPLASH (unity → meaning)
-   Partikel rempah + gradasi ke warmBg
-═══════════════════════════════════════ */
+/* SPICE SPLASH (unity → meaning)
+ */
 function spiceSplash({ color, done }) {
   const W = window.innerWidth;
   const H = window.innerHeight;
 
   const bg = createOverlay({
-    background:      `radial-gradient(circle at center, ${P.orange} 0%, ${color} 55%, ${P.warmBg} 100%)`,
-    opacity:         "0",
-    transform:       "scale(0.05)",
-    borderRadius:    "50%",
+    background: `radial-gradient(circle at center, ${P.orange} 0%, ${color} 55%, ${P.warmBg} 100%)`,
+    opacity: "0",
+    transform: "scale(0.05)",
+    borderRadius: "50%",
     transformOrigin: "center center",
   });
 
-  const SPICE_COLORS = [P.rust, P.brown, P.yellow, P.green, P.saffron, "#d05a1f"];
+  const SPICE_COLORS = [
+    P.rust,
+    P.brown,
+    P.yellow,
+    P.green,
+    P.saffron,
+    "#d05a1f",
+  ];
   const particles = Array.from({ length: 28 }, (_, i) => {
     const angle = (i / 28) * Math.PI * 2;
-    const dist  = 60 + Math.random() * 140;
-    const size  = 6 + Math.random() * 14;
-    const el    = createOverlay({
-      width:        `${size}px`,
-      height:       `${size}px`,
+    const dist = 60 + Math.random() * 140;
+    const size = 6 + Math.random() * 14;
+    const el = createOverlay({
+      width: `${size}px`,
+      height: `${size}px`,
       borderRadius: i % 3 === 0 ? "50%" : `${20 + Math.random() * 30}%`,
-      background:   SPICE_COLORS[i % SPICE_COLORS.length],
-      left:         `${W / 2 - size / 2}px`,
-      top:          `${H / 2 - size / 2}px`,
-      opacity:      "0",
+      background: SPICE_COLORS[i % SPICE_COLORS.length],
+      left: `${W / 2 - size / 2}px`,
+      top: `${H / 2 - size / 2}px`,
+      opacity: "0",
     });
     return { el, angle, dist };
   });
@@ -365,79 +349,74 @@ function spiceSplash({ color, done }) {
     },
   });
 
-  tl.to(particles.map((p) => p.el), {
-    opacity: 1,
-    x: (i) => Math.cos(particles[i].angle) * particles[i].dist * 2.5,
-    y: (i) => Math.sin(particles[i].angle) * particles[i].dist * 2,
-    scale:    "random(0.5, 2.5)",
-    rotation: "random(-180, 180)",
-    duration: 0.55,
-    stagger:  0.01,
-    ease:     "expo.out",
-  }, 0);
+  tl.to(
+    particles.map((p) => p.el),
+    {
+      opacity: 1,
+      x: (i) => Math.cos(particles[i].angle) * particles[i].dist * 2.5,
+      y: (i) => Math.sin(particles[i].angle) * particles[i].dist * 2,
+      scale: "random(0.5, 2.5)",
+      rotation: "random(-180, 180)",
+      duration: 0.55,
+      stagger: 0.01,
+      ease: "expo.out",
+    },
+    0,
+  );
 
-  tl.to(bg, {
-    opacity:      1,
-    scale:        4,
-    borderRadius: "0%",
-    duration:     0.5,
-    ease:         "power3.inOut",
-  }, 0.1);
+  tl.to(
+    bg,
+    {
+      opacity: 1,
+      scale: 4,
+      borderRadius: "0%",
+      duration: 0.5,
+      ease: "power3.inOut",
+    },
+    0.1,
+  );
 
-  tl.to(particles.map((p) => p.el), {
-    opacity:  0,
-    scale:    0,
-    duration: 0.25,
-    stagger:  0.008,
-  }, 0.45);
+  tl.to(
+    particles.map((p) => p.el),
+    {
+      opacity: 0,
+      scale: 0,
+      duration: 0.25,
+      stagger: 0.008,
+    },
+    0.45,
+  );
 
-  tl.to(bg, {
-    y:        "-110vh",
-    duration: 0.55,
-    ease:     "power3.inOut",
-  }, 0.55);
+  tl.to(
+    bg,
+    {
+      y: "-110vh",
+      duration: 0.55,
+      ease: "power3.inOut",
+    },
+    0.55,
+  );
 }
 
-
-/* ═══════════════════════════════════════
-   HANDLER MAP
-═══════════════════════════════════════ */
+/* map*/
 const HANDLERS = {
-  steamRise:       steamRise,
-  liquidSplash:    liquidSplash,
-  filmstripPull:   filmstripPull,
-  spiceSplash:     spiceSplash,
-  
-  
+  steamRise: steamRise,
+  liquidSplash: liquidSplash,
+  filmstripPull: filmstripPull,
+  spiceSplash: spiceSplash,
 };
 
-/* ═══════════════════════════════════════
-   DEFINISI TRANSISI
+/* 
    from/to = data-section value
-   Untuk pinned sections, kita pakai pendekatan
-   berbeda (lihat setupTransitions di bawah).
-═══════════════════════════════════════ */
+*/
 const TRANSITIONS = [
-  { from: "opening",         to: "question",         type: "steamRise",       color: P.cream      },
-  { from: "question",        to: "journey",           type: "liquidSplash",    color: P.brown      },
-  { from: "journey",         to: "unity",             type: "filmstripPull",   color: P.saffron    },
-  { from: "unity",           to: "meaning",           type: "spiceSplash",     color: P.orange     },
- 
-  ];
+  { from: "opening", to: "question", type: "steamRise", color: P.cream },
+  { from: "question", to: "journey", type: "liquidSplash", color: P.brown },
+  { from: "journey", to: "unity", type: "filmstripPull", color: P.saffron },
+  { from: "unity", to: "meaning", type: "spiceSplash", color: P.orange },
+];
 
-/* ═══════════════════════════════════════
-   SETUP TRANSISI
-   
-   Pendekatan hybrid:
-   1. Untuk transisi ke section NON-pinned: pakai ScrollTrigger
-      dengan trigger di bottom section sebelumnya.
-   2. Untuk transisi ke/dari pinned sections: pakai state tracking
-      via progress scroll.
-   
-   Core insight: section yang di-pin oleh GSAP ScrollTrigger
-   sebenarnya punya "spacer" element yang ditambahkan GSAP.
-   Kita bisa gunakan spacer itu sebagai trigger.
-═══════════════════════════════════════ */
+/* ─── Setup transitions ─── */
 function setupTransitions() {
   let isAnimating = false;
   let lastFiredTransition = null;
@@ -487,30 +466,16 @@ function setupTransitions() {
     const fromEl = getSection(t.from);
     if (!fromEl) return;
 
-    /* 
-     * Trigger saat bagian bawah section "from" hampir meninggalkan viewport.
-     * onLeave = user scroll down melebihi section from.
-     * Ini bekerja bahkan untuk pinned sections karena ScrollTrigger
-     * menghitung berdasarkan scroll progress, bukan viewport position.
-     */
     const trigger = ScrollTrigger.create({
-      trigger:  fromEl,
-      start:    "bottom 80%",  /* saat 80% dari bawah section "from" terlihat */
-      end:      "bottom top",  /* saat section "from" benar-benar keluar */
-      onLeave:  () => fireTransition(`${t.from}→${t.to}`),
+      trigger: fromEl,
+      start: "bottom 80%" /* saat 80% dari bawah section "from" terlihat */,
+      end: "bottom top" /* saat section "from" benar-benar keluar */,
+      onLeave: () => fireTransition(`${t.from}→${t.to}`),
     });
 
     triggers.push(trigger);
   });
 
-  /* ─── Fallback: Pinned sections butuh pendekatan berbeda ─── */
-  /* 
-   * Beberapa section punya internal scrolling (pin=true di gsap).
-   * Untuk section tersebut, kita detect saat pinned section
-   * "selesai" scrollnya, yaitu ketika ScrollTrigger's progress = 1.
-   *
-   * Kita tambahkan trigger tambahan di spacer yang dibuat GSAP.
-   */
   const checkPinnedInterval = setInterval(() => {
     /* Tunggu hingga semua ScrollTrigger (dari section lain) sudah dibuat */
     const allSTs = ScrollTrigger.getAll();
@@ -548,22 +513,20 @@ function setupTransitions() {
   return () => {
     clearInterval(checkPinnedInterval);
     triggers.forEach((t) => {
-      try { t.kill(); } catch (_) {}
+      try {
+        t.kill();
+      } catch (error) {
+        console.warn("Failed to kill ScrollTrigger:", error);
+      }
     });
   };
 }
 
-/* ═══════════════════════════════════════
-   KOMPONEN UTAMA
-═══════════════════════════════════════ */
+/*komponen utama */
 export default function SectionTransitions() {
   const cleanupRef = useRef(null);
 
   useEffect(() => {
-    /*
-     * Delay agar semua section dan ScrollTrigger lain
-     * sudah selesai mount + register.
-     */
     const timer = setTimeout(() => {
       cleanupRef.current = setupTransitions();
     }, 1000);

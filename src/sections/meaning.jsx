@@ -1,60 +1,282 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { storyContent } from "../data/storytext";
 
 // Import Assets
-import sotoBetawi    from "../assets/images/soto-betawi.webp";
-import sotoLamongan  from "../assets/images/soto-lamongan.webp";
-import sotoKudus     from "../assets/images/soto-kudus.webp";
-import sotoPadang    from "../assets/images/soto-padang.webp";
-import sotoBanjar    from "../assets/images/soto-banjar.webp";
-import cotoMakassar  from "../assets/images/coto-makasar.webp";
-import bawangMerah   from "../assets/images/bawang-merah.webp";
-import cabe          from "../assets/images/cabe.webp";
-import bungaRetro    from "../assets/images/bunga-retro.webp";
-import starRetro     from "../assets/images/star.svg";
-import daunJeruk     from "../assets/images/daun-jeruk.webp";
-import asap          from "../assets/images/asap.webp";
-import bgDecor3      from "../assets/images/background-3.webp";
-import bgDecor4      from "../assets/images/background-4.webp";
-import bgDecor5      from "../assets/images/background-5.webp";
+import bawangMerah from "../assets/images/bawang-merah.webp";
+import cabe from "../assets/images/cabe.webp";
+import bungaRetro from "../assets/images/bunga-retro.webp";
+import starRetro from "../assets/images/star.svg";
+import daunJeruk from "../assets/images/daun-jeruk.webp";
+import asap from "../assets/images/asap.webp";
+import bgDecor3 from "../assets/images/background-3.webp";
+import bgDecor4 from "../assets/images/background-4.webp";
+import bgDecor5 from "../assets/images/background-5.webp";
 
 const PHASE1_NODES = [
-  { src: daunJeruk,    endX: "14vw",  endY: "18vh",  startOffX: "35vw",  startOffY: "40vh",  delay: 0.3, rotate: 25,  type: "decor" },
-  { src: bawangMerah,  endX: "22vw",  endY: "-16vh", startOffX: "40vw",  startOffY: "-35vh", delay: 0.5, rotate: 45,  type: "decor" },
-  { src: bungaRetro,   endX: "-22vw", endY: "-20vh", startOffX: "-45vw", startOffY: "-45vh", delay: 0.4, rotate: 60,  type: "decor" },
-  { src: cabe,         endX: "-18vw", endY: "16vh",  startOffX: "-38vw", startOffY: "35vh",  delay: 0.2, rotate: -15, type: "decor" },
-  { src: starRetro,    endX: "16vw",  endY: "-14vh", startOffX: "35vw",  startOffY: "-30vh", delay: 0.6, rotate: 35,  type: "decor" },
+  {
+    src: daunJeruk,
+    endX: "14vw",
+    endY: "18vh",
+    startOffX: "35vw",
+    startOffY: "40vh",
+    delay: 0.3,
+    rotate: 25,
+    type: "decor",
+  },
+  {
+    src: bawangMerah,
+    endX: "22vw",
+    endY: "-16vh",
+    startOffX: "40vw",
+    startOffY: "-35vh",
+    delay: 0.5,
+    rotate: 45,
+    type: "decor",
+  },
+  {
+    src: bungaRetro,
+    endX: "-22vw",
+    endY: "-20vh",
+    startOffX: "-45vw",
+    startOffY: "-45vh",
+    delay: 0.4,
+    rotate: 60,
+    type: "decor",
+  },
+  {
+    src: cabe,
+    endX: "-18vw",
+    endY: "16vh",
+    startOffX: "-38vw",
+    startOffY: "35vh",
+    delay: 0.2,
+    rotate: -15,
+    type: "decor",
+  },
+  {
+    src: starRetro,
+    endX: "16vw",
+    endY: "-14vh",
+    startOffX: "35vw",
+    startOffY: "-30vh",
+    delay: 0.6,
+    rotate: 35,
+    type: "decor",
+  },
 ];
 
 const PHASE2_NODES = [
-  { src: cabe,         endX: "-28vw", endY: "-8vh",  startOffX: "-50vw", startOffY: "25vh",  delay: 0.2, rotate:  15, type: "decor" },
-  { src: bungaRetro,   endX: "-18vw", endY: "-24vh", startOffX: "-20vw", startOffY: "-50vh", delay: 0.4, rotate:  45, type: "decor" },
-  { src: bawangMerah,  endX: "-8vw",  endY: "22vh",  startOffX: "-30vw", startOffY: "45vh",  delay: 0.7, rotate: -20, type: "decor" },
-  { src: starRetro,    endX: "8vw",   endY: "22vh",  startOffX: "6vw",   startOffY: "50vh",  delay: 0.6, rotate:  20, type: "decor" },
-  { src: daunJeruk,    endX: "16vw",  endY: "-10vh", startOffX: "40vw",  startOffY: "-28vh", delay: 0.2, rotate:  30, type: "decor" },
-  { src: starRetro,    endX: "28vw",  endY: "-14vh", startOffX: "50vw",  startOffY: "-48vh", delay: 0.8, rotate: -45, type: "decor" },
-  { src: cabe,         endX: "10vw",  endY: "18vh",  startOffX: "28vw",  startOffY: "42vh",  delay: 0.3, rotate:  25, type: "decor" },
-  { src: bungaRetro,   endX: "-10vw", endY: "0vh",   startOffX: "-22vw", startOffY: "14vh",  delay: 0.5, rotate:  60, type: "decor" },
+  {
+    src: cabe,
+    endX: "-28vw",
+    endY: "-8vh",
+    startOffX: "-50vw",
+    startOffY: "25vh",
+    delay: 0.2,
+    rotate: 15,
+    type: "decor",
+  },
+  {
+    src: bungaRetro,
+    endX: "-18vw",
+    endY: "-24vh",
+    startOffX: "-20vw",
+    startOffY: "-50vh",
+    delay: 0.4,
+    rotate: 45,
+    type: "decor",
+  },
+  {
+    src: bawangMerah,
+    endX: "-8vw",
+    endY: "22vh",
+    startOffX: "-30vw",
+    startOffY: "45vh",
+    delay: 0.7,
+    rotate: -20,
+    type: "decor",
+  },
+  {
+    src: starRetro,
+    endX: "8vw",
+    endY: "22vh",
+    startOffX: "6vw",
+    startOffY: "50vh",
+    delay: 0.6,
+    rotate: 20,
+    type: "decor",
+  },
+  {
+    src: daunJeruk,
+    endX: "16vw",
+    endY: "-10vh",
+    startOffX: "40vw",
+    startOffY: "-28vh",
+    delay: 0.2,
+    rotate: 30,
+    type: "decor",
+  },
+  {
+    src: starRetro,
+    endX: "28vw",
+    endY: "-14vh",
+    startOffX: "50vw",
+    startOffY: "-48vh",
+    delay: 0.8,
+    rotate: -45,
+    type: "decor",
+  },
+  {
+    src: cabe,
+    endX: "10vw",
+    endY: "18vh",
+    startOffX: "28vw",
+    startOffY: "42vh",
+    delay: 0.3,
+    rotate: 25,
+    type: "decor",
+  },
+  {
+    src: bungaRetro,
+    endX: "-10vw",
+    endY: "0vh",
+    startOffX: "-22vw",
+    startOffY: "14vh",
+    delay: 0.5,
+    rotate: 60,
+    type: "decor",
+  },
 ];
 
 const PHASE3_NODES = [
-  { src: bungaRetro,   endX: "-20vw", endY: "20vh",  startOffX: "-38vw", startOffY: "42vh",  delay: 0.1, rotate: -20, type: "decor" },
-  { src: starRetro,    endX: "20vw",  endY: "-18vh", startOffX: "42vw",  startOffY: "-38vh", delay: 0.3, rotate:  15, type: "decor" },
-  { src: cabe,         endX: "18vw",  endY: "18vh",  startOffX: "34vw",  startOffY: "38vh",  delay: 0.5, rotate:  25, type: "decor" },
-  { src: bawangMerah,  endX: "-18vw", endY: "-20vh", startOffX: "-34vw", startOffY: "-42vh", delay: 0.2, rotate: -10, type: "decor" },
-  { src: starRetro,    endX: "0vw",   endY: "26vh",  startOffX: "0vw",   startOffY: "50vh",  delay: 0.4, rotate:  60, type: "decor" },
-  { src: daunJeruk,    endX: "-26vw", endY: "5vh",   startOffX: "-44vw", startOffY: "18vh",  delay: 0.6, rotate: -35, type: "decor" },
-  { src: bungaRetro,   endX: "5vw",   endY: "-22vh", startOffX: "8vw",   startOffY: "-55vh", delay: 0.2, rotate:  45, type: "decor" },
+  {
+    src: bungaRetro,
+    endX: "-20vw",
+    endY: "20vh",
+    startOffX: "-38vw",
+    startOffY: "42vh",
+    delay: 0.1,
+    rotate: -20,
+    type: "decor",
+  },
+  {
+    src: starRetro,
+    endX: "20vw",
+    endY: "-18vh",
+    startOffX: "42vw",
+    startOffY: "-38vh",
+    delay: 0.3,
+    rotate: 15,
+    type: "decor",
+  },
+  {
+    src: cabe,
+    endX: "18vw",
+    endY: "18vh",
+    startOffX: "34vw",
+    startOffY: "38vh",
+    delay: 0.5,
+    rotate: 25,
+    type: "decor",
+  },
+  {
+    src: bawangMerah,
+    endX: "-18vw",
+    endY: "-20vh",
+    startOffX: "-34vw",
+    startOffY: "-42vh",
+    delay: 0.2,
+    rotate: -10,
+    type: "decor",
+  },
+  {
+    src: starRetro,
+    endX: "0vw",
+    endY: "26vh",
+    startOffX: "0vw",
+    startOffY: "50vh",
+    delay: 0.4,
+    rotate: 60,
+    type: "decor",
+  },
+  {
+    src: daunJeruk,
+    endX: "-26vw",
+    endY: "5vh",
+    startOffX: "-44vw",
+    startOffY: "18vh",
+    delay: 0.6,
+    rotate: -35,
+    type: "decor",
+  },
+  {
+    src: bungaRetro,
+    endX: "5vw",
+    endY: "-22vh",
+    startOffX: "8vw",
+    startOffY: "-55vh",
+    delay: 0.2,
+    rotate: 45,
+    type: "decor",
+  },
 ];
 
 const AFTERGLOW = [
-  { src: bungaRetro, x:  "25vw", y: "-45vh", scale: 0.40, rotate:  30, spd: 5.2, op: 0.16 },
-  { src: starRetro,  x: "-45vw", y:  "40vh", scale: 0.32, rotate: -20, spd: 6.4, op: 0.13 },
-  { src: cabe,       x:  "45vw", y: "-30vh", scale: 0.28, rotate:  55, spd: 7.1, op: 0.12 },
-  { src: starRetro,  x: "-25vw", y: "-40vh", scale: 0.26, rotate: -60, spd: 4.8, op: 0.10 },
-  { src: bungaRetro, x:  "55vw", y:  "35vh", scale: 0.34, rotate:  75, spd: 8.0, op: 0.11 },
-  { src: daunJeruk,  x: "-50vw", y: "-20vh", scale: 0.28, rotate: -35, spd: 5.6, op: 0.09 },
+  {
+    src: bungaRetro,
+    x: "25vw",
+    y: "-45vh",
+    scale: 0.4,
+    rotate: 30,
+    spd: 5.2,
+    op: 0.16,
+  },
+  {
+    src: starRetro,
+    x: "-45vw",
+    y: "40vh",
+    scale: 0.32,
+    rotate: -20,
+    spd: 6.4,
+    op: 0.13,
+  },
+  {
+    src: cabe,
+    x: "45vw",
+    y: "-30vh",
+    scale: 0.28,
+    rotate: 55,
+    spd: 7.1,
+    op: 0.12,
+  },
+  {
+    src: starRetro,
+    x: "-25vw",
+    y: "-40vh",
+    scale: 0.26,
+    rotate: -60,
+    spd: 4.8,
+    op: 0.1,
+  },
+  {
+    src: bungaRetro,
+    x: "55vw",
+    y: "35vh",
+    scale: 0.34,
+    rotate: 75,
+    spd: 8.0,
+    op: 0.11,
+  },
+  {
+    src: daunJeruk,
+    x: "-50vw",
+    y: "-20vh",
+    scale: 0.28,
+    rotate: -35,
+    spd: 5.6,
+    op: 0.09,
+  },
 ];
 
 // Komponen per-huruf dengan efek uap
@@ -91,15 +313,31 @@ function MapNode({ node, scrollYProgress, inRange, outRange }) {
   const [inStartRaw, inEndRaw] = inRange;
   const [outStartRaw, outEndRaw] = outRange;
 
-  const inStart  = Math.max(0, inStartRaw);
-  const inEnd    = Math.min(1, Math.max(inStart, inEndRaw));
+  const inStart = Math.max(0, inStartRaw);
+  const inEnd = Math.min(1, Math.max(inStart, inEndRaw));
   const outStart = Math.min(1, Math.max(inEnd, outStartRaw));
-  const outEnd   = Math.min(1, Math.max(outStart, outEndRaw));
+  const outEnd = Math.min(1, Math.max(outStart, outEndRaw));
 
-  const x      = useTransform(scrollYProgress, [inStart, inEnd], [node.startOffX, node.endX]);
-  const y      = useTransform(scrollYProgress, [inStart, inEnd], [node.startOffY, node.endY]);
-  const scale  = useTransform(scrollYProgress, [inStart, inEnd], [node.type === "bowl" ? 1.5 : 0.6, 1]);
-  const rotate = useTransform(scrollYProgress, [inStart, inEnd], [node.rotate * 3, node.rotate]);
+  const x = useTransform(
+    scrollYProgress,
+    [inStart, inEnd],
+    [node.startOffX, node.endX],
+  );
+  const y = useTransform(
+    scrollYProgress,
+    [inStart, inEnd],
+    [node.startOffY, node.endY],
+  );
+  const scale = useTransform(
+    scrollYProgress,
+    [inStart, inEnd],
+    [node.type === "bowl" ? 1.5 : 0.6, 1],
+  );
+  const rotate = useTransform(
+    scrollYProgress,
+    [inStart, inEnd],
+    [node.rotate * 3, node.rotate],
+  );
 
   const op1 = Math.max(0, inStart - 0.05);
   const op2 = Math.max(op1, Math.min(1, inStart + 0.1));
@@ -109,13 +347,11 @@ function MapNode({ node, scrollYProgress, inRange, outRange }) {
   const opacity = useTransform(
     scrollYProgress,
     [op1, op2, op3, op4],
-    [0, 0.8, 1, 0]
+    [0, 0.8, 1, 0],
   );
 
   const sizeClass =
-    node.type === "bowl"
-      ? "w-20 md:w-32 lg:w-36"
-      : "w-12 md:w-16 lg:w-20";
+    node.type === "bowl" ? "w-20 md:w-32 lg:w-36" : "w-12 md:w-16 lg:w-20";
 
   return (
     <motion.div className="absolute" style={{ x, y, opacity, scale, rotate }}>
@@ -160,145 +396,97 @@ export default function MeaningSection() {
     - Blur dikurangin biar lebih clean.
   */
 
-  const bg3Op = useTransform(
-    scrollYProgress,
-    [0.00, 0.30, 0.42],
-    [1, 1, 0]
-  );
+  const bg3Op = useTransform(scrollYProgress, [0.0, 0.3, 0.42], [1, 1, 0]);
 
   const bg4Op = useTransform(
     scrollYProgress,
     [0.36, 0.48, 0.64, 0.74],
-    [0, 1, 1, 0]
+    [0, 1, 1, 0],
   );
 
-  const bg5Op = useTransform(
-    scrollYProgress,
-    [0.68, 0.78, 1.00],
-    [0, 1, 1]
-  );
+  const bg5Op = useTransform(scrollYProgress, [0.68, 0.78, 1.0], [0, 1, 1]);
 
   // PHASE 1: "Soto is more than a dish."
   const t1Opacity = useTransform(
     scrollYProgress,
-    [0.00, 0.08, 0.30, 0.38],
-    [0, 1, 1, 0]
+    [0.0, 0.08, 0.3, 0.38],
+    [0, 1, 1, 0],
   );
 
-  const t1Y = useTransform(
-    scrollYProgress,
-    [0.00, 0.08, 0.38],
-    [60, 0, -35]
-  );
+  const t1Y = useTransform(scrollYProgress, [0.0, 0.08, 0.38], [60, 0, -35]);
 
   const t1Blur = useTransform(
     scrollYProgress,
-    [0.00, 0.08],
-    ["blur(6px)", "blur(0px)"]
+    [0.0, 0.08],
+    ["blur(6px)", "blur(0px)"],
   );
 
   const t1Scale = useTransform(
     scrollYProgress,
-    [0.00, 0.08, 0.38],
-    [0.88, 1, 1.03]
+    [0.0, 0.08, 0.38],
+    [0.88, 1, 1.03],
   );
 
   const steamOpacity = useTransform(
     scrollYProgress,
-    [0.00, 0.08, 0.30, 0.38],
-    [0, 0.65, 0.65, 0]
+    [0.0, 0.08, 0.3, 0.38],
+    [0, 0.65, 0.65, 0],
   );
 
-  const steamY = useTransform(
-    scrollYProgress,
-    [0.00, 0.38],
-    [100, -200]
-  );
+  const steamY = useTransform(scrollYProgress, [0.0, 0.38], [100, -200]);
 
-  const steamScale = useTransform(
-    scrollYProgress,
-    [0.00, 0.38],
-    [0.9, 1.7]
-  );
+  const steamScale = useTransform(scrollYProgress, [0.0, 0.38], [0.9, 1.7]);
 
   // PHASE 2: "It is a reflection of a nation."
   const t2Opacity = useTransform(
     scrollYProgress,
     [0.38, 0.48, 0.66, 0.74],
-    [0, 1, 1, 0]
+    [0, 1, 1, 0],
   );
 
-  const t2Y = useTransform(
-    scrollYProgress,
-    [0.38, 0.48, 0.74],
-    [30, 0, -30]
-  );
+  const t2Y = useTransform(scrollYProgress, [0.38, 0.48, 0.74], [30, 0, -30]);
 
   const t2Blur = useTransform(
     scrollYProgress,
     [0.38, 0.48],
-    ["blur(4px)", "blur(0px)"]
+    ["blur(4px)", "blur(0px)"],
   );
 
   const t2Scale = useTransform(
     scrollYProgress,
     [0.38, 0.48, 0.74],
-    [0.84, 1, 1.04]
+    [0.84, 1, 1.04],
   );
 
   // PHASE 3: "Diverse… yet deeply connected."
-  const t3aOpacity = useTransform(
-    scrollYProgress,
-    [0.72, 0.80],
-    [0, 1]
-  );
+  const t3aOpacity = useTransform(scrollYProgress, [0.72, 0.8], [0, 1]);
 
-  const t3aY = useTransform(
-    scrollYProgress,
-    [0.72, 0.80],
-    [40, 0]
-  );
+  const t3aY = useTransform(scrollYProgress, [0.72, 0.8], [40, 0]);
 
   const t3aBlur = useTransform(
     scrollYProgress,
-    [0.72, 0.80],
-    ["blur(4px)", "blur(0px)"]
+    [0.72, 0.8],
+    ["blur(4px)", "blur(0px)"],
   );
 
-  const t3yetOpacity = useTransform(
-    scrollYProgress,
-    [0.80, 0.86],
-    [0, 1]
-  );
+  const t3yetOpacity = useTransform(scrollYProgress, [0.8, 0.86], [0, 1]);
 
-  const t3yetScale = useTransform(
-    scrollYProgress,
-    [0.80, 0.86],
-    [0.65, 1]
-  );
+  const t3yetScale = useTransform(scrollYProgress, [0.8, 0.86], [0.65, 1]);
 
   const t3yetBlur = useTransform(
     scrollYProgress,
-    [0.80, 0.86],
-    ["blur(3px)", "blur(0px)"]
+    [0.8, 0.86],
+    ["blur(3px)", "blur(0px)"],
   );
 
-  const t3bOpacity = useTransform(
-    scrollYProgress,
-    [0.86, 0.94],
-    [0, 1]
-  );
+  const t3bOpacity = useTransform(scrollYProgress, [0.86, 0.94], [0, 1]);
 
-  const t3bScale = useTransform(
-    scrollYProgress,
-    [0.86, 0.96],
-    [0.82, 1]
-  );
+  const t3bScale = useTransform(scrollYProgress, [0.86, 0.96], [0.82, 1]);
 
   const t3bBlur = useTransform(
     scrollYProgress,
     [0.86, 0.94],
-    ["blur(5px)", "blur(0px)"]
+    ["blur(5px)", "blur(0px)"],
   );
 
   return (
@@ -310,7 +498,6 @@ export default function MeaningSection() {
       style={{ fontFamily: "var(--font-body, 'InriaSerif', serif)" }}
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
-
         {/* Background SVGs */}
         <motion.img
           src={bgDecor3}
@@ -375,8 +562,8 @@ export default function MeaningSection() {
               key={`p1-${i}`}
               node={node}
               scrollYProgress={scrollYProgress}
-              inRange={[0.00, 0.14]}
-              outRange={[0.32, 0.40]}
+              inRange={[0.0, 0.14]}
+              outRange={[0.32, 0.4]}
             />
           ))}
 
@@ -385,7 +572,7 @@ export default function MeaningSection() {
               key={`p2-${i}`}
               node={node}
               scrollYProgress={scrollYProgress}
-              inRange={[0.40, 0.52]}
+              inRange={[0.4, 0.52]}
               outRange={[0.68, 0.75]}
             />
           ))}
@@ -396,13 +583,12 @@ export default function MeaningSection() {
               node={node}
               scrollYProgress={scrollYProgress}
               inRange={[0.72, 0.82]}
-              outRange={[0.96, 1.00]}
+              outRange={[0.96, 1.0]}
             />
           ))}
         </div>
 
         <div className="absolute inset-0 flex items-center justify-center z-[40] pointer-events-none text-center px-4 md:px-10">
-
           {/* Phase 1 */}
           <motion.div
             className="absolute flex flex-col items-center gap-2"
@@ -432,14 +618,16 @@ export default function MeaningSection() {
                 fontFamily: "var(--font-body, 'InriaSerif', serif)",
                 fontWeight: "bold",
               }}
-              animate={{ opacity: [0.55, 0.80, 0.55] }}
+              animate={{ opacity: [0.55, 0.8, 0.55] }}
               transition={{ repeat: Infinity, duration: 3.5 }}
             >
               nusantara dalam semangkuk
             </motion.span>
 
             <WavyText
-              text={storyContent.meaning.lines[0] ?? "Soto is more than a dish."}
+              text={
+                storyContent.meaning.lines[0] ?? "Soto is more than a dish."
+              }
               className="text-[#1A0B04] font-bold italic text-2xl md:text-4xl lg:text-5xl tracking-wide leading-relaxed"
               style={{ fontFamily: "var(--font-body, 'InriaSerif', serif)" }}
             />
@@ -455,9 +643,9 @@ export default function MeaningSection() {
                 strokeWidth="1.5"
                 strokeLinecap="round"
               />
-              <circle cx="10"  cy="9" r="2.5" fill="#FF9721" opacity="0.7" />
+              <circle cx="10" cy="9" r="2.5" fill="#FF9721" opacity="0.7" />
               <circle cx="290" cy="9" r="2.5" fill="#FF9721" opacity="0.7" />
-              <circle cx="150" cy="9" r="2"   fill="#FFF073" opacity="0.9" />
+              <circle cx="150" cy="9" r="2" fill="#FFF073" opacity="0.9" />
             </svg>
           </motion.div>
 
@@ -479,7 +667,8 @@ export default function MeaningSection() {
                   "0 0 40px rgba(255,240,115,0.30), 0 6px 20px rgba(0,0,0,0.8)",
               }}
             >
-              {storyContent.meaning.lines[1] ?? "It is a reflection of a nation."}
+              {storyContent.meaning.lines[1] ??
+                "It is a reflection of a nation."}
             </motion.h2>
 
             <div className="flex items-center gap-4 opacity-45 mt-1">
@@ -506,7 +695,6 @@ export default function MeaningSection() {
         {/* Phase 3 */}
         <div className="absolute inset-0 flex items-center justify-center z-[50] pointer-events-none text-center px-4 md:px-10">
           <div className="flex flex-col items-center gap-3 md:gap-5">
-
             <motion.h2
               className="text-[#FFF5D1] font-bold italic text-2xl md:text-4xl lg:text-5xl tracking-wider"
               style={{
@@ -556,7 +744,7 @@ export default function MeaningSection() {
                 className="w-56 md:w-96"
                 fill="none"
                 style={{ opacity: t3bOpacity }}
-                animate={{ opacity: [0.35, 0.80, 0.35] }}
+                animate={{ opacity: [0.35, 0.8, 0.35] }}
                 transition={{
                   repeat: Infinity,
                   duration: 2.4,
@@ -580,7 +768,6 @@ export default function MeaningSection() {
             </motion.div>
           </div>
         </div>
-
       </div>
     </motion.section>
   );

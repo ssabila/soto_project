@@ -343,7 +343,7 @@ export default function FooterSection() {
             md:text-[clamp(11px,1.1vw,12.5px)]
           "
         >
-          © 2026 Kicau Mania Team. All rights reserved.
+          © 2026 Kicau Mania Team - Sabila & Qurany. All rights reserved.
         </p>
 
         <p

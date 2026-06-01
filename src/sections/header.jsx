@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
 
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -20,59 +20,6 @@ import servinglid1 from "../assets/images/servinglid1.webp";
 import servinglidSoto from "../assets/images/servinglid-soto.webp";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const ScreenDebugger = () => {
-  const [size, setSize] = useState({
-    width: typeof window !== "undefined" ? window.innerWidth : 0,
-    height: typeof window !== "undefined" ? window.innerHeight : 0,
-  });
-
-  useEffect(() => {
-    const updateSize = () => {
-      setSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-
-    updateSize();
-    window.addEventListener("resize", updateSize);
-
-    return () => window.removeEventListener("resize", updateSize);
-  }, []);
-
-  const getBreakpoint = () => {
-    if (size.width >= 1536) return "2xl";
-    if (size.width >= 1280) return "xl";
-    if (size.width >= 1024) return "lg";
-    if (size.width >= 768) return "md";
-    if (size.width >= 640) return "sm";
-    return "base";
-  };
-
-  return (
-    <div
-      className="
-        fixed
-        left-3
-        bottom-3
-        z-[9999]
-        rounded-md
-        bg-black/70
-        px-3
-        py-2
-        text-xs
-        font-mono
-        text-white
-        pointer-events-none
-      "
-    >
-      <div>w: {size.width}px</div>
-      <div>h: {size.height}px</div>
-      <div>bp: {getBreakpoint()}</div>
-    </div>
-  );
-};
 
 const SCENE_ANCHOR_Y = `
   top-1/2
@@ -338,7 +285,7 @@ const OpeningSection = () => {
         ease: "steps(12)",
       });
 
-      //line 3 masuk 
+      //line 3 masuk
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: container.current,
@@ -372,7 +319,7 @@ const OpeningSection = () => {
           ease: "power3.out",
           overwrite: "auto",
         },
-        0
+        0,
       );
 
       tl.to("#globe-1", {
@@ -395,7 +342,7 @@ const OpeningSection = () => {
           ease: "power3.out",
           overwrite: "auto",
         },
-        "-=1.8"
+        "-=1.8",
       );
 
       tl.to(
@@ -406,7 +353,7 @@ const OpeningSection = () => {
           ease: "steps(20)",
           overwrite: "auto",
         },
-        "-=2.3"
+        "-=2.3",
       );
 
       tl.to(
@@ -417,7 +364,7 @@ const OpeningSection = () => {
           ease: "steps(10)",
           overwrite: "auto",
         },
-        "-=0.5"
+        "-=0.5",
       );
 
       tl.to(
@@ -430,7 +377,7 @@ const OpeningSection = () => {
           ease: "power4.inOut",
           overwrite: "auto",
         },
-        "+=0.4"
+        "+=0.4",
       );
 
       tl.to(
@@ -441,7 +388,7 @@ const OpeningSection = () => {
           ease: "power2.inOut",
           overwrite: "auto",
         },
-        "-=2"
+        "-=2",
       );
 
       tl.to(".tv-sequence", {
@@ -460,7 +407,7 @@ const OpeningSection = () => {
           ease: "power2.inOut",
           overwrite: "auto",
         },
-        ">"
+        ">",
       );
 
       tl.to(
@@ -470,7 +417,7 @@ const OpeningSection = () => {
           duration: 0.2,
           overwrite: "auto",
         },
-        "-=0.65"
+        "-=0.65",
       );
 
       tl.to(
@@ -483,7 +430,7 @@ const OpeningSection = () => {
           ease: "power3.out",
           overwrite: "auto",
         },
-        "-=1"
+        "-=1",
       );
 
       tl.to(
@@ -495,7 +442,7 @@ const OpeningSection = () => {
           ease: "power2.in",
           overwrite: "auto",
         },
-        "+=0.45"
+        "+=0.45",
       );
 
       tl.to(
@@ -508,7 +455,7 @@ const OpeningSection = () => {
           ease: "power3.out",
           overwrite: "auto",
         },
-        "-=0.1"
+        "-=0.1",
       );
 
       tl.to(
@@ -521,7 +468,7 @@ const OpeningSection = () => {
           ease: "back.out(1.6)",
           overwrite: "auto",
         },
-        "+=0.85"
+        "+=0.85",
       );
 
       tl.to(
@@ -534,7 +481,7 @@ const OpeningSection = () => {
           ease: "back.out(1.6)",
           overwrite: "auto",
         },
-        "+=0.35"
+        "+=0.35",
       );
 
       tl.to(
@@ -547,7 +494,7 @@ const OpeningSection = () => {
           ease: "power4.inOut",
           overwrite: "auto",
         },
-        "+=0.45"
+        "+=0.45",
       );
 
       tl.to(
@@ -559,7 +506,7 @@ const OpeningSection = () => {
           ease: "power2.in",
           overwrite: "auto",
         },
-        "<"
+        "<",
       );
 
       tl.to(
@@ -571,7 +518,7 @@ const OpeningSection = () => {
           ease: "power3.out",
           overwrite: "auto",
         },
-        ">-0.2"
+        ">-0.2",
       );
 
       tl.to(
@@ -582,7 +529,7 @@ const OpeningSection = () => {
           ease: "back.out(1.4)",
           overwrite: "auto",
         },
-        "<0.15"
+        "<0.15",
       );
 
       let resizeTimer;
@@ -634,7 +581,7 @@ const OpeningSection = () => {
         });
       };
     },
-    { scope: container }
+    { scope: container },
   );
 
   return (
@@ -724,9 +671,7 @@ const OpeningSection = () => {
           </div>
 
           <div className="overflow-hidden">
-            <div className="type-line line-4 whitespace-nowrap">
-              the same.
-            </div>
+            <div className="type-line line-4 whitespace-nowrap">the same.</div>
           </div>
         </div>
       </div>
@@ -1100,8 +1045,6 @@ const OpeningSection = () => {
           </div>
         </div>
       </div>
-
-     
     </section>
   );
 };

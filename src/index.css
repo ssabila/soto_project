@@ -3,36 +3,35 @@
 /* src/index.css */
 
 @font-face {
-  font-family: 'Beachfly';
-  src: url('./assets/fonts/BeachflyFreeTrial.woff2') format('woff2'),
-       url('./assets/fonts/BeachflyFreeTrial.woff') format('woff'),
-       url('./assets/fonts/BeachflyFreeTrial.ttf') format('truetype');
+  font-family: "Beachfly";
+  src:
+    url("./assets/fonts/BeachflyFreeTrial.woff2") format("woff2"),
+    url("./assets/fonts/BeachflyFreeTrial.woff") format("woff"),
+    url("./assets/fonts/BeachflyFreeTrial.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'InriaSerif';
-  src: url('./assets/fonts/InriaSerif-Regular.woff2') format('woff2'),
-       url('./assets/fonts/InriaSerif-Regular.woff') format('woff'),
-       url('./assets/fonts/InriaSerif-Regular.ttf') format('truetype');
+  font-family: "InriaSerif";
+  src:
+    url("./assets/fonts/InriaSerif-Regular.woff2") format("woff2"),
+    url("./assets/fonts/InriaSerif-Regular.woff") format("woff"),
+    url("./assets/fonts/InriaSerif-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
-
 /* ─── Theme Configuration (pengganti tailwind.config.js) ─── */
 @theme {
   /* Font Family */
-  --font-title: 'Beachfly', serif;
-  --font-body:  'InriaSerif', serif;
+  --font-title: "Beachfly", serif;
+  --font-body: "InriaSerif", serif;
 
   /* Brand Colors */
-  --color-brand-cream:  #f9fdda;
-  --color-brand-red:    #f63b1c;
-  --color-brand-green:  #24a733;
+  --color-brand-cream: #f9fdda;
+  --color-brand-red: #f63b1c;
+  --color-brand-green: #24a733;
   --color-brand-yellow: #fff073;
   --color-brand-orange: #ff9721;
-
-  
 }

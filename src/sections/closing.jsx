@@ -6,9 +6,7 @@ import background5 from "../assets/images/background-5.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ═════════════════════════════════════════════════════════════
-   COLORS
-═════════════════════════════════════════════════════════════ */
+/* warna*/
 const C = {
   cream: "#fafdda",
   brown: "#2c1309",
@@ -91,18 +89,16 @@ export default function ClosingSection() {
   const footerRef = useRef(null);
 
   const renderStyledIntroQuote = () => {
-    introQuoteCharRefs.current = [];
-
     let charIndex = 0;
 
     return introQuoteParts.map((part, wordIndex) => (
       <span
         key={`${part.text}-${wordIndex}`}
         className={`
-          mr-[0.24em]
-          inline-block
-          ${part.className}
-        `}
+        mr-[0.24em]
+        inline-block
+        ${part.className}
+      `}
       >
         {part.text.split("").map((char, i) => {
           const currentIndex = charIndex;
@@ -112,12 +108,14 @@ export default function ClosingSection() {
             <span
               key={`${part.text}-${wordIndex}-${i}`}
               ref={(el) => {
-                if (el) introQuoteCharRefs.current[currentIndex] = el;
+                if (el) {
+                  introQuoteCharRefs.current[currentIndex] = el;
+                }
               }}
               className="
-                inline-block
-                will-change-[opacity,transform,filter]
-              "
+              inline-block
+              will-change-[opacity,transform,filter]
+            "
             >
               {char}
             </span>
@@ -218,7 +216,7 @@ export default function ClosingSection() {
               from: "start",
             },
           },
-          "<"
+          "<",
         )
         .to(typeCursorRef.current, {
           opacity: 0,
@@ -286,7 +284,7 @@ export default function ClosingSection() {
           duration: 0.15,
           ease: "none",
         },
-        "<"
+        "<",
       );
 
       /* Green batik layer fade out to cream */
@@ -298,7 +296,7 @@ export default function ClosingSection() {
           duration: 1,
           ease: "power2.inOut",
         },
-        "-=0.05"
+        "-=0.05",
       );
 
       /* Dots muncul */
@@ -310,7 +308,7 @@ export default function ClosingSection() {
           duration: 0.75,
           ease: "power2.out",
         },
-        "-=0.55"
+        "-=0.55",
       );
 
       /* Final layout masuk */
@@ -330,7 +328,7 @@ export default function ClosingSection() {
           duration: 0.7,
           ease: "power3.out",
         },
-        "-=0.35"
+        "-=0.35",
       );
 
       tl.to(
@@ -342,7 +340,7 @@ export default function ClosingSection() {
           duration: 0.7,
           ease: "power3.out",
         },
-        "-=0.45"
+        "-=0.45",
       );
 
       tl.to(
@@ -353,7 +351,7 @@ export default function ClosingSection() {
           duration: 0.6,
           ease: "power3.out",
         },
-        "-=0.25"
+        "-=0.25",
       );
 
       tl.to(
@@ -366,7 +364,7 @@ export default function ClosingSection() {
           duration: 0.7,
           ease: "power3.out",
         },
-        "-=0.2"
+        "-=0.2",
       );
 
       tl.to(
@@ -378,7 +376,7 @@ export default function ClosingSection() {
           duration: 0.55,
           ease: "power2.out",
         },
-        "-=0.2"
+        "-=0.2",
       );
 
       tl.to({}, { duration: 0.8 });
@@ -586,8 +584,8 @@ export default function ClosingSection() {
             "
           >
             From Aceh to Papua, soto takes a thousand forms — each one is a
-            reflection of the hands that made it, the land it came from, and
-            the table it was shared on.
+            reflection of the hands that made it, the land it came from, and the
+            table it was shared on.
           </p>
         </div>
 
