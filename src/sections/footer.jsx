@@ -1,28 +1,37 @@
 import footerBg from "../assets/images/footer.svg";
 
-const scrollTo = (selector) => {
-  const el = document.querySelector(selector);
-  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+const scrollToSection = (sectionId) => {
+  const el =
+    document.querySelector(`[data-section='${sectionId}']`) ||
+    document.getElementById(sectionId);
+
+  if (!el) return;
+
+  el.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
 };
 
 export default function FooterSection() {
   const actions = [
     {
       label: "Replay Story",
-      onClick: () => scrollTo("[data-section='opening']"),
+      target: "opening",
     },
     {
       label: "Create Another Soto",
-      onClick: () => scrollTo("[data-section='makeyourownsoto']"),
+      target: "makeyourownsoto",
     },
     {
       label: "Back to Journey",
-      onClick: () => scrollTo("[data-section='journey']"),
+      target: "journey",
     },
   ];
 
   return (
     <section
+      id="footer"
       data-section="footer"
       className="
         relative
@@ -55,8 +64,6 @@ export default function FooterSection() {
           md:object-[center_10%]
         "
       />
-
-      
 
       {/* MAIN CONTENT */}
       <div
@@ -105,6 +112,7 @@ export default function FooterSection() {
               items-start
               gap-2
             "
+            aria-label="Footer navigation"
           >
             <p
               className="
@@ -125,7 +133,7 @@ export default function FooterSection() {
               <button
                 key={action.label}
                 type="button"
-                onClick={action.onClick}
+                onClick={() => scrollToSection(action.target)}
                 className="
                   group
                   cursor-pointer
@@ -150,7 +158,7 @@ export default function FooterSection() {
                   focus-visible:ring-2
                   focus-visible:ring-[#d2230d]/70
                   focus-visible:ring-offset-4
-                  focus-visible:ring-offset-[#fafdda]
+                  focus-visible:ring-offset-[#ffbd59]
 
                   md:text-[clamp(13px,1.3vw,15px)]
                 "

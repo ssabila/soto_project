@@ -28,24 +28,26 @@ import gameTitle from "../assets/images/game-title.svg";
 
 // ─── COLORS ───────────────────────────────────────────────────────────────────
 const C = {
-  saffron: "#ff9721",
+  brown: "#2c1309",
+  rust: "#c2380f",
   scarlet: "#e83a2a",
-  banana: "#fafdda",
+  saffron: "#c9880a",
+  burntOrange: "#d05a1f",
 };
 
 // ─── BACKGROUND DECOR ─────────────────────────────────────────────────────────
 const spiceDots = [
-  { top: "7%", left: "5%", size: 11, color: C.saffron },
-  { top: "11%", left: "87%", size: 7, color: C.scarlet },
-  { top: "20%", left: "93%", size: 15, color: C.banana },
-  { top: "78%", left: "4%", size: 13, color: C.scarlet },
-  { top: "87%", left: "93%", size: 9, color: C.saffron },
-  { top: "73%", left: "89%", size: 6, color: C.banana },
-  { top: "69%", left: "2%", size: 10, color: C.saffron },
-  { top: "91%", left: "48%", size: 5, color: C.scarlet },
-  { top: "5%", left: "51%", size: 7, color: C.banana },
-  { top: "50%", left: "1%", size: 5, color: C.saffron },
-  { top: "45%", left: "96%", size: 8, color: C.scarlet },
+  { top: "7%", left: "5%", size: 11, color: C.rust, opacity: 0.72 },
+  { top: "11%", left: "87%", size: 7, color: C.brown, opacity: 0.38 },
+  { top: "20%", left: "93%", size: 15, color: C.saffron, opacity: 0.58 },
+  { top: "78%", left: "4%", size: 13, color: C.scarlet, opacity: 0.62 },
+  { top: "87%", left: "93%", size: 9, color: C.burntOrange, opacity: 0.58 },
+  { top: "73%", left: "89%", size: 6, color: C.brown, opacity: 0.34 },
+  { top: "69%", left: "2%", size: 10, color: C.rust, opacity: 0.62 },
+  { top: "91%", left: "48%", size: 5, color: C.brown, opacity: 0.35 },
+  { top: "5%", left: "51%", size: 7, color: C.saffron, opacity: 0.58 },
+  { top: "50%", left: "1%", size: 5, color: C.burntOrange, opacity: 0.52 },
+  { top: "45%", left: "96%", size: 8, color: C.scarlet, opacity: 0.58 },
 ];
 
 // ─── GAME DATA ────────────────────────────────────────────────────────────────
@@ -936,28 +938,29 @@ const Makeyourownsoto = () => {
 
   return (
     <section
-      id="Makeyourownsoto"
+      id="makeyourownsoto"
+  data-section="makeyourownsoto"
       ref={container}
-      className="relative w-full overflow-hidden bg-[#2a1f0e]"
+      className="relative w-full overflow-hidden bg-[#fafdda]"
     >
       {/* BG GRADIENT */}
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(42,31,14,0.95),rgba(250,253,218,0.2))]" />
-
-      {/* SPICE DOTS */}
+<div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,#fafdda_0%,#ffbd59_100%)]" />
+      
+	  {/* SPICE DOTS */}
       <div className="pointer-events-none absolute inset-0 z-[2] overflow-hidden">
         {spiceDots.map((dot, i) => (
           <span
             key={i}
-            className="absolute rounded-full opacity-80"
-            style={{
-              top: dot.top,
-              left: dot.left,
-              width: `${dot.size}px`,
-              height: `${dot.size}px`,
-              backgroundColor: dot.color,
-              boxShadow: `0 0 ${dot.size * 1.8}px ${dot.color}`,
-              transform: `rotate(${i * 17}deg)`,
-            }}
+  className="absolute rounded-full"
+  style={{
+    top: dot.top,
+    left: dot.left,
+    width: `${dot.size}px`,
+    height: `${dot.size}px`,
+    backgroundColor: dot.color,
+    opacity: dot.opacity,
+    boxShadow: `0 2px ${dot.size * 1.4}px rgba(44,19,9,0.16)`,
+    transform: `rotate(${i * 17}deg)`,}}
           />
         ))}
       </div>

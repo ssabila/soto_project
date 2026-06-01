@@ -11,24 +11,23 @@ import fotoBila from "../assets/images/foto-bila.svg";
 const members = [
   {
     id: "bila",
-    greeting: "Halo, aku",
+    greeting: "Halo! aku",
     name: "Sabila Bintang Kusuma Dewi",
     nickname: "Bila",
     photo: fotoBila,
     rotate: "-3deg",
     accentColor: "#c2380f",
-    bio: "Namaku Sabila Bintang Kusuma Dewi atau biasa dipanggil Bila. Sekarang aku duduk di tingkat 3 di Polstat STIS dengan peminatan Sistem Informasi. Di web ini aku yang buat konten dan isi website soto ini loh!!",
-  },
+    bio: "Namaku Sabila Bintang Kusuma Dewi. Aku mahasiswa tingkat 3 Politeknik statistika STIS. Dalam web story ini, aku mengerjakan konten dan isi website, mulai dari informasi, sampai narasi tentang beragam masakan soto di Indonesia.",
+ },
   {
     id: "dhira",
-    greeting: "Halo, aku",
+    greeting: "Halo! aku",
     name: "Qurany Nadhira Tsabita",
     nickname: "Dhira",
     photo: fotoDhira,
     rotate: "3deg",
-    accentColor: "#25a734",
-    bio: "Namaku Qurany Nadhira Tsabita atau biasa dipanggil Dhira. Sekarang aku duduk di tingkat 3 di Polstat STIS dengan peminatan Sistem Informasi. Di web ini aku yang buat opening, closing, footer, dan game interaktifnya loh!!",
-  },
+    accentColor: "#c2380f",
+    bio: "Namaku Qurany Nadhira Tsabita. Aku mahasiswa tingkat 3 Politeknik statistika STIS. Di web ini aku yang mengerjakan bagian opening, closing, footer dan game interaktif membuat soto, sampai section about us yang kamu lihat sekarang!.", },
 ];
 
 /* ═══════════════════════════════════════════
@@ -73,7 +72,7 @@ export default function AboutUs() {
     if (!target || !cursor) return;
 
     target.textContent = "";
-    gsap.set(cursor, { opacity: 1 });
+    gsap.set(cursor, { opacity: 0 });
 
     for (let i = 0; i <= text.length; i++) {
       if (!isMountedRef.current) return;
@@ -268,6 +267,7 @@ export default function AboutUs() {
 
   return (
     <section
+      id="about"
       ref={containerRef}
       data-section="about"
       style={{
@@ -283,20 +283,20 @@ export default function AboutUs() {
     >
       {/* ── FULL BG ── */}
       <img
-  src={backgroundUs}
-  alt=""
-  aria-hidden="true"
-  style={{
-    position: "absolute",
-    inset: 0,
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-    objectPosition: "center 0.1%",
-    pointerEvents: "none",
-    userSelect: "none",
-  }}
-/>
+        src={backgroundUs}
+        alt=""
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          objectPosition: "center 0.5%",
+          pointerEvents: "none",
+          userSelect: "none",
+        }}
+      />
 
       {/* ── STAGE ── */}
       <div
@@ -305,11 +305,11 @@ export default function AboutUs() {
           position: "relative",
           zIndex: 10,
           width: "100%",
-          maxWidth: "1280px",
+          maxWidth: "1640px",
           minHeight: "clamp(430px, 62vh, 650px)",
           display: "grid",
           placeItems: "center",
-          padding: "0 clamp(2rem, 5vw, 5.5rem)",
+          padding: "0 clamp(1.5rem, 4vw, 4.5rem)",
         }}
       >
         {members.map((member, idx) => (
@@ -327,7 +327,7 @@ export default function AboutUs() {
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "center",
-              gap: "clamp(1rem, 3vw, 4rem)",
+              gap: "clamp(0.5rem, 2vw, 2.6rem)",
               flexWrap: "nowrap",
               opacity: 0,
               pointerEvents: "none",
@@ -353,7 +353,7 @@ export default function AboutUs() {
                 className="about-photo"
                 style={{
                   display: "block",
-                  width: "clamp(330px, 37vw, 520px)",
+                  width: "clamp(330px, 34vw, 500px)",
                   height: "auto",
                   objectFit: "contain",
                   filter: "drop-shadow(0 24px 45px rgba(42,31,14,0.3))",
@@ -366,11 +366,11 @@ export default function AboutUs() {
 
             {/* ── TEXT SIDE ── */}
             <div
-  className="about-text"
-  style={{
-    flex: "0 1 760px",
-    minWidth: "480px",
-    maxWidth: "760px",
+              className="about-text"
+              style={{
+                flex: "0 1 min(52vw, 1040px)",
+                minWidth: "620px",
+                maxWidth: "1040px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-start",
@@ -394,7 +394,7 @@ export default function AboutUs() {
                   className="font-serif italic"
                   style={{
                     display: "block",
-                    fontSize: "clamp(2rem, 5.2vw, 4rem)",
+                    fontSize: "clamp(2rem, 4.6vw, 3.8rem)",
                     color: "#2a1f0e",
                     lineHeight: 1,
                     marginBottom: "-0.15em",
@@ -410,13 +410,13 @@ export default function AboutUs() {
                   }}
                   className="font-title font-black"
                   style={{
-                    fontSize: "clamp(2.7rem, 5.6vw, 5.6rem)",
+                    fontSize: "clamp(2.7rem, 5vw, 5.25rem)",
                     lineHeight: 0.95,
-                    letterSpacing: "-0.04em",
+                    letterSpacing: "-0.055em",
                     color: "#2a1f0e",
                     WebkitTextStroke: "0.5px #2a1f0e",
                     margin: 0,
-                    maxWidth: "760px",
+                    maxWidth: "1040px",
                   }}
                 >
                   {member.name}
@@ -431,7 +431,7 @@ export default function AboutUs() {
                 className="about-bio-box"
                 style={{
                   width: "100%",
-                  maxWidth: "590px",
+                  maxWidth: "620px",
                   minHeight: "clamp(160px, 22vh, 205px)",
                   position: "relative",
                 }}
@@ -500,24 +500,67 @@ export default function AboutUs() {
 
         /* DESKTOP BESAR */
         @media (min-width: 1280px) {
+          .about-stage {
+            max-width: 1640px !important;
+            padding-left: clamp(1.5rem, 3vw, 4rem) !important;
+            padding-right: clamp(1.5rem, 3vw, 4rem) !important;
+          }
+
           .about-slide {
-            gap: clamp(2rem, 3.4vw, 4.2rem) !important;
+            gap: clamp(0.8rem, 2vw, 2.6rem) !important;
             justify-content: center !important;
           }
 
           .about-photo {
-            width: clamp(380px, 35vw, 540px) !important;
+            width: clamp(360px, 31vw, 500px) !important;
           }
 
           .about-text {
-            flex-basis: 680px !important;
-            max-width: 680px !important;
-            transform: translateX(-1.2rem);
+            flex-basis: 1040px !important;
+            min-width: 620px !important;
+            max-width: 1040px !important;
+            transform: translateX(-1.4rem);
           }
 
           .about-text h2 {
-            font-size: clamp(3.2rem, 5.4vw, 5.6rem) !important;
-            max-width: 680px !important;
+            font-size: clamp(3rem, 4.75vw, 5.25rem) !important;
+            max-width: 1040px !important;
+            letter-spacing: -0.055em !important;
+          }
+
+          .about-bio-box {
+            max-width: 620px !important;
+          }
+        }
+
+        /* LAPTOP / HALFSCREEN */
+        @media (max-width: 1279px) {
+          .about-stage {
+            max-width: 1320px !important;
+            padding-left: clamp(1rem, 2.4vw, 2.8rem) !important;
+            padding-right: clamp(1rem, 2.4vw, 2.8rem) !important;
+          }
+
+          .about-slide {
+            gap: clamp(0.6rem, 1.8vw, 1.8rem) !important;
+            justify-content: center !important;
+          }
+
+          .about-photo {
+            width: clamp(280px, 30vw, 410px) !important;
+          }
+
+          .about-text {
+            min-width: 560px !important;
+            flex-basis: 920px !important;
+            max-width: 920px !important;
+            transform: translateX(-1rem);
+          }
+
+          .about-text h2 {
+            font-size: clamp(2.55rem, 4.55vw, 4.8rem) !important;
+            max-width: 920px !important;
+            letter-spacing: -0.055em !important;
           }
 
           .about-bio-box {
@@ -525,108 +568,120 @@ export default function AboutUs() {
           }
         }
 
-        /* LAPTOP / HALFSCREEN */
-        @media (max-width: 1279px) {
-          .about-stage {
-            max-width: 1180px !important;
-            padding-left: clamp(1.4rem, 3.5vw, 3.8rem) !important;
-            padding-right: clamp(1.4rem, 3.5vw, 3.8rem) !important;
-          }
+        /* TABLET: SAMA KAYAK MOBILE, FOTO ATAS TEKS BAWAH */
+@media (max-width: 1024px) {
+  [data-section="about"] {
+    min-height: 100svh !important;
+  }
 
-          .about-slide {
-            gap: clamp(1rem, 2.8vw, 2.8rem) !important;
-            justify-content: center !important;
-          }
+  .about-stage {
+    min-height: 100svh !important;
+    max-width: 760px !important;
+    padding: clamp(1.4rem, 3vw, 2.4rem) clamp(1.2rem, 4vw, 2.4rem) !important;
+    align-items: center !important;
+  }
 
-          .about-photo {
-            width: clamp(300px, 34vw, 450px) !important;
-          }
+  .about-slide {
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: clamp(0.9rem, 2vw, 1.35rem) !important;
+    text-align: center !important;
+  }
 
-          .about-text {
-            min-width: 420px !important;
-            flex-basis: 620px !important;
-            max-width: 620px !important;
-            transform: translateX(-0.8rem);
-          }
+  .about-photo-wrap {
+    width: 100% !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
 
-          .about-text h2 {
-            font-size: clamp(2.7rem, 5.3vw, 5rem) !important;
-            max-width: 620px !important;
-          }
+  .about-photo {
+    width: clamp(270px, 52vw, 390px) !important;
+    max-width: 100% !important;
+  }
 
-          .about-bio-box {
-            max-width: 560px !important;
-          }
-        }
+  .about-text {
+    width: min(92vw, 600px) !important;
+    min-width: 0 !important;
+    max-width: 600px !important;
+    flex: 0 1 auto !important;
+    align-items: center !important;
+    text-align: center !important;
+    transform: none !important;
+  }
 
-        /* TABLET: MASIH BERSAMPINGAN */
-        @media (max-width: 1024px) {
-          .about-stage {
-            max-width: 980px !important;
-            padding-left: clamp(1rem, 2.6vw, 2.2rem) !important;
-            padding-right: clamp(1rem, 2.6vw, 2.2rem) !important;
-          }
+  .about-header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin-bottom: clamp(0.75rem, 1.6vw, 1rem) !important;
+  }
 
-          .about-slide {
-            gap: clamp(0.8rem, 2.2vw, 1.8rem) !important;
-            justify-content: center !important;
-            align-items: center !important;
-          }
+  .about-text h2 {
+    font-size: clamp(2.45rem, 7vw, 4.45rem) !important;
+    line-height: 0.94 !important;
+    text-align: center !important;
+    max-width: 600px !important;
+    width: 100% !important;
+    letter-spacing: -0.055em !important;
+  }
 
-          .about-photo {
-            width: clamp(250px, 31vw, 350px) !important;
-          }
+  .about-bio-box {
+    width: 100% !important;
+    max-width: 520px !important;
+    min-height: clamp(150px, 20vh, 190px) !important;
+    text-align: center !important;
+  }
 
-          .about-text {
-            min-width: 390px !important;
-            flex-basis: 560px !important;
-            max-width: 560px !important;
-            transform: translateX(-0.6rem);
-          }
+  .about-pill {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
 
-          .about-text h2 {
-            font-size: clamp(2.35rem, 4.8vw, 4.25rem) !important;
-            line-height: 0.95 !important;
-            max-width: 560px !important;
-          }
+  .about-bio-text {
+    font-size: clamp(0.84rem, 2.1vw, 1rem) !important;
+    line-height: 1.68 !important;
+    text-align: center !important;
+  }
+}
 
-          .about-bio-box {
-            max-width: 510px !important;
-          }
-        }
+/* TABLET KECIL / MOBILE LANDSCAPE */
+@media (max-width: 900px) {
+  .about-stage {
+    max-width: 680px !important;
+    padding: 1.6rem 1.25rem !important;
+  }
 
-        /* TABLET KECIL / HALFSCREEN SEMPIT: TETAP SAMPINGAN */
-        @media (max-width: 900px) {
-          .about-slide {
-            gap: clamp(0.6rem, 1.8vw, 1.4rem) !important;
-          }
+  .about-slide {
+    gap: 0.95rem !important;
+  }
 
-          .about-photo {
-            width: clamp(220px, 29vw, 300px) !important;
-          }
+  .about-photo {
+    width: clamp(245px, 54vw, 350px) !important;
+  }
 
-          .about-text {
-            min-width: 360px !important;
-            flex-basis: 500px !important;
-            max-width: 500px !important;
-            transform: translateX(-0.4rem);
-          }
+  .about-text {
+    width: min(94vw, 560px) !important;
+    max-width: 560px !important;
+  }
 
-          .about-text h2 {
-            font-size: clamp(2.1rem, 4.4vw, 3.65rem) !important;
-            line-height: 0.96 !important;
-            max-width: 500px !important;
-          }
+  .about-text h2 {
+    font-size: clamp(2.25rem, 7.4vw, 4rem) !important;
+    max-width: 560px !important;
+  }
 
-          .about-bio-box {
-            max-width: 470px !important;
-          }
+  .about-bio-box {
+    max-width: 500px !important;
+  }
 
-          .about-bio-text {
-            font-size: clamp(0.78rem, 1.55vw, 0.95rem) !important;
-            line-height: 1.65 !important;
-          }
-        }
+  .about-bio-text {
+    font-size: clamp(0.82rem, 2.2vw, 0.98rem) !important;
+    line-height: 1.65 !important;
+  }
+}
 
         /* MOBILE: FOTO TENGAH, DESKRIPSI DI BAWAH */
         @media (max-width: 767px) {
@@ -680,11 +735,12 @@ export default function AboutUs() {
           }
 
           .about-text h2 {
-            font-size: clamp(2.35rem, 10.2vw, 4.35rem) !important;
+            font-size: clamp(2.25rem, 9.6vw, 4.1rem) !important;
             line-height: 0.94 !important;
             text-align: center !important;
             max-width: 500px !important;
             width: 100% !important;
+            letter-spacing: -0.055em !important;
           }
 
           .about-bio-box {
@@ -714,9 +770,10 @@ export default function AboutUs() {
           }
 
           .about-text h2 {
-            font-size: clamp(2.15rem, 9.6vw, 3.6rem) !important;
+            font-size: clamp(2.05rem, 9vw, 3.45rem) !important;
             line-height: 0.95 !important;
             max-width: 460px !important;
+            letter-spacing: -0.055em !important;
           }
 
           .about-bio-box {
@@ -736,7 +793,7 @@ export default function AboutUs() {
           }
 
           .about-text h2 {
-            font-size: clamp(2rem, 8.8vw, 3.25rem) !important;
+            font-size: clamp(1.95rem, 8.4vw, 3.15rem) !important;
           }
 
           .about-bio-box {

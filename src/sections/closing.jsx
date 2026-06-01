@@ -9,30 +9,34 @@ gsap.registerPlugin(ScrollTrigger);
 ═════════════════════════════════════════════════════════════ */
 const C = {
   cream: "#fafdda",
-  brown: "#2a1f0e",
-  ink: "#2a1f0e",
+  brown: "#2c1309",
   rust: "#c2380f",
-  orange: "#ff9721",
+  burntOrange: "#d05a1f",
   saffron: "#c9880a",
-  scarlet: "#c2380f",
-  banana: "#f4d35e",
+  darkSaffron: "#9f6708",
+  deepRed: "#8f2410",
 };
 
 /* ===============================
    DECORATION DOTS
+   disesuaikan buat background #fafdda
 ================================ */
 const spiceDots = [
-  { top: "7%", left: "5%", size: 11, color: C.saffron },
-  { top: "11%", left: "87%", size: 7, color: C.scarlet },
-  { top: "20%", left: "93%", size: 15, color: C.banana },
-  { top: "78%", left: "4%", size: 13, color: C.scarlet },
-  { top: "87%", left: "93%", size: 9, color: C.saffron },
-  { top: "73%", left: "89%", size: 6, color: C.banana },
-  { top: "69%", left: "2%", size: 10, color: C.saffron },
-  { top: "91%", left: "48%", size: 5, color: C.scarlet },
-  { top: "5%", left: "51%", size: 7, color: C.banana },
-  { top: "50%", left: "1%", size: 5, color: C.saffron },
-  { top: "45%", left: "96%", size: 8, color: C.scarlet },
+  { top: "7%", left: "5%", size: 11, color: C.rust, opacity: 0.82 },
+  { top: "11%", left: "87%", size: 7, color: C.brown, opacity: 0.42 },
+  { top: "20%", left: "93%", size: 15, color: C.saffron, opacity: 0.72 },
+  { top: "78%", left: "4%", size: 13, color: C.deepRed, opacity: 0.78 },
+  { top: "87%", left: "93%", size: 9, color: C.darkSaffron, opacity: 0.7 },
+  { top: "73%", left: "89%", size: 6, color: C.rust, opacity: 0.78 },
+  { top: "69%", left: "2%", size: 10, color: C.burntOrange, opacity: 0.72 },
+  { top: "91%", left: "48%", size: 5, color: C.deepRed, opacity: 0.68 },
+  { top: "5%", left: "51%", size: 7, color: C.darkSaffron, opacity: 0.62 },
+  { top: "50%", left: "1%", size: 5, color: C.brown, opacity: 0.38 },
+  { top: "45%", left: "96%", size: 8, color: C.rust, opacity: 0.75 },
+  { top: "31%", left: "7%", size: 6, color: C.brown, opacity: 0.32 },
+  { top: "61%", left: "94%", size: 11, color: C.saffron, opacity: 0.64 },
+  { top: "16%", left: "24%", size: 5, color: C.deepRed, opacity: 0.58 },
+  { top: "84%", left: "22%", size: 8, color: C.burntOrange, opacity: 0.62 },
 ];
 
 /* ═════════════════════════════════════════════════════════════
@@ -41,7 +45,7 @@ const spiceDots = [
 export default function ClosingSection() {
   const containerRef = useRef(null);
 
-  const creamLayerRef = useRef(null);
+  const brownLayerRef = useRef(null);
   const dotsRef = useRef(null);
 
   const quote1Ref = useRef(null);
@@ -90,7 +94,7 @@ export default function ClosingSection() {
       const q1 = quote1WordRefs.current;
       const q2 = quote2WordRefs.current;
 
-      /* Initial text quote states */
+      /* Initial quote states */
       gsap.set(q1, {
         y: 42,
         opacity: 0,
@@ -103,13 +107,14 @@ export default function ClosingSection() {
         filter: "blur(12px)",
       });
 
-      /* Layer states */
-      gsap.set(creamLayerRef.current, {
+      /* Brown overlay states */
+      gsap.set(brownLayerRef.current, {
         opacity: 1,
         scale: 1,
         transformOrigin: "center center",
       });
 
+      /* Dots muncul di final cream */
       gsap.set(dotsRef.current, {
         opacity: 0,
         scale: 0.96,
@@ -159,7 +164,7 @@ export default function ClosingSection() {
       });
 
       /* ═════════════════════════════════════════════════════
-         1. Quote 1 masuk
+         1. Quote 1 masuk di brown bg
       ═════════════════════════════════════════════════════ */
       tl.to(q1, {
         y: 0,
@@ -188,7 +193,7 @@ export default function ClosingSection() {
       tl.to({}, { duration: 0.22 });
 
       /* ═════════════════════════════════════════════════════
-         2. Quote 2 masuk
+         2. Quote 2 masuk di brown bg
       ═════════════════════════════════════════════════════ */
       tl.to(q2, {
         y: 0,
@@ -215,10 +220,10 @@ export default function ClosingSection() {
       });
 
       /* ═════════════════════════════════════════════════════
-         3. Cream ke brown: zoom out + fade
+         3. Brown ke cream: zoom out + fade
       ═════════════════════════════════════════════════════ */
       tl.to(
-        creamLayerRef.current,
+        brownLayerRef.current,
         {
           scale: 1.08,
           opacity: 0,
@@ -228,7 +233,7 @@ export default function ClosingSection() {
         "+=0.05"
       );
 
-      /* Dots muncul */
+      /* Dots muncul di cream */
       tl.to(
         dotsRef.current,
         {
@@ -241,7 +246,7 @@ export default function ClosingSection() {
       );
 
       /* ═════════════════════════════════════════════════════
-         4. Final layout masuk
+         4. Final cream layout masuk
       ═════════════════════════════════════════════════════ */
       tl.to(topLineRef.current, {
         scaleX: 1,
@@ -318,16 +323,18 @@ export default function ClosingSection() {
 
   return (
     <section
+         id="closing"
+            data-section="closing"
       ref={containerRef}
       className="
         relative
         h-screen
         w-full
         overflow-hidden
-        bg-[#2a1f0e]
+        bg-[#fafdda]
       "
     >
-      {/* BROWN BACKGROUND */}
+      {/* CREAM FINAL BACKGROUND */}
       <div
         className="
           absolute
@@ -335,9 +342,25 @@ export default function ClosingSection() {
           z-0
           h-full
           w-full
-          bg-[#2a1f0e]
+          bg-[#fafdda]
         "
       >
+        {/* SOFT WARM GLOW - jangan terlalu kuat di pinggir */}
+        <div
+          className="
+            pointer-events-none
+            absolute
+            inset-0
+            bg-[radial-gradient(circle_at_50%_42%,rgba(194,56,15,0.07),transparent_42%),radial-gradient(circle_at_18%_82%,rgba(201,136,10,0.09),transparent_34%),radial-gradient(circle_at_88%_12%,rgba(44,19,9,0.055),transparent_28%)]
+          "
+          style={{
+            WebkitMaskImage:
+              "linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%)",
+            maskImage:
+              "linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%)",
+          }}
+        />
+
         {/* SCATTERED DOTS */}
         <div
           ref={dotsRef}
@@ -352,21 +375,25 @@ export default function ClosingSection() {
           {spiceDots.map((dot, i) => (
             <span
               key={i}
-              className="absolute rounded-full"
+              className="
+                absolute
+                rounded-full
+                shadow-[0_2px_8px_rgba(44,19,9,0.14)]
+              "
               style={{
                 top: dot.top,
                 left: dot.left,
                 width: `${dot.size}px`,
                 height: `${dot.size}px`,
                 backgroundColor: dot.color,
-                opacity: 0.9,
+                opacity: dot.opacity,
               }}
             />
           ))}
         </div>
       </div>
 
-      {/* FINAL BROWN LAYOUT */}
+      {/* FINAL CREAM LAYOUT */}
       <div
         ref={finalLayoutRef}
         className="
@@ -389,7 +416,7 @@ export default function ClosingSection() {
             mb-[clamp(1.4rem,3.5vh,2.5rem)]
             h-[2px]
             w-[min(48vw,580px)]
-            bg-[#c9880a]
+            bg-[#c2380f]
           "
         />
 
@@ -410,9 +437,9 @@ export default function ClosingSection() {
               font-black
               leading-none
               tracking-[-0.035em]
-              text-[#fafdda]
+              text-[#2c1309]
               [-webkit-text-stroke:0.45px_currentColor]
-              [text-shadow:1px_1px_0_rgba(250,253,218,0.18)]
+              [text-shadow:1px_1px_0_rgba(44,19,9,0.18)]
 
               text-[clamp(2.6rem,8.6vw,6.6rem)]
               sm:text-[clamp(3rem,8.2vw,7rem)]
@@ -434,9 +461,9 @@ export default function ClosingSection() {
               italic
               leading-none
               tracking-[-0.04em]
-              text-[#ff9721]
+              text-[#c2380f]
               [-webkit-text-stroke:0.35px_currentColor]
-              [text-shadow:1px_1px_0_rgba(255,151,33,0.16)]
+              [text-shadow:1px_1px_0_rgba(194,56,15,0.15)]
 
               text-[clamp(2rem,6.9vw,4.8rem)]
               sm:text-[clamp(2.4rem,6.5vw,5.2rem)]
@@ -456,7 +483,7 @@ export default function ClosingSection() {
             mt-[clamp(1.7rem,4.5vh,3rem)]
             h-[2px]
             w-[min(48vw,580px)]
-            bg-[#c9880a]
+            bg-[#c2380f]
           "
         />
 
@@ -469,49 +496,36 @@ export default function ClosingSection() {
             w-[min(82vw,500px)]
             rounded-[1rem]
             border
-            border-[#c9880a]/55
+            border-[#c2380f]/60
+            bg-[#fafdda]/55
             px-[clamp(1.5rem,4vw,2.8rem)]
             py-[clamp(1.2rem,3.2vh,2rem)]
             text-center
-            shadow-[0_0_28px_rgba(0,0,0,0.12)]
+            shadow-[0_14px_34px_rgba(44,19,9,0.12)]
+            backdrop-blur-[1px]
           "
         >
           {/* CORNER BRACKETS */}
-<span className="absolute left-4 top-4 h-5 w-5 border-l-2 border-t-2 border-[#c9880a]" />
-<span className="absolute right-4 top-4 h-5 w-5 border-r-2 border-t-2 border-[#c9880a]" />
-<span className="absolute bottom-4 left-4 h-5 w-5 border-b-2 border-l-2 border-[#c9880a]" />
-<span className="absolute bottom-4 right-4 h-5 w-5 border-b-2 border-r-2 border-[#c9880a]" />
+          <span className="absolute left-4 top-4 h-5 w-5 border-l-2 border-t-2 border-[#c2380f]" />
+          <span className="absolute right-4 top-4 h-5 w-5 border-r-2 border-t-2 border-[#c2380f]" />
+          <span className="absolute bottom-4 left-4 h-5 w-5 border-b-2 border-l-2 border-[#c2380f]" />
+          <span className="absolute bottom-4 right-4 h-5 w-5 border-b-2 border-r-2 border-[#c2380f]" />
 
-<p
-  className="
-    font-serif
-    text-[clamp(0.75rem,1.2vw,0.95rem)]
-    font-normal
-    leading-relaxed
-    tracking-[0.03em]
-    text-[#fafdda]
-    text-center
-  "
->
-  From Aceh to Papua, soto takes a thousand forms —
-  each one is a reflection of the hands that made it, the
-  land it came from, and the table it was shared on.
-</p>
-
-{/* <p
-  className="
-    mt-4
-    text-center
-    font-serif
-    text-[clamp(0.72rem,1.3vw,0.9rem)]
-    font-black
-    uppercase
-    tracking-[0.16em]
-    text-[#f4d35e]
-  "
->
-  Indonesia — Satu Selera, Seribu Rasa
-</p> */}
+          <p
+            className="
+              font-serif
+              text-[clamp(0.75rem,1.2vw,0.95rem)]
+              font-normal
+              leading-relaxed
+              tracking-[0.03em]
+              text-[#2c1309]
+              text-center
+            "
+          >
+            From Aceh to Papua, soto takes a thousand forms —
+            each one is a reflection of the hands that made it, the
+            land it came from, and the table it was shared on.
+          </p>
         </div>
 
         {/* FOOTER */}
@@ -523,23 +537,23 @@ export default function ClosingSection() {
             text-[clamp(0.62rem,1vw,0.75rem)]
             uppercase
             tracking-[0.45em]
-            text-[#f4d35e]
+            text-[#c2380f]
           "
         >
           A story by Kicau Mania Team
         </p> */}
       </div>
 
-      {/* CREAM LAYER WITH QUOTES */}
+      {/* BROWN LAYER WITH QUOTES */}
       <div
-        ref={creamLayerRef}
+        ref={brownLayerRef}
         className="
           absolute
           inset-0
           z-[6]
           h-full
           w-full
-          bg-[#fafdda]
+          bg-[#2c1309]
         "
       >
         <div
@@ -569,9 +583,9 @@ export default function ClosingSection() {
               font-black
               leading-none
               tracking-[-0.025em]
-              text-[#2a1f0e]
+              text-[#fafdda]
               [-webkit-text-stroke:0.45px_currentColor]
-              [text-shadow:1px_1px_0_rgba(42,31,14,0.18)]
+              [text-shadow:1px_1px_0_rgba(250,253,218,0.18)]
 
               text-[clamp(2.8rem,11vw,5.4rem)]
               sm:text-[clamp(3.2rem,9vw,6rem)]
@@ -598,9 +612,9 @@ export default function ClosingSection() {
               font-black
               leading-none
               tracking-[-0.025em]
-              text-[#2a1f0e]
+              text-[#fafdda]
               [-webkit-text-stroke:0.42px_currentColor]
-              [text-shadow:1px_1px_0_rgba(42,31,14,0.16)]
+              [text-shadow:1px_1px_0_rgba(250,253,218,0.16)]
 
               text-[clamp(2.35rem,9.5vw,4.7rem)]
               sm:text-[clamp(2.8rem,8vw,5.3rem)]

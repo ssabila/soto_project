@@ -1,0 +1,29 @@
+<svg width="100" height="100" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="retroPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <!-- Warm cream background -->
+      <rect width="20" height="20" fill="#FFF8E7"/>
+      
+      <!-- Small decorative dots in vintage colors -->
+      <circle cx="4" cy="4" r="1.5" fill="#FFB84D" opacity="0.6"/>
+      <circle cx="14" cy="10" r="1.5" fill="#FF9999" opacity="0.6"/>
+      <circle cx="10" cy="16" r="1.5" fill="#FFDA7D" opacity="0.6"/>
+      <circle cx="18" cy="6" r="1" fill="#FF7B7B" opacity="0.4"/>
+    </pattern>
+  </defs>
+  
+  <!-- Main background -->
+  <rect width="100" height="100" fill="#FFF8E7"/>
+  
+  <!-- Pattern overlay -->
+  <rect width="100" height="100" fill="url(#retroPattern)"/>
+  
+  <!-- Film strip frame lines (subtle) -->
+  <line x1="0" y1="0" x2="100" y2="0" stroke="#FFD9A3" stroke-width="3" opacity="0.8"/>
+  <line x1="0" y1="100" x2="100" y2="100" stroke="#FFD9A3" stroke-width="3" opacity="0.8"/>
+  
+  <!-- Left edge accent -->
+  <rect x="0" y="0" width="6" height="100" fill="#FFD9A3" opacity="0.5"/>
+  <!-- Right edge accent -->
+  <rect x="94" y="0" width="6" height="100" fill="#FFD9A3" opacity="0.5"/>
+</svg>

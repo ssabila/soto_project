@@ -719,15 +719,17 @@ const OpeningSection = () => {
 
   return (
     <section
-      ref={container}
-      className="
-        relative
-        h-screen
-        w-full
-        overflow-hidden
-        bg-brand-cream
-      "
-    >
+  id="opening"
+  data-section="opening"
+  ref={container}
+  className="
+    relative
+    h-screen
+    w-full
+    overflow-hidden
+    bg-brand-cream
+  "
+>
       
 
       {/* BACKGROUND */}
