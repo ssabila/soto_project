@@ -2,7 +2,6 @@ import React, { useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-// ─── ASSETS ───────────────────────────────────────────────────────────────────
 import backgroundGame from "../assets/images/background-gamestart.svg";
 import mangkokMeja from "../assets/images/mangkokmeja-game.svg";
 
@@ -26,7 +25,7 @@ import tambahanEmping from "../assets/images/tambahan-emping.svg";
 
 import gameTitle from "../assets/images/game-title.svg";
 
-// ─── COLORS ───────────────────────────────────────────────────────────────────
+// warna
 const C = {
   brown: "#2c1309",
   rust: "#c2380f",
@@ -35,7 +34,7 @@ const C = {
   burntOrange: "#d05a1f",
 };
 
-// ─── BACKGROUND DECOR ─────────────────────────────────────────────────────────
+// dots dekorasi
 const spiceDots = [
   { top: "7%", left: "5%", size: 11, color: C.rust, opacity: 0.72 },
   { top: "11%", left: "87%", size: 7, color: C.brown, opacity: 0.38 },
@@ -50,7 +49,7 @@ const spiceDots = [
   { top: "45%", left: "96%", size: 8, color: C.scarlet, opacity: 0.58 },
 ];
 
-// ─── GAME DATA ────────────────────────────────────────────────────────────────
+//data game
 const KUAH_LIST = [
   {
     id: "biasa",
@@ -230,7 +229,7 @@ function getResultCopy(kuah, topping, pelengkap, tambahan) {
     .join(", ")}. Selamat menikmati sotomu!.`;
 }
 
-// ─── FRAME SHELL ──────────────────────────────────────────────────────────────
+// frame
 const frameShellClassName = [
   "relative mx-auto",
   "h-[68svh] w-[90vw]",
@@ -247,7 +246,6 @@ const frameCardClassName = [
   "sm:rounded-[1.5rem] md:rounded-[1.75rem]",
 ].join(" ");
 
-// ─── SUB-COMPONENTS ───────────────────────────────────────────────────────────
 function IngredientCard({
   item,
   selected,
@@ -575,7 +573,7 @@ function FinalSotoPreview({ kuah, topping, pelengkap, tambahan }) {
   );
 }
 
-// ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
+// komponen utama
 const Makeyourownsoto = () => {
   const container = useRef(null);
   const hasPlayed = useRef(false);
@@ -1038,10 +1036,10 @@ const Makeyourownsoto = () => {
               ))}
             </div>
 
-            {/* BLACKOUT */}
+            {/* transisi */}
             <div className="soto-frame-blackout pointer-events-none absolute inset-0 z-[100] bg-black opacity-0" />
 
-            {/* ACTUAL GAME */}
+            {/* GAME */}
             <div className="soto-actual-game pointer-events-none absolute inset-0 z-[110] opacity-0">
               {gameStarted && (
                 <div className="relative h-full w-full overflow-hidden">
@@ -1208,7 +1206,7 @@ const Makeyourownsoto = () => {
       </button>
     </div>
 
-    {/* CENTER: STEPS */}
+    {/* tahapan pembuatan */}
     <div className="flex justify-center">
       <div
         className="
@@ -1243,7 +1241,7 @@ const Makeyourownsoto = () => {
       </div>
     </div>
 
-    {/* RIGHT: FINISH */}
+    {/* tombol FINISH */}
     <div className="flex justify-end">
       <button
         type="button"

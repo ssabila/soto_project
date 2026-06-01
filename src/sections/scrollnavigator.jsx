@@ -93,7 +93,7 @@ export default function ScrollNavigator() {
             "
             aria-label={`Go to ${item.label}`}
           >
-            {/* LABEL: muncul pas hover */}
+            {/* LABEL*/}
             <span
               className="
                 pointer-events-none

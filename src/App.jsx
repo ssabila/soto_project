@@ -15,14 +15,12 @@ function App() {
   return (
     <main className="w-full overflow-clip">
       <ScrollNavigator />
-      {/* OPENING SECTION */}
+      
       <OpeningSection />
-
       <QuestionSection />
       <JourneySection />
       <UnitySection />
       <MeaningSection />
-
       <ClosingSection />
 
       <div className="relative z-20 -mt-[2px] bg-[#2a1f0e]">

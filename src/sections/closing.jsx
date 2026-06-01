@@ -17,10 +17,7 @@ const C = {
   deepRed: "#8f2410",
 };
 
-/* ===============================
-   DECORATION DOTS
-   disesuaikan buat background #fafdda
-================================ */
+/* decoration elements */
 const spiceDots = [
   { top: "7%", left: "5%", size: 11, color: C.rust, opacity: 0.82 },
   { top: "11%", left: "87%", size: 7, color: C.brown, opacity: 0.42 },
@@ -39,9 +36,7 @@ const spiceDots = [
   { top: "84%", left: "22%", size: 8, color: C.burntOrange, opacity: 0.62 },
 ];
 
-/* ═════════════════════════════════════════════════════════════
-   COMPONENT
-═════════════════════════════════════════════════════════════ */
+/* komponen */
 export default function ClosingSection() {
   const containerRef = useRef(null);
 
@@ -163,9 +158,7 @@ export default function ClosingSection() {
         },
       });
 
-      /* ═════════════════════════════════════════════════════
-         1. Quote 1 masuk di brown bg
-      ═════════════════════════════════════════════════════ */
+      /* quote1 masuk */
       tl.to(q1, {
         y: 0,
         opacity: 1,
@@ -192,9 +185,7 @@ export default function ClosingSection() {
 
       tl.to({}, { duration: 0.22 });
 
-      /* ═════════════════════════════════════════════════════
-         2. Quote 2 masuk di brown bg
-      ═════════════════════════════════════════════════════ */
+      /* quote 2 masuk */
       tl.to(q2, {
         y: 0,
         opacity: 1,
@@ -219,9 +210,7 @@ export default function ClosingSection() {
         },
       });
 
-      /* ═════════════════════════════════════════════════════
-         3. Brown ke cream: zoom out + fade
-      ═════════════════════════════════════════════════════ */
+      /* zoom out brown layer */
       tl.to(
         brownLayerRef.current,
         {
@@ -233,7 +222,7 @@ export default function ClosingSection() {
         "+=0.05"
       );
 
-      /* Dots muncul di cream */
+      /* Dots muncul*/
       tl.to(
         dotsRef.current,
         {
@@ -245,9 +234,7 @@ export default function ClosingSection() {
         "-=0.55"
       );
 
-      /* ═════════════════════════════════════════════════════
-         4. Final cream layout masuk
-      ═════════════════════════════════════════════════════ */
+      /* final layout */
       tl.to(topLineRef.current, {
         scaleX: 1,
         opacity: 1,
@@ -345,7 +332,7 @@ export default function ClosingSection() {
           bg-[#fafdda]
         "
       >
-        {/* SOFT WARM GLOW - jangan terlalu kuat di pinggir */}
+        
         <div
           className="
             pointer-events-none
@@ -393,7 +380,7 @@ export default function ClosingSection() {
         </div>
       </div>
 
-      {/* FINAL CREAM LAYOUT */}
+      
       <div
         ref={finalLayoutRef}
         className="
@@ -409,7 +396,7 @@ export default function ClosingSection() {
           text-center
         "
       >
-        {/* TOP LINE */}
+       
         <div
           ref={topLineRef}
           className="
@@ -505,7 +492,7 @@ export default function ClosingSection() {
             backdrop-blur-[1px]
           "
         >
-          {/* CORNER BRACKETS */}
+         
           <span className="absolute left-4 top-4 h-5 w-5 border-l-2 border-t-2 border-[#c2380f]" />
           <span className="absolute right-4 top-4 h-5 w-5 border-r-2 border-t-2 border-[#c2380f]" />
           <span className="absolute bottom-4 left-4 h-5 w-5 border-b-2 border-l-2 border-[#c2380f]" />
@@ -528,23 +515,9 @@ export default function ClosingSection() {
           </p>
         </div>
 
-        {/* FOOTER */}
-        {/* <p
-          ref={footerRef}
-          className="
-            mt-[clamp(1.8rem,5vh,3rem)]
-            font-serif
-            text-[clamp(0.62rem,1vw,0.75rem)]
-            uppercase
-            tracking-[0.45em]
-            text-[#c2380f]
-          "
-        >
-          A story by Kicau Mania Team
-        </p> */}
       </div>
 
-      {/* BROWN LAYER WITH QUOTES */}
+      {/* brown layer */}
       <div
         ref={brownLayerRef}
         className="

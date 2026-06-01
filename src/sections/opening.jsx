@@ -21,10 +21,6 @@ import servinglidSoto from "../assets/images/servinglid-soto.svg";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* =========================================================
-   DEBUGGER VIEWPORT
-   Hapus <ScreenDebugger /> nanti kalau layout udah final.
-========================================================= */
 const ScreenDebugger = () => {
   const [size, setSize] = useState({
     width: typeof window !== "undefined" ? window.innerWidth : 0,
@@ -78,16 +74,11 @@ const ScreenDebugger = () => {
   );
 };
 
-/* =========================================================
-   SHARED COLORS
-========================================================= */
+
 const COLOR_INK = "#2a1f0e";
 const COLOR_RUST = "#c2380f";
 const COLOR_ORANGE = "#ff9721";
 
-/* =========================================================
-   SHARED POSITION ANCHOR
-========================================================= */
 const SCENE_ANCHOR_Y = `
   top-[38%]
   min-[560px]:top-[42%]
@@ -126,9 +117,6 @@ const SOTO_ANCHOR_Y = `
   2xl:top-[40%]
 `;
 
-/* =========================================================
-   FLOATING ASSETS
-========================================================= */
 const floatingAssets = [
   {
     id: "tomato",
@@ -250,9 +238,6 @@ const floatingAssets = [
   },
 ];
 
-/* =========================================================
-   TV ITEMS
-========================================================= */
 const tvItems = [
   {
     first: "Different",
@@ -334,11 +319,6 @@ const OpeningSection = () => {
         force3D: true,
       });
 
-      /*
-        TV motion:
-        Pakai x berbasis viewport, bukan xPercent.
-        Ini lebih smooth karena jaraknya konsisten di berbagai ukuran layar.
-      */
       gsap.set(".tv-sequence", {
         x: "105vw",
         opacity: 1,
@@ -372,12 +352,10 @@ const OpeningSection = () => {
           anticipatePin: 1,
           invalidateOnRefresh: true,
 
-          // ini yang bersihin elemen final pas balik ke atas
           onLeaveBack: () => {
             resetFinalScene();
           },
 
-          // ini safety tambahan kalau refresh terjadi pas posisi scroll di atas
           onRefresh: (self) => {
             if (self.progress === 0) {
               resetFinalScene();
@@ -386,9 +364,7 @@ const OpeningSection = () => {
         },
       });
 
-      // =========================
-      // GLOBE MASUK
-      // =========================
+      //globe masuk
       tl.to(
         "#globe-1",
         {
@@ -402,9 +378,7 @@ const OpeningSection = () => {
         0
       );
 
-      // =========================
-      // GLOBE KELUAR
-      // =========================
+      //globe keluar
       tl.to("#globe-1", {
         y: -850,
         opacity: 0,
@@ -414,9 +388,7 @@ const OpeningSection = () => {
         overwrite: "auto",
       });
 
-      // =========================
-      // INGREDIENT MASUK
-      // =========================
+      //bahan masuk
       tl.to(
         ".ingredient",
         {
@@ -431,9 +403,7 @@ const OpeningSection = () => {
         "-=1.8"
       );
 
-      // =========================
-      // TEXT LANJUTAN
-      // =========================
+      // teks masuk
       tl.to(
         ".line-3",
         {
@@ -456,9 +426,7 @@ const OpeningSection = () => {
         "-=0.5"
       );
 
-      // =========================
-      // TEXT + INGREDIENT KELUAR
-      // =========================
+      // reks dan bahan keluar
       tl.to(
         [".ingredient", ".text-group"],
         {
@@ -472,9 +440,7 @@ const OpeningSection = () => {
         "+=0.4"
       );
 
-      // =========================
-      // TV MASUK — SMOOTH
-      // =========================
+      // tv masuk
       tl.to(
         ".tv-sequence",
         {
@@ -486,9 +452,7 @@ const OpeningSection = () => {
         "-=2"
       );
 
-      // =========================
-      // TV HOLD — BENTAR AJA
-      // =========================
+      // tv hold
       tl.to(".tv-sequence", {
         x: "8vw",
         duration: 0.8,
@@ -496,9 +460,7 @@ const OpeningSection = () => {
         overwrite: "auto",
       });
 
-      // =========================
-      // TV KELUAR — SMOOTH + BENER-BENER HILANG
-      // =========================
+      // tv keluar
       tl.to(
         ".tv-sequence",
         {
@@ -511,9 +473,7 @@ const OpeningSection = () => {
         ">"
       );
 
-      // =========================
-      // ONE DISH SECTION REVEAL
-      // =========================
+      // one dish
       tl.to(
         ".one-dish-section",
         {
@@ -524,9 +484,7 @@ const OpeningSection = () => {
         "-=0.65"
       );
 
-      // =========================
-      // STILL MUNCUL
-      // =========================
+      // still
       tl.to(
         ".text-still",
         {
@@ -540,9 +498,7 @@ const OpeningSection = () => {
         "-=1"
       );
 
-      // =========================
-      // STILL ILANG
-      // =========================
+      // still keluar
       tl.to(
         ".text-still",
         {
@@ -555,9 +511,7 @@ const OpeningSection = () => {
         "+=0.45"
       );
 
-      // =========================
-      // ONE DISH TEXT MUNCUL
-      // =========================
+      // teks masuk
       tl.to(
         [".text-one-dish", ".text-continues"],
         {
@@ -571,9 +525,7 @@ const OpeningSection = () => {
         "-=0.1"
       );
 
-      // =========================
-      // SERVING LID 1 POP IN
-      // =========================
+      // asset masuk
       tl.to(
         ".lid-1",
         {
@@ -587,9 +539,7 @@ const OpeningSection = () => {
         "+=0.6"
       );
 
-      // =========================
-      // SOTO BASE POP IN
-      // =========================
+      // soto masuk
       tl.to(
         ".lid-soto",
         {
@@ -603,9 +553,7 @@ const OpeningSection = () => {
         "+=0.35"
       );
 
-      // =========================
-      // LID 1 GESER KE ATAS
-      // =========================
+      // asset keluar
       tl.to(
         ".lid-1",
         {
@@ -631,9 +579,7 @@ const OpeningSection = () => {
         "<"
       );
 
-      // =========================
-      // TEKS "SOTO" MUNCUL
-      // =========================
+      // teks soto final masuk
       tl.to(
         ".text-soto-final",
         {
@@ -646,9 +592,7 @@ const OpeningSection = () => {
         ">-0.2"
       );
 
-      // =========================
-      // SOTO BASE POP
-      // =========================
+      // soto pop up
       tl.to(
         ".lid-soto",
         {
@@ -660,11 +604,7 @@ const OpeningSection = () => {
         "<0.15"
       );
 
-      /* =========================================================
-         GSAP REFRESH FIX — SAFE VERSION
-         Jangan pakai tl.invalidate() di resize.
-         Jangan observe pinned container, biar gak refresh loop.
-      ========================================================= */
+      
       let resizeTimer;
       let rafId;
 

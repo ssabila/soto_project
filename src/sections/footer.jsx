@@ -43,7 +43,7 @@ export default function FooterSection() {
         md:min-h-[clamp(300px,39vh,390px)]
       "
     >
-      {/* FOOTER SVG AS BACKGROUND SCRAP */}
+      {/*scrap bg */}
       <img
         src={footerBg}
         alt=""
@@ -104,7 +104,7 @@ export default function FooterSection() {
             md:gap-7
           "
         >
-          {/* LEFT LINKS */}
+          {/* link kiri*/}
           <nav
             className="
               flex
@@ -192,7 +192,7 @@ export default function FooterSection() {
             "
           />
 
-          {/* CENTER COPY - HIDDEN ON MOBILE */}
+          {/* center*/}
           <div
             className="
               hidden
@@ -245,7 +245,7 @@ export default function FooterSection() {
             "
           />
 
-          {/* RIGHT INFO */}
+          {/* link kanan*/}
           <div
             className="
               flex

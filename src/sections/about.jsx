@@ -281,7 +281,7 @@ export default function AboutUs() {
         backgroundColor: "#645c46",
       }}
     >
-      {/* ── FULL BG ── */}
+      {/* BG */}
       <img
         src={backgroundUs}
         alt=""
@@ -298,7 +298,7 @@ export default function AboutUs() {
         }}
       />
 
-      {/* ── STAGE ── */}
+      {/* ISI */}
       <div
         className="about-stage"
         style={{
@@ -333,7 +333,7 @@ export default function AboutUs() {
               pointerEvents: "none",
             }}
           >
-            {/* ── FOTO POLAROID ── */}
+            {/* FOTO  */}
             <div
               className="about-photo-wrap"
               style={{
@@ -364,7 +364,7 @@ export default function AboutUs() {
               />
             </div>
 
-            {/* ── TEXT SIDE ── */}
+            {/* nama & bio */}
             <div
               className="about-text"
               style={{
@@ -376,7 +376,7 @@ export default function AboutUs() {
                 alignItems: "flex-start",
               }}
             >
-              {/* WRAPPER NAMA / HEADER */}
+              {/* WRAPPER NAMA */}
               <div
                 ref={(el) => {
                   headerRefs.current[idx] = el;
@@ -568,7 +568,7 @@ export default function AboutUs() {
           }
         }
 
-        /* TABLET: SAMA KAYAK MOBILE, FOTO ATAS TEKS BAWAH */
+        /* TABLET*/
 @media (max-width: 1024px) {
   [data-section="about"] {
     min-height: 100svh !important;
@@ -648,7 +648,7 @@ export default function AboutUs() {
   }
 }
 
-/* TABLET KECIL / MOBILE LANDSCAPE */
+/* MOBILE */
 @media (max-width: 900px) {
   .about-stage {
     max-width: 680px !important;
@@ -683,7 +683,7 @@ export default function AboutUs() {
   }
 }
 
-        /* MOBILE: FOTO TENGAH, DESKRIPSI DI BAWAH */
+        /* MOBILE */
         @media (max-width: 767px) {
           [data-section="about"] {
             min-height: 100svh !important;
