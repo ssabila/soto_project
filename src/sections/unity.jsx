@@ -33,7 +33,7 @@ import grainOverlay from '../assets/images/grain.webp';
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
-// ─── Static constants ──────────────────────────────────────────────────────
+//  Static constants
 
 const BOWLS       = [sotoMakasar, sotoBanjar, sotoBetawi, sotoKudus, sotoLamongan, sotoPadang];
 const INGREDIENTS = [rempah, daging, santan, dagingSapi, jerukNipis, cabe, bawangRetro];
@@ -122,7 +122,7 @@ const BOWL_PHASE2 = [
   { x:  300, y:  -80, r:  35 },
 ];
 
-// ─── Component ─────────────────────────────────────────────────────────────
+//  Component 
 
 export default function Unity() {
   const spacerRef  = useRef(null);
@@ -153,7 +153,7 @@ export default function Unity() {
     const ings     = ingRefs.current.filter(Boolean);
     const cultures = cultureRefs.current.filter(Boolean);
 
-    // ── Initial states ──────────────────────────────────────────────────
+    //  Initial states 
     gsap.set([text1Ref.current, text2Ref.current, text3Ref.current,
               text4Ref.current, text5Ref.current], { autoAlpha: 0, y: 50 });
     gsap.set(sotoRef.current,  { autoAlpha: 0, scale: 0.3, rotation: -15 });
@@ -166,7 +166,7 @@ export default function Unity() {
     // Container wavy lines visible, tapi semua jalurnya "tersembunyi" pakai dashoffset
     gsap.set(funkyLinesRef.current, { autoAlpha: 1 });
 
-    // ── Ambient float ───────────────────────────────────────────────────
+    //  Ambient float 
     gsap.to(bowls, {
       y: 'random(-18, 18)', x: 'random(-10, 10)', rotation: 'random(-8, 8)',
       duration: 'random(2, 4)', repeat: -1, yoyo: true, ease: 'sine.inOut',
@@ -195,7 +195,7 @@ export default function Unity() {
       },
     });
 
-    // ═══ PHASE 0 ─ "Each bowl tells a different story." ════════════════
+    //  PHASE 0  "Each bowl tells a different story." 
     tl.to(text1Ref.current, { autoAlpha: 1, y: 0, duration: 1.5, ease: 'power2.out' }, 0)
       .to(bowls, {
         x: (i) => BOWL_PHASE1[i]?.x ?? 0,
@@ -205,7 +205,7 @@ export default function Unity() {
       }, 0.5)
       .to(text1Ref.current, { autoAlpha: 0, y: -40, duration: 1 }, '+=0.8');
 
-    // ═══ TRANSITION - Psychedelic funky lines appear! ══════════════════
+    //  TRANSITION 
     tl.to('.funky-path', {
       strokeDashoffset: 0, // Garis seakan-akan digambar pelan-pelan
       duration: 2.5,
@@ -213,7 +213,7 @@ export default function Unity() {
       stagger: 0.15
     }, '-=0.5');
 
-    // ═══ PHASE 1 ─ "Different islands." (Motion Path Mangkuk) ══════════
+    //  PHASE 1 
     tl.to(text2Ref.current, { autoAlpha: 1, y: 0, duration: 1.4, ease: 'back.out(1.7)' }, '<0.5')
       .to(bowls, {
         // Mangkuk menggunakan jalur melengkung (tidak lurus)
@@ -243,7 +243,7 @@ export default function Unity() {
       }, '-=1.8')
       .to(text2Ref.current, { autoAlpha: 0, y: -40, duration: 1 }, '+=0.5');
 
-    // ═══ PHASE 2 ─ "Different ingredients." (Confetti Burst!) ══════════
+    //  PHASE 2 
     tl.to(text3Ref.current, { autoAlpha: 1, y: 0, duration: 1.4, ease: 'back.out(1.7)' })
       .to(bowls, {
         x: (i) => BOWL_PHASE2[i]?.x ?? 0,
@@ -264,7 +264,7 @@ export default function Unity() {
       }, '-=2.2')
       .to(text3Ref.current, { autoAlpha: 0, y: -40, duration: 1 }, '+=0.8');
 
-    // ═══ PHASE 3 ─ "Different philosophies." ═══════════════════════════
+    //  PHASE 3
     tl.to(text4Ref.current, { autoAlpha: 1, y: 0, duration: 1.4, ease: 'back.out(1.5)' })
       .to([...bowls, ...ings], {
         x: (i) => gsap.utils.wrap(
@@ -288,7 +288,7 @@ export default function Unity() {
       }, '-=1.8')
       .to(text4Ref.current, { autoAlpha: 0, y: -40, duration: 1 }, '+=0.5');
 
-    // ═══ PHASE 4 ─ Grand Vortex ════════════════════════════════════════
+    //  PHASE 4 ─ Grand Vortex 
     tl.to([...bowls, ...ings, ...islands, ...cultures], {
         x: 0, y: 0, scale: 0.05, rotation: '+=480', autoAlpha: 0,
         stagger: { amount: 1.5, from: 'random' },
@@ -306,10 +306,10 @@ export default function Unity() {
         autoAlpha: 0, duration: 1.5 // Garis menghilang
       }, '<0.5');
 
-    // ═══ PHASE 5 ─ "Yet they all share the same name." ══════════════════
+    //  PHASE 5 
     tl.to(text5Ref.current, { autoAlpha: 1, y: 0, duration: 2, ease: 'expo.out' });
 
-    // ═══ PHASE 6 ─ SOTO grand finale ════════════════════════════════════
+    //  PHASE 6 
     tl.to(text5Ref.current, { autoAlpha: 0, y: -40, duration: 1 }, '+=0.6')
       .to(blobs, {
         autoAlpha: 0.5,
@@ -379,7 +379,7 @@ export default function Unity() {
   >
     <div ref={panelRef} style={S.panel}>
 
-        {/* ── Texture Overlays ─────────────────────────────────────── */}
+        {/*  Texture Overlays  */}
         <img src={retroPattern} alt="" style={{
           position:'absolute', inset:0, width:'100%', height:'100%',
           objectFit:'cover', opacity:0.4, mixBlendMode:'multiply', zIndex:0,
@@ -389,7 +389,7 @@ export default function Unity() {
           objectFit:'cover', opacity:0.22, mixBlendMode:'multiply', zIndex:0,
         }}/>
 
-        {/* ── Wavy Groovy Lines (Animate Draw) ─────────────────────── */}
+        {/*  Wavy Groovy Lines (Animate Draw)  */}
         <svg ref={funkyLinesRef} viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="xMidYMid slice"
           style={{ position:'absolute', inset:0, width:'100%', height:'100%',
@@ -413,7 +413,7 @@ export default function Unity() {
           ))}
         </svg>
 
-        {/* ── Background Blobs ──────────────────────────────────────── */}
+        {/*  Background Blobs  */}
         {BLOBS.map((b, i) => (
           <div key={`blob-${i}`}
             ref={(el) => (blobRefs.current[i] = el)}
@@ -432,7 +432,7 @@ export default function Unity() {
           />
         ))}
 
-        {/* ── Background Decors ─────────────────────────────────────── */}
+        {/*  Background Decors  */}
         {DECOR_POS.map((d, i) => (
           <img key={`decor-${i}`}
             ref={(el) => (decorRefs.current[i] = el)}
@@ -447,7 +447,7 @@ export default function Unity() {
           />
         ))}
 
-        {/* ── Bowls ─────────────────────────────────────────────────── */}
+        {/*  Bowls  */}
         {BOWLS.map((bowl, i) => (
           <img key={`bowl-${i}`}
             ref={(el) => (bowlRefs.current[i] = el)}
@@ -462,7 +462,7 @@ export default function Unity() {
           />
         ))}
 
-        {/* ── Island Decors ─────────────────────────────────────────── */}
+        {/*  Island Decors  */}
         {[...Array(5)].map((_, i) => (
           <div key={`island-${i}`}
             ref={(el) => (islandRefs.current[i] = el)}
@@ -478,7 +478,7 @@ export default function Unity() {
           </div>
         ))}
 
-        {/* ── Ingredient Confetti (Diperbanyak) ─────────────────────── */}
+        {/*  Ingredient Confetti (Diperbanyak)  */}
         {[...INGREDIENTS, ...INGREDIENTS].map((ing, i) => (
           <img key={`ing-${i}`}
             ref={(el) => (ingRefs.current[i] = el)}
@@ -494,7 +494,7 @@ export default function Unity() {
           />
         ))}
 
-        {/* ── Culture Doodles ───────────────────────────────────────── */}
+        {/*  Culture Doodles  */}
         {[...Array(6)].map((_, i) => (
           <img key={`culture-${i}`}
             ref={(el) => (cultureRefs.current[i] = el)}
@@ -511,7 +511,7 @@ export default function Unity() {
           />
         ))}
 
-        {/* ── Texts ─────────────────────────────────────────────────── */}
+        {/*  Texts  */}
         <div style={S.textCenter}>
 
           <p ref={text1Ref} style={{

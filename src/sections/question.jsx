@@ -86,7 +86,7 @@ export default function QuestionSection() {
   useEffect(() => {
     const ctx = gsap.context(() => {
 
-      /* ══ UTILITIES ═════════════════════════════════════════════════ */
+      /*  UTILITIES  */
       function jitter(targets, { delay = 0, stagger = 0.1, dur = 0.7 } = {}) {
         const els = Array.isArray(targets) ? targets : [targets]
         return gsap.fromTo(els.filter(Boolean),
@@ -101,7 +101,7 @@ export default function QuestionSection() {
       }
 
 
-      /* ══ SCENE A ════════════════════════════════════════════════════ */
+      /*  SCENE A   */
       function resetA() {
         const saWords = stageRef.current?.querySelectorAll('.sa-word') ?? []
         gsap.killTweensOf([saRuleRef.current, saStampTL.current, saStampTR.current, saAsterisk.current, ...saWords])
@@ -138,7 +138,7 @@ export default function QuestionSection() {
         gsap.to([saRuleRef.current, saStampTL.current, saStampTR.current, saAsterisk.current], { opacity: 0, duration: 0.4, stagger: 0.05 })
       }
 
-      /* ══ SCENE B ════════════════════════════════════════════════════ */
+      /*  SCENE B  */
       function resetB() {
         const sbWords = sbWordRefs.current.filter(Boolean)
         gsap.killTweensOf([sbLabelRef.current, sbBodyRef.current, sbMangkokRef.current, mangkokWrapRef.current, ...sbWords])
@@ -181,18 +181,18 @@ export default function QuestionSection() {
         })
       }
 
-      // ── Bahan masuk mangkok → mangkok miring → tumpah ke Scene C ──────────
+      //  Bahan masuk mangkok → mangkok miring → tumpah ke Scene C    
       function playSceneB_To_Bowl() {
         const tl = gsap.timeline()
         const drops = spillDropsRef.current.filter(Boolean)
 
-        // [1] Mangkok naik dari bawah
+        // Mangkok naik dari bawah
         tl.to(mangkokWrapRef.current, {
           opacity: 1, y: 0, scale: 1,
           duration: 1.0, ease: 'back.out(1.2)',
         }, 0)
 
-        // [2] Bahan terbang masuk ke mangkok
+        // Bahan terbang masuk ke mangkok
         ingRefs.current.forEach((r, i) => {
           tl.to(r.wrap, {
             top: '78%', left: '50%', right: 'auto',
@@ -206,15 +206,15 @@ export default function QuestionSection() {
           tl.to(r.label, { opacity: 0, duration: 0.2 }, '<')
         })
 
-        // [3] Mangkok goyang kecil
+        // Mangkok goyang kecil
         tl.to(sbMangkokRef.current, { rotation: -7, duration: 0.2, ease: 'power2.out' }, '+=0.1')
         tl.to(sbMangkokRef.current, { rotation: 7,  duration: 0.18, ease: 'power2.inOut' })
         tl.to(sbMangkokRef.current, { rotation: 0,  duration: 0.18, ease: 'power2.out' })
 
-        // [4] Pause dramatis sebelum tilt
+        // Pause dramatis sebelum tilt
         tl.to({}, { duration: 0.25 })
 
-        // [5] TILT
+        // TILT
         tl.set(sbMangkokRef.current, { transformOrigin: '15% 85%' })
         tl.to(sbMangkokRef.current, {
           rotation: 115,
@@ -224,7 +224,7 @@ export default function QuestionSection() {
           ease: 'power3.inOut',
         })
 
-        // [6] Partikel tumpahan
+        // Partikel tumpahan
         drops.forEach((drop, i) => {
           const angle = 10 + i * 14
           const dist  = 70 + i * 30
@@ -246,7 +246,7 @@ export default function QuestionSection() {
           )
         })
 
-        // [7] Gravitasi
+        // Gravitasi
         tl.to(drops, {
           y: '+=280',
           opacity: 0,
@@ -256,12 +256,12 @@ export default function QuestionSection() {
           ease: 'power2.in',
         }, '<0.2')
 
-        // [8] Mangkok getar kecil setelah kosong
+        // Mangkok getar kecil setelah kosong
         tl.to(sbMangkokRef.current, { rotation: 120, duration: 0.1, ease: 'power1.out' })
         tl.to(sbMangkokRef.current, { rotation: 108, duration: 0.09 })
         tl.to(sbMangkokRef.current, { rotation: 116, duration: 0.09 })
 
-        // [9] Mangkok menghilang
+        // Mangkok menghilang
         tl.to(mangkokWrapRef.current, {
           opacity: 0, y: 60, scale: 0.65,
           duration: 0.5, ease: 'power2.in',
@@ -300,7 +300,7 @@ export default function QuestionSection() {
         })
       }
 
-      // ── Fade out HANYA teks Scene B (tanpa mangkok/ingredients) ──────────
+      //  Fade out HANYA teks Scene B (tanpa mangkok/ingredients) 
       function playSceneB_TextOut() {
         gsap.to(
           [
@@ -330,7 +330,7 @@ export default function QuestionSection() {
         })
       }
 
-      /* ══ SCENE C — Soto muncul menangkap tumpahan ══════════════════ */
+      /*  SCENE C — Soto muncul menangkap tumpahan  */
       function resetC() {
         const chars = scSceneRef.current?.querySelectorAll('.sc-char') || []
         gsap.killTweensOf([scSotoRef.current, scAsapRef.current, scBlitsRef.current,
@@ -351,7 +351,7 @@ export default function QuestionSection() {
         gsap.to(scSceneRef.current, { y: 0, opacity: 1, duration: 0.8, ease: 'power1.inOut' })
         gsap.to(stageRef.current, { backgroundColor: Q.ink, duration: 1.0, ease: 'power2.inOut' })
 
-        // [1] Blits & stars
+        // Blits & stars
         tl.fromTo(scBlitsRef.current,
           { opacity: 0, scale: 0.1, rotation: -90 },
           { opacity: 1, scale: 1, rotation: 0, duration: 1.5, ease: 'back.out(1)' }, 0.4)
@@ -361,12 +361,12 @@ export default function QuestionSection() {
         gsap.to(scBlitsRef.current, { rotation: 360, duration: 30, ease: 'none', repeat: -1 })
         gsap.to(scStarRef.current,  { rotation: -360, duration: 40, ease: 'none', repeat: -1 })
 
-        // [2] Asap muncul duluan
+        // Asap muncul duluan
         tl.fromTo(scAsapRef.current,
           { opacity: 0, y: 60, scale: 0.7 },
           { opacity: 0.85, y: 0, scale: 1, duration: 1.4, ease: 'power2.out' }, 0.15)
 
-        // [3] Soto "menangkap" tumpahan
+        // Soto "menangkap" tumpahan
         tl.fromTo(scSotoRef.current,
           {
             opacity: 0,
@@ -385,14 +385,14 @@ export default function QuestionSection() {
             ease: 'elastic.out(1, 0.5)',
           }, 0.5)
 
-        // [4] Impact shake
+        // Impact shake
         tl.to(scSotoRef.current, { x: -10, rotation: -5, duration: 0.07, ease: 'power2.out' }, '+=0.02')
         tl.to(scSotoRef.current, { x: 12,  rotation: 6,  duration: 0.07 })
         tl.to(scSotoRef.current, { x: -7,  rotation: -3, duration: 0.06 })
         tl.to(scSotoRef.current, { x: 5,   rotation: 2,  duration: 0.06 })
         tl.to(scSotoRef.current, { x: 0,   rotation: 0,  duration: 0.3, ease: 'elastic.out(2, 0.35)' })
 
-        // [5] Text typewriter
+        // Text typewriter
         const chars = scSceneRef.current?.querySelectorAll('.sc-char') || []
         tl.fromTo(scDividerRef.current,
           { opacity: 0, scaleY: 0 },
@@ -425,14 +425,14 @@ export default function QuestionSection() {
         })
       }
 
-      /* ══ INIT ════════════════════════════════════════════════════════ */
+      /*  INIT  */
       resetA()
       resetB()
       resetC()
       gsap.set(scrollCueRef.current, { opacity: 0 })
       let hasPlayedA = false
 
-      /* ══ SCROLL ORCHESTRATION ════════════════════════════════════════ */
+      /*  SCROLL ORCHESTRATION  */
       ScrollTrigger.create({
         trigger: pinWrapRef.current,
         pin: true,
@@ -546,7 +546,7 @@ export default function QuestionSection() {
             </div>
           </div>
 
-          {/* ═══════ SCENE B ═══════ */}
+          {/*  SCENE B  */}
           <div ref={sbSceneRef} style={{ ...S.scene, flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             {INGREDIENTS.map((ing, i) => (
               <div key={ing.name}
@@ -587,7 +587,7 @@ export default function QuestionSection() {
               Setiap tangan meninggalkan jejaknya sendiri.
             </p>
 
-            {/* ── Mangkok wrapper ── */}
+            {/*  Mangkok wrapper  */}
             <div ref={mangkokWrapRef} style={S.mangkokWrap}>
               <img ref={sbMangkokRef} src={imgMangkok} alt="Mangkok kosong" style={S.mangkokImgInner} />
 
@@ -609,7 +609,7 @@ export default function QuestionSection() {
             </div>
           </div>
 
-          {/* ═══════ SCENE C ═══════ */}
+          {/*  SCENE C  */}
           <div ref={scSceneRef} style={{ ...S.scene, flexDirection: 'column', padding: '20px' }}>
             <div style={S.sotoImgsContainer}>
               <img ref={scBlitsRef} src={imgBlits} alt="" style={S.scBlits} />
@@ -657,7 +657,7 @@ export default function QuestionSection() {
   )
 }
 
-/* ── Constants & Styles ──────────────────────────────────────────────────── */
+/*  Constants & Styles  */
 const Q = {
   cream: '#f9fdda', creamD: '#eee8b8', ink: '#2a1f0e', ink2: '#5a4220',
   rust: '#c2380f', gold: '#c9880a', orange: '#ff9721', yellow: '#fff073',

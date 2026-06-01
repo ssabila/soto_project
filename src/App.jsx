@@ -8,14 +8,23 @@ import ClosingSection from "./sections/closing";
 import Makeyourownsoto from "./sections/makeyourown";
 import AboutUs from "./sections/about";
 import FooterSection from "./sections/footer";
+import SectionTransitions from "./sections/SectionTransitions";
 
 import "./App.css";
 
 function App() {
   return (
     <main className="w-full overflow-clip">
+      {/* Navigator dot */}
       <ScrollNavigator />
-      
+
+      {/*
+       *   SectionTransitions — tidak merender DOM apapun,
+       *   murni mendeteksi perpindahan section dan menjalankan
+       *   animasi overlay (steam, filmstrip, splash, dll.)
+       */}
+      <SectionTransitions />
+
       <OpeningSection />
       <QuestionSection />
       <JourneySection />

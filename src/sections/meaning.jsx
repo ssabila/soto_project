@@ -19,21 +19,6 @@ import bgDecor3      from "../assets/images/background-3.svg";
 import bgDecor4      from "../assets/images/background-4.svg";
 import bgDecor5      from "../assets/images/background-5.svg";
 
-// ─────────────────────────────────────────────────────────────────────────────
-// SCROLL TIMELINE  (section height = 700vh)
-//
-// Background Colors:
-//  0.00 → 0.33   Cream  (#F9FDDA)
-//  0.33 → 0.66   Green  (#24A733)
-//  0.66 → 1.00   Orange (#FF9721)
-//
-// PERUBAHAN:
-//  - endX/endY diperkecil ~40-50% dari nilai asli agar dekorasi
-//    mengelilingi area teks, bukan pinggir layar
-//  - startOffX/Y dikurangi proporsional agar arah animasi tetap natural
-//  - sizeClass diperbesar: decor w-12 md:w-16 lg:w-20 (sebelumnya w-6 md:w-10 lg:w-12)
-// ─────────────────────────────────────────────────────────────────────────────
-
 const PHASE1_NODES = [
   // Sebelumnya endX:"25vw" → sekarang "14vw", endY:"35vh" → "18vh"
   { src: daunJeruk,    endX: "14vw",  endY: "18vh",  startOffX: "35vw",  startOffY: "40vh",  delay: 0.3, rotate: 25,  type: "decor" },
@@ -73,7 +58,7 @@ const AFTERGLOW = [
   { src: daunJeruk,  x: "-50vw", y: "-20vh", scale: 0.28, rotate: -35, spd: 5.6, op: 0.09 },
 ];
 
-// ── Komponen per-huruf dengan efek uap ───────────────────────────────────────
+//  Komponen per-huruf dengan efek uap 
 function WavyText({ text, className, style }) {
   return (
     <motion.span
@@ -102,7 +87,7 @@ function WavyText({ text, className, style }) {
   );
 }
 
-// ── Single MapNode — hooks di top-level, bukan di dalam .map() ───────────────
+//  Single MapNode 
 function MapNode({ node, scrollYProgress, inRange, outRange }) {
   const [inStartRaw, inEndRaw] = inRange;
   const [outStartRaw, outEndRaw] = outRange;
@@ -128,9 +113,6 @@ function MapNode({ node, scrollYProgress, inRange, outRange }) {
     [0, 0.8, 1, 0]
   );
 
-  // ── PERUBAHAN UTAMA: ukuran diperbesar ──────────────────────────────────
-  // bowl: w-20 md:w-32 lg:w-36  (sebelumnya w-14 md:w-24 lg:w-28)
-  // decor: w-12 md:w-16 lg:w-20 (sebelumnya w-6  md:w-10 lg:w-12)
   const sizeClass =
     node.type === "bowl"
       ? "w-20 md:w-32 lg:w-36"
@@ -163,7 +145,7 @@ function MapNode({ node, scrollYProgress, inRange, outRange }) {
   );
 }
 
-// ── Komponen Utama ────────────────────────────────────────────────────────────
+//  Komponen Utama 
 export default function MeaningSection() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -175,7 +157,7 @@ export default function MeaningSection() {
   const bg4Op = useTransform(scrollYProgress, [0.3, 0.45, 0.55, 0.7],    [0, 1, 1, 0]);
   const bg5Op = useTransform(scrollYProgress, [0.6, 0.75, 1.0],          [0, 1, 1]);
 
-  // ── PHASE 1: 0.00 → 0.32 ──────────────────────────────────────────────────
+  //  PHASE 1: 0.00 → 0.32 
   const t1Opacity = useTransform(scrollYProgress, [0.00, 0.10, 0.22, 0.32], [0, 1, 1, 0]);
   const t1Y       = useTransform(scrollYProgress, [0.00, 0.10, 0.32],       [60, 0, -40]);
   const t1Blur    = useTransform(scrollYProgress, [0.00, 0.12],              ["blur(20px)", "blur(0px)"]);
@@ -185,13 +167,13 @@ export default function MeaningSection() {
   const steamY       = useTransform(scrollYProgress, [0.00, 0.32],             [100, -200]);
   const steamScale   = useTransform(scrollYProgress, [0.00, 0.32],             [0.9, 1.7]);
 
-  // ── PHASE 2: 0.30 → 0.62 ──────────────────────────────────────────────────
+  //  PHASE 2: 0.30 → 0.62 
   const t2Opacity = useTransform(scrollYProgress, [0.30, 0.40, 0.52, 0.62], [0, 1, 1, 0]);
   const t2Y       = useTransform(scrollYProgress, [0.30, 0.40, 0.62],       [30, 0, -30]);
   const t2Blur    = useTransform(scrollYProgress, [0.30, 0.42],              ["blur(10px)", "blur(0px)"]);
   const t2Scale   = useTransform(scrollYProgress, [0.30, 0.40, 0.62],       [0.84, 1, 1.06]);
 
-  // ── PHASE 3: 0.60 → 1.00 ──────────────────────────────────────────────────
+  //  PHASE 3: 0.60 → 1.00 
   const t3aOpacity   = useTransform(scrollYProgress, [0.62, 0.70], [0, 1]);
   const t3aY         = useTransform(scrollYProgress, [0.62, 0.70], [40, 0]);
   const t3aBlur      = useTransform(scrollYProgress, [0.62, 0.70], ["blur(12px)", "blur(0px)"]);
@@ -248,7 +230,7 @@ export default function MeaningSection() {
           ))}
         </div>
 
-        {/* ── Map Nodes ── */}
+        {/*  Map Nodes  */}
         <div className="absolute inset-0 flex items-center justify-center z-[30]">
           {PHASE1_NODES.map((node, i) => (
             <MapNode key={`p1-${i}`} node={node} scrollYProgress={scrollYProgress} inRange={[0.0, 0.15]} outRange={[0.25, 0.33]} />
@@ -261,12 +243,9 @@ export default function MeaningSection() {
           ))}
         </div>
 
-        {/* ════════════════════════════════════════════════════════════════════
-            TEKS — z-40
-            ════════════════════════════════════════════════════════════════ */}
         <div className="absolute inset-0 flex items-center justify-center z-[40] pointer-events-none text-center px-4 md:px-10">
 
-          {/* ── Phase 1: "Soto is more than a dish." ── */}
+          {/*  Phase 1: "Soto is more than a dish."  */}
           <motion.div
             className="absolute flex flex-col items-center gap-2"
             style={{ opacity: t1Opacity, y: t1Y, scale: t1Scale, filter: t1Blur }}
@@ -303,7 +282,7 @@ export default function MeaningSection() {
             </svg>
           </motion.div>
 
-          {/* ── Phase 2: "It is a reflection of a nation." ── */}
+          {/*  Phase 2: "It is a reflection of a nation."  */}
           <motion.div
             className="absolute flex flex-col items-center gap-3"
             style={{ opacity: t2Opacity, scale: t2Scale, y: t2Y, filter: t2Blur }}
@@ -332,9 +311,8 @@ export default function MeaningSection() {
           </motion.div>
 
         </div>
-        {/* ── akhir layer teks (P1 + P2) ── */}
 
-        {/* ── Phase 3: layer TERPISAH z-[50] ── */}
+        {/*  Phase 3  */}
         <div className="absolute inset-0 flex items-center justify-center z-[50] pointer-events-none text-center px-4 md:px-10">
           <div className="flex flex-col items-center gap-3 md:gap-5">
 

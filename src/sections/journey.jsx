@@ -1,4 +1,3 @@
-// JourneySection.jsx — responsive, no white bg, image fits inside frame
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -41,10 +40,8 @@ const RATING_CONFIG = [
 
 const PARALLAX_FACTOR = 0.3
 
-// ─── Responsive CSS diinjek ke <head> via useEffect ───────────────────────────
-// TIDAK menggunakan <style> tag di dalam JSX karena menyebabkan
-// "removeChild: node is not a child" error saat React & GSAP sama-sama
-// memanipulasi DOM pada proses unmount.
+//  Responsive CSS diinjek ke <head> via useEffect 
+
 const RESPONSIVE_CSS = `
   .journey-card {
     flex-direction: row !important;
@@ -237,7 +234,7 @@ export default function JourneySection() {
     return () => ctx.revert()
   }, [])
 
-  // ─── HELPERS ──────────────────────────────────────────────────────────────
+  //  HELPERS 
 
   const renderStars = (rating, config) => Array.from({ length: 5 }, (_, idx) => (
     <span
@@ -266,7 +263,7 @@ export default function JourneySection() {
     ))
   }
 
-  // ─── RENDER ───────────────────────────────────────────────────────────────
+  //  RENDER  
 
   return (
     <section ref={sectionRef} style={S.container}>
@@ -286,7 +283,7 @@ export default function JourneySection() {
               <div className="journey-content-wrapper" style={S.contentWrapper}>
                 <div className="journey-card" style={S.card}>
 
-                  {/* ── KIRI: Foto dalam bingkai ── */}
+                  {/*  KIRI: Foto dalam bingkai  */}
                   <div className="j-frame journey-frame-container" style={S.frameContainer}>
                     <img src={bingkaiRetro} alt="" style={S.frameBg} />
                     {/*
@@ -303,7 +300,7 @@ export default function JourneySection() {
                     </div>
                   </div>
 
-                  {/* ── KANAN: Konten ── */}
+                  {/*  KANAN: Konten  */}
                   <div className="journey-text-container" style={S.textContainer}>
 
                     <div style={S.indexBadge}>
@@ -356,7 +353,7 @@ export default function JourneySection() {
   )
 }
 
-// ─── STYLES ───────────────────────────────────────────────────────────────────
+//  STYLES 
 
 const S = {
   container: {
@@ -432,7 +429,7 @@ const S = {
     gap: '48px',
   },
 
-  // ── Foto ──────────────────────────────────────────────────────────────────
+  //  Foto 
 
   frameContainer: {
     position: 'relative',
@@ -456,17 +453,9 @@ const S = {
     pointerEvents: 'none',
   },
 
-  /*
-   * imgMask — area di dalam lubang bingkai.
-   * TIDAK ada backgroundColor maupun border berwarna,
-   * karena asset gambar sudah di-remove background-nya.
-   * 78% = perkiraan luas area "dalam" bingkai retro.
-   * Sesuaikan jika terlalu besar/kecil terhadap SVG bingkai.
-   */
   imgMask: {
     position: 'relative',
     zIndex: 2,
-    // +20% dari 78% → 93.6% — gambar soto mengisi area dalam bingkai lebih penuh
     width: '65.5%',
     height: '65.5%',
     display: 'flex',
@@ -476,7 +465,6 @@ const S = {
     borderRadius: '4px',
   },
 
-  // contain agar gambar soto (yang mungkin tidak square) tidak terpotong
   img: {
     width: '110%',
     height: '110%',
@@ -486,7 +474,7 @@ const S = {
     left: '-5%',
   },
 
-  // ── Teks ──────────────────────────────────────────────────────────────────
+  //  Teks 
 
   textContainer: {
     flex: 1,
