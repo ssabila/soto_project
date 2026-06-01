@@ -52,8 +52,8 @@ const RESPONSIVE_CSS = `
     gap: 48px !important;
   }
   .journey-frame-container {
-    width: min(42vw, 66vh) !important;
-    height: min(42vw, 66vh) !important;
+    width: min(50.4vw, 79.2vh) !important;
+    height: min(50.4vw, 79.2vh) !important;
   }
   .journey-text-container { gap: 20px !important; }
   .journey-ratings-grid   { grid-template-columns: 1fr 1fr !important; }
@@ -65,8 +65,8 @@ const RESPONSIVE_CSS = `
       gap: 32px !important;
     }
     .journey-frame-container {
-      width: min(38vw, 52vh) !important;
-      height: min(38vw, 52vh) !important;
+      width: min(45.6vw, 62.4vh) !important;
+      height: min(45.6vw, 62.4vh) !important;
     }
     .journey-text-container { gap: 14px !important; }
     .journey-decor          { width: 80px !important; }
@@ -82,8 +82,8 @@ const RESPONSIVE_CSS = `
       align-items: center !important;
     }
     .journey-frame-container {
-      width: min(60vw, 38vh) !important;
-      height: min(60vw, 38vh) !important;
+      width: min(72vw, 45.6vh) !important;
+      height: min(72vw, 45.6vh) !important;
       flex-shrink: 0 !important;
     }
     .journey-text-container {
@@ -102,8 +102,8 @@ const RESPONSIVE_CSS = `
       border-radius: 18px !important;
     }
     .journey-frame-container {
-      width: min(72vw, 34vh) !important;
-      height: min(72vw, 34vh) !important;
+      width: min(86.4vw, 40.8vh) !important;
+      height: min(86.4vw, 40.8vh) !important;
     }
     .journey-ratings-grid { gap: 6px 12px !important; }
     .journey-decor        { width: 44px !important; }
@@ -269,10 +269,7 @@ export default function JourneySection() {
   // ─── RENDER ───────────────────────────────────────────────────────────────
 
   return (
-    <section
-    id="journey"
-    data-section="journey" 
-    ref={sectionRef} style={S.container}>
+    <section ref={sectionRef} style={S.container}>
       <div ref={bgRef} style={S.bgLayer} />
 
       <div ref={wrapperRef} style={S.wrapper}>
@@ -439,8 +436,9 @@ const S = {
 
   frameContainer: {
     position: 'relative',
-    width: 'min(42vw, 66vh)',
-    height: 'min(42vw, 66vh)',
+    // +20% dari min(42vw, 66vh) → min(50.4vw, 79.2vh)
+    width: 'min(50.4vw, 79.2vh)',
+    height: 'min(50.4vw, 79.2vh)',
     flexShrink: 0,
     display: 'flex',
     alignItems: 'center',
@@ -450,8 +448,9 @@ const S = {
   // Bingkai SVG sedikit overflow agar ornamen tepi terlihat
   frameBg: {
     position: 'absolute',
-    width: '130%',
-    height: '130%',
+    // +20% dari 130% → 156%
+    width: '180%',
+    height: '180%',
     objectFit: 'contain',
     zIndex: 3,
     pointerEvents: 'none',
@@ -467,8 +466,9 @@ const S = {
   imgMask: {
     position: 'relative',
     zIndex: 2,
-    width: '78%',
-    height: '78%',
+    // +20% dari 78% → 93.6% — gambar soto mengisi area dalam bingkai lebih penuh
+    width: '65.5%',
+    height: '65.5%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

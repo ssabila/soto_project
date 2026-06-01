@@ -470,7 +470,7 @@ export default function Unity() {
               position: 'absolute', top: '50%', left: '50%',
               transform: 'translate(-50%, -50%)',
               zIndex: 15, padding: '12px', borderRadius: '24px',
-              border: '4px dashed #FFF1D6',
+              border: '1.5px dashed #FFF1D6',
               backgroundColor: COLORS[i % COLORS.length],
               opacity: 0,
             }}>
