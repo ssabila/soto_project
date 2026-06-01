@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -17,30 +17,305 @@ import tvCultures from "../assets/images/tv-cultures.png";
 import tvHands from "../assets/images/tv-hands.png";
 
 import servinglid1 from "../assets/images/servinglid1.svg";
-import servinglid2 from "../assets/images/servinglid2.svg";
 import servinglidSoto from "../assets/images/servinglid-soto.svg";
-
-import sendokImg from "../assets/images/sendok-retro.svg";
-import piringImg from "../assets/images/piring-retro.svg";
-import garpuImg from "../assets/images/garpu-retro.svg";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const OpeningSequence = () => {
+/* =========================================================
+   DEBUGGER VIEWPORT
+   Hapus <ScreenDebugger /> nanti kalau layout udah final.
+========================================================= */
+const ScreenDebugger = () => {
+  const [size, setSize] = useState({
+    width: typeof window !== "undefined" ? window.innerWidth : 0,
+    height: typeof window !== "undefined" ? window.innerHeight : 0,
+  });
+
+  useEffect(() => {
+    const updateSize = () => {
+      setSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    updateSize();
+    window.addEventListener("resize", updateSize);
+
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+
+  const getBreakpoint = () => {
+    if (size.width >= 1536) return "2xl";
+    if (size.width >= 1280) return "xl";
+    if (size.width >= 1024) return "lg";
+    if (size.width >= 768) return "md";
+    if (size.width >= 640) return "sm";
+    return "base";
+  };
+
+  return (
+    <div
+      className="
+        fixed
+        left-3
+        bottom-3
+        z-[9999]
+        rounded-md
+        bg-black/70
+        px-3
+        py-2
+        text-xs
+        font-mono
+        text-white
+        pointer-events-none
+      "
+    >
+      <div>w: {size.width}px</div>
+      <div>h: {size.height}px</div>
+      <div>bp: {getBreakpoint()}</div>
+    </div>
+  );
+};
+
+/* =========================================================
+   SHARED COLORS
+========================================================= */
+const COLOR_INK = "#2a1f0e";
+const COLOR_RUST = "#c2380f";
+const COLOR_ORANGE = "#ff9721";
+
+/* =========================================================
+   SHARED POSITION ANCHOR
+========================================================= */
+const SCENE_ANCHOR_Y = `
+  top-[38%]
+  min-[560px]:top-[42%]
+  min-[620px]:top-[46%]
+  sm:top-[45%]
+  md:top-[50%]
+  lg:top-[48%]
+  xl:top-[20%]
+  2xl:top-[50%]
+`;
+
+const STILL_ANCHOR_Y = `
+  top-[34%]
+  sm:top-[34%]
+  md:top-[35%]
+  lg:top-[34%]
+  xl:top-[33%]
+  2xl:top-[33%]
+`;
+
+const ONE_DISH_ANCHOR_Y = `
+  top-[25%]
+  sm:top-[31%]
+  md:top-[25%]
+  lg:top-[31%]
+  xl:top-[25%]
+  2xl:top-[25%]
+`;
+
+const SOTO_ANCHOR_Y = `
+  top-[40%]
+  sm:top-[40%]
+  md:top-[40%]
+  lg:top-[40%]
+  xl:top-[40%]
+  2xl:top-[40%]
+`;
+
+/* =========================================================
+   FLOATING ASSETS
+========================================================= */
+const floatingAssets = [
+  {
+    id: "tomato",
+    src: tomatoImg,
+    className: `
+      right-[-2.5rem]
+      top-[9%]
+      w-[clamp(150px,48vw,230px)]
+
+      sm:right-[-2rem]
+      sm:top-[9%]
+      sm:w-[clamp(170px,44vw,260px)]
+
+      md:right-[4%]
+      md:top-[8%]
+      md:w-[clamp(240px,30vw,380px)]
+
+      lg:right-[5%]
+      lg:top-[7%]
+      lg:w-[clamp(290px,29vw,430px)]
+
+      xl:right-[6%]
+      xl:top-[6%]
+      xl:w-[clamp(340px,28vw,500px)]
+    `,
+  },
+
+  {
+    id: "cabe",
+    src: cabeImg,
+    className: `
+      right-[-5rem]
+      bottom-[25%]
+      min-[620px]:bottom-[-2%]
+      w-[clamp(220px,68vw,340px)]
+
+      sm:right-[-5.5rem]
+      sm:bottom-[24%]
+      sm:w-[clamp(250px,65vw,380px)]
+
+      md:right-[-7%]
+      md:bottom-[22%]
+      md:w-[clamp(360px,42vw,570px)]
+
+      lg:right-[-8%]
+      lg:bottom-[-18%]
+      lg:w-[clamp(430px,40vw,630px)]
+
+      xl:right-[-7%]
+      xl:bottom-[-20%]
+      xl:w-[clamp(470px,35vw,670px)]
+
+      2xl:right-[-8%]
+      2xl:bottom-[-10%]
+      2xl:w-[clamp(520px,34vw,720px)]
+    `,
+  },
+
+  {
+    id: "bawang",
+    src: bawangImg,
+    className: `
+      left-[1.5rem]
+      bottom-[33%]
+      min-[620px]:bottom-[8%]
+      w-[clamp(120px,36vw,180px)]
+
+      sm:left-[-0.5rem]
+      sm:top-[35%]
+      sm:w-[clamp(140px,34vw,210px)]
+
+      md:left-[10%]
+      md:top-[50%]
+      md:w-[clamp(180px,25vw,320px)]
+
+      lg:left-[15%]
+      lg:top-[48%]
+      lg:w-[clamp(230px,25vw,380px)]
+
+      xl:left-[30%]
+      xl:top-[60%]
+      xl:w-[clamp(280px,24vw,420px)]
+
+      2xl:left-[20%]
+      2xl:top-[60%]
+      2xl:w-[clamp(300px,23vw,440px)]
+    `,
+  },
+
+  {
+    id: "garlic",
+    src: garlicImg,
+    className: `
+      left-[38%]
+      bottom-[40%]
+      min-[620px]:bottom-[20%]
+      w-[clamp(115px,34vw,175px)]
+
+      sm:left-[33%]
+      sm:bottom-[28%]
+      sm:w-[clamp(135px,32vw,200px)]
+
+      md:left-[43%]
+      md:bottom-[35%]
+      md:w-[clamp(170px,24vw,300px)]
+
+      lg:left-[48%]
+      lg:bottom-[-6%]
+      lg:w-[clamp(230px,25vw,370px)]
+
+      xl:left-[52%]
+      xl:bottom-[5%]
+      xl:w-[clamp(280px,24vw,430px)]
+
+      2xl:left-[53%]
+      2xl:bottom-[10%]
+      2xl:w-[clamp(300px,23vw,450px)]
+    `,
+  },
+];
+
+/* =========================================================
+   TV ITEMS
+========================================================= */
+const tvItems = [
+  {
+    first: "Different",
+    second: "Lands",
+    img: tvLands,
+  },
+  {
+    first: "Different",
+    second: "Cultures",
+    img: tvCultures,
+  },
+  {
+    first: "Different",
+    second: "Hands",
+    img: tvHands,
+  },
+];
+
+const OpeningSection = () => {
   const container = useRef();
 
   useGSAP(
     () => {
-      // =========================
-      // INITIAL STATE
-      // =========================
+      const resetFinalScene = () => {
+        gsap.set(".one-dish-section", {
+          opacity: 0,
+          overwrite: "auto",
+        });
+
+        gsap.set(".text-still", {
+          opacity: 0,
+          y: 30,
+          overwrite: "auto",
+        });
+
+        gsap.set([".text-one-dish", ".text-continues"], {
+          opacity: 0,
+          y: 30,
+          overwrite: "auto",
+        });
+
+        gsap.set(".text-soto-final", {
+          opacity: 0,
+          y: 35,
+          overwrite: "auto",
+        });
+
+        gsap.set(".lid-soto", {
+          opacity: 0,
+          y: 18,
+          scale: 0.82,
+          overwrite: "auto",
+        });
+
+        gsap.set(".lid-1", {
+          opacity: 0,
+          y: 18,
+          scale: 0.84,
+          overwrite: "auto",
+        });
+      };
 
       gsap.set(".type-line", {
-        clipPath: "inset(0 100% 0 0)",
-        opacity: 1,
-      });
-
-      gsap.set(".reveal-line", {
         clipPath: "inset(0 100% 0 0)",
         opacity: 1,
       });
@@ -49,47 +324,29 @@ const OpeningSequence = () => {
         opacity: 0,
         y: 300,
         rotate: -10,
+        force3D: true,
       });
 
       gsap.set(".ingredient", {
         opacity: 0,
-        y: 200,
-        scale: 0.8,
+        y: 180,
+        scale: 0.85,
+        force3D: true,
       });
 
+      /*
+        TV motion:
+        Pakai x berbasis viewport, bukan xPercent.
+        Ini lebih smooth karena jaraknya konsisten di berbagai ukuran layar.
+      */
       gsap.set(".tv-sequence", {
-        xPercent: 100,
+        x: "105vw",
+        opacity: 1,
+        force3D: true,
+        willChange: "transform",
       });
 
-      gsap.set(".one-dish-section", {
-        opacity: 0,
-      });
-
-      gsap.set(".one-dish-wrapper", {
-        x: 200,
-      });
-
-      gsap.set(".dish-block", {
-        x: 300,
-        opacity: 0,
-        y: 0,
-      });
-
-      // Serving lids — dari bawah, no opacity transition
-      gsap.set(".lid-soto", { y: 500, opacity: 0});
-      gsap.set(".lid-1", { y: 500,opacity: 0 });
-      gsap.set(".lid-2", { y: 500, opacity: 0 });
-
-      // Soto scene — hidden
-      gsap.set(".soto-scene", { opacity: 0 });
-      gsap.set(".soto-title", { opacity: 0, y: 40 });
-      gsap.set(".soto-sendok", { opacity: 0, scale: 0.7, x: -60 });
-      gsap.set(".soto-piring", { opacity: 0, scale: 0.7 });
-      gsap.set(".soto-garpu", { opacity: 0, scale: 0.7, x: 60 });
-
-      // =========================
-      // INTRO TIMELINE (autoplay, no scroll)
-      // =========================
+      resetFinalScene();
 
       const introTl = gsap.timeline({ delay: 0.3 });
 
@@ -105,24 +362,33 @@ const OpeningSequence = () => {
         ease: "steps(12)",
       });
 
-      // =========================
-      // TIMELINE (scroll-driven)
-      // =========================
-
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: container.current,
           start: "top top",
-          end: "+=4000",
-          scrub: 0.7,
+          end: "+=4600",
+          scrub: 1,
           pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+
+          // ini yang bersihin elemen final pas balik ke atas
+          onLeaveBack: () => {
+            resetFinalScene();
+          },
+
+          // ini safety tambahan kalau refresh terjadi pas posisi scroll di atas
+          onRefresh: (self) => {
+            if (self.progress === 0) {
+              resetFinalScene();
+            }
+          },
         },
       });
 
       // =========================
       // GLOBE MASUK
       // =========================
-
       tl.to(
         "#globe-1",
         {
@@ -131,6 +397,7 @@ const OpeningSequence = () => {
           rotate: 0,
           duration: 2,
           ease: "power3.out",
+          overwrite: "auto",
         },
         0
       );
@@ -138,23 +405,18 @@ const OpeningSequence = () => {
       // =========================
       // GLOBE KELUAR
       // =========================
-
-      tl.to(
-        "#globe-1",
-        {
-          y: -900,
-          opacity: 0,
-          scale: 0.7,
-          duration: 2.5,
-          ease: "power3.inOut",
-        },
-        "+=0"
-      );
+      tl.to("#globe-1", {
+        y: -850,
+        opacity: 0,
+        scale: 0.75,
+        duration: 2.4,
+        ease: "power3.inOut",
+        overwrite: "auto",
+      });
 
       // =========================
       // INGREDIENT MASUK
       // =========================
-
       tl.to(
         ".ingredient",
         {
@@ -162,24 +424,25 @@ const OpeningSequence = () => {
           y: 0,
           scale: 1,
           stagger: 0.12,
-          duration: 2.5,
+          duration: 2.3,
           ease: "power3.out",
+          overwrite: "auto",
         },
         "-=1.8"
       );
 
       // =========================
-      // TYPEWRITER TEXT 2
+      // TEXT LANJUTAN
       // =========================
-
       tl.to(
         ".line-3",
         {
           clipPath: "inset(0 0% 0 0)",
           duration: 1.3,
           ease: "steps(20)",
+          overwrite: "auto",
         },
-        "-=2.5"
+        "-=2.3"
       );
 
       tl.to(
@@ -188,6 +451,7 @@ const OpeningSequence = () => {
           clipPath: "inset(0 0% 0 0)",
           duration: 1,
           ease: "steps(10)",
+          overwrite: "auto",
         },
         "-=0.5"
       );
@@ -195,201 +459,260 @@ const OpeningSequence = () => {
       // =========================
       // TEXT + INGREDIENT KELUAR
       // =========================
-
       tl.to(
         [".ingredient", ".text-group"],
         {
           x: -1400,
           opacity: 0,
           duration: 2,
-          stagger: 0.05,
+          stagger: 0.04,
           ease: "power4.inOut",
+          overwrite: "auto",
         },
-        "+=0.3"
+        "+=0.4"
       );
 
       // =========================
-      // TV SEQUENCE MASUK
+      // TV MASUK — SMOOTH
       // =========================
-
       tl.to(
         ".tv-sequence",
         {
-          xPercent: -32,
-          duration: 3,
-          ease: "power4.out",
-        },
-        "-=1.5"
-      );
-
-      // =========================
-      // TV SEQUENCE KELUAR
-      // =========================
-
-      tl.to(
-        ".tv-sequence",
-        {
-          xPercent: -200,
-          duration: 3,
-          ease: "power4.inOut",
-        },
-        "+=0.3"
-      );
-
-      // =========================
-      // ONE DISH SECTION MASUK
-      // =========================
-
-      tl.to(
-        ".one-dish-section",
-        {
-          opacity: 1,
-          duration: 0.3,
-        },
-        "-=2.5"
-      );
-
-      tl.to(
-        ".one-dish-wrapper",
-        {
-          x: 0,
-          duration: 2,
-          ease: "power4.out",
-        },
-        "<"
-      );
-
-      // =========================
-      // ONE DISH TEXT MASUK
-      // =========================
-
-      tl.to(
-        ".dish-block",
-        {
-          x: 0,
-          opacity: 1,
-          duration: 1.6,
-          ease: "power4.out",
-        },
-        "-=1.5"
-      );
-
-      // =========================
-      // SERVING LIDS MASUK — geser dari bawah
-      // =========================
-
-      tl.to(
-        [".lid-soto", ".lid-1", ".lid-2"],
-        {
-          y: 0,
-          opacity: 1,
-          duration: 2,
-          ease: "power3.out",
+          x: "8vw",
+          duration: 3.1,
+          ease: "power2.inOut",
+          overwrite: "auto",
         },
         "-=2"
       );
 
       // =========================
-      // DISH BLOCK KELUAR — geser ke atas
+      // TV HOLD — BENTAR AJA
       // =========================
+      tl.to(".tv-sequence", {
+        x: "8vw",
+        duration: 0.8,
+        ease: "none",
+        overwrite: "auto",
+      });
 
+      // =========================
+      // TV KELUAR — SMOOTH + BENER-BENER HILANG
+      // =========================
       tl.to(
-        ".dish-block",
+        ".tv-sequence",
         {
-          y: -300,
+          x: "-280vw",
           opacity: 0,
-          duration: 1.6,
-          ease: "power3.inOut",
+          duration: 4.5,
+          ease: "power2.inOut",
+          overwrite: "auto",
         },
-        "+=0.5"
+        ">"
       );
 
       // =========================
-      // LID 1 KELUAR — keangkat ke atas
+      // ONE DISH SECTION REVEAL
       // =========================
-
       tl.to(
-        ".lid-1",
-        {
-          y: -700,
-          duration: 1.8,
-          ease: "power3.inOut",
-        },
-        "<"
-      );
-
-      // =========================
-      // LID 2 KELUAR — turun ke bawah
-      // =========================
-
-      tl.to(
-        ".lid-2",
-        {
-          y: 700,
-          duration: 1.8,
-          ease: "power3.inOut",
-        },
-        "<"
-      );
-
-      // =========================
-      // SOTO CENTERED — geser ke tengah
-      // =========================
-
-      tl.to(
-        ".lid-soto",
-        {
-          x: -300,
-          y: -50,
-          duration: 2,
-          ease: "power4.inOut",
-        },
-        "<"
-      );
-
-      // =========================
-      // SOTO SCENE REVEAL
-      // =========================
-
-      tl.to(
-        ".soto-scene",
+        ".one-dish-section",
         {
           opacity: 1,
-          duration: 0.1,
+          duration: 0.2,
+          overwrite: "auto",
         },
-        "-=0.8"
+        "-=0.65"
       );
 
       // =========================
-      // SOTO TITLE MASUK
+      // STILL MUNCUL
       // =========================
-
       tl.to(
-        ".soto-title",
+        ".text-still",
         {
           opacity: 1,
           y: 0,
-          duration: 1,
+          duration: 0.9,
+          stagger: 0.12,
           ease: "power3.out",
+          overwrite: "auto",
         },
-        "-=0.3"
+        "-=1"
       );
 
       // =========================
-      // CUTLERY + PIRING MASUK — pop out
+      // STILL ILANG
       // =========================
-
       tl.to(
-        [".soto-sendok", ".soto-piring", ".soto-garpu"],
+        ".text-still",
+        {
+          opacity: 0,
+          y: -20,
+          duration: 0.5,
+          ease: "power2.in",
+          overwrite: "auto",
+        },
+        "+=0.45"
+      );
+
+      // =========================
+      // ONE DISH TEXT MUNCUL
+      // =========================
+      tl.to(
+        [".text-one-dish", ".text-continues"],
         {
           opacity: 1,
-          scale: 1,
-          x: 0,
-          duration: 1.2,
+          y: 0,
+          duration: 0.9,
+          stagger: 0.12,
           ease: "power3.out",
+          overwrite: "auto",
         },
-        "-=0.6"
+        "-=0.1"
       );
+
+      // =========================
+      // SERVING LID 1 POP IN
+      // =========================
+      tl.to(
+        ".lid-1",
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.85,
+          ease: "back.out(1.6)",
+          overwrite: "auto",
+        },
+        "+=0.6"
+      );
+
+      // =========================
+      // SOTO BASE POP IN
+      // =========================
+      tl.to(
+        ".lid-soto",
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.85,
+          ease: "back.out(1.6)",
+          overwrite: "auto",
+        },
+        "+=0.35"
+      );
+
+      // =========================
+      // LID 1 GESER KE ATAS
+      // =========================
+      tl.to(
+        ".lid-1",
+        {
+          y: -360,
+          opacity: 0,
+          scale: 0.85,
+          duration: 1.15,
+          ease: "power4.inOut",
+          overwrite: "auto",
+        },
+        "+=0.45"
+      );
+
+      tl.to(
+        [".text-one-dish", ".text-continues"],
+        {
+          opacity: 0,
+          y: -20,
+          duration: 0.45,
+          ease: "power2.in",
+          overwrite: "auto",
+        },
+        "<"
+      );
+
+      // =========================
+      // TEKS "SOTO" MUNCUL
+      // =========================
+      tl.to(
+        ".text-soto-final",
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
+          ease: "power3.out",
+          overwrite: "auto",
+        },
+        ">-0.2"
+      );
+
+      // =========================
+      // SOTO BASE POP
+      // =========================
+      tl.to(
+        ".lid-soto",
+        {
+          scale: 1.5,
+          duration: 1.2,
+          ease: "back.out(1.4)",
+          overwrite: "auto",
+        },
+        "<0.15"
+      );
+
+      /* =========================================================
+         GSAP REFRESH FIX — SAFE VERSION
+         Jangan pakai tl.invalidate() di resize.
+         Jangan observe pinned container, biar gak refresh loop.
+      ========================================================= */
+      let resizeTimer;
+      let rafId;
+
+      const refreshGsap = () => {
+        clearTimeout(resizeTimer);
+
+        resizeTimer = setTimeout(() => {
+          cancelAnimationFrame(rafId);
+
+          rafId = requestAnimationFrame(() => {
+            ScrollTrigger.refresh();
+          });
+        }, 150);
+      };
+
+      window.addEventListener("resize", refreshGsap);
+      window.addEventListener("orientationchange", refreshGsap);
+
+      if (document.fonts?.ready) {
+        document.fonts.ready.then(() => {
+          refreshGsap();
+        });
+      }
+
+      const images = container.current?.querySelectorAll("img") || [];
+
+      images.forEach((img) => {
+        if (!img.complete) {
+          img.addEventListener("load", refreshGsap);
+        }
+      });
+
+      refreshGsap();
+
+      return () => {
+        clearTimeout(resizeTimer);
+        cancelAnimationFrame(rafId);
+
+        introTl.kill();
+        tl.kill();
+
+        window.removeEventListener("resize", refreshGsap);
+        window.removeEventListener("orientationchange", refreshGsap);
+
+        images.forEach((img) => {
+          img.removeEventListener("load", refreshGsap);
+        });
+      };
     },
     { scope: container }
   );
@@ -405,6 +728,8 @@ const OpeningSequence = () => {
         bg-brand-cream
       "
     >
+      
+
       {/* BACKGROUND */}
       <img
         src={bgImg}
@@ -412,8 +737,8 @@ const OpeningSequence = () => {
         className="
           absolute
           inset-0
-          w-full
           h-full
+          w-full
           object-cover
         "
       />
@@ -423,36 +748,59 @@ const OpeningSequence = () => {
         className="
           text-group
           absolute
-          left-[5%]
-          top-[23%]
           z-30
+
+          left-[clamp(1rem,5vw,4rem)]
+          top-[clamp(5rem,17vh,10rem)]
+          w-[calc(100%-2rem)]
+
+          md:left-[clamp(2rem,5vw,5rem)]
+          md:top-[clamp(8rem,22vh,13rem)]
+
+          lg:left-[clamp(3rem,5.5vw,6rem)]
+          lg:top-[clamp(8rem,20vh,13rem)]
+
+          xl:left-[clamp(4rem,6vw,7rem)]
+          xl:top-[clamp(7rem,18vh,13rem)]
         "
       >
         <div
           className="
             font-title
-            text-brand-green
-            leading-[0.82]
-            tracking-[-0.05em]
-            text-[5.7rem]
-            drop-shadow-[0_1px_0_#00703C]
+            font-black
+            text-[#2a1f0e]
+            leading-none
+            tracking-[-0.025em]
+            [-webkit-text-stroke:0.45px_currentColor]
+            [text-shadow:1px_1px_0_rgba(42,31,14,0.18)]
+
+            text-[clamp(3.6rem,10vw,7rem)]
+            sm:text-[clamp(4rem,9vw,7.5rem)]
+            md:text-[clamp(4.2rem,7.5vw,8rem)]
+            lg:text-[clamp(4.4rem,7vw,8.5rem)]
+            xl:text-[clamp(4.6rem,7vw,9.2rem)]
           "
         >
           <div className="overflow-hidden">
             <div className="type-line line-1 whitespace-nowrap">
-              Across thousands
+              Across{" "}
+              <span className="text-[#25a734] italic">thousands</span>
             </div>
           </div>
+
           <div className="overflow-hidden">
-            <div className="type-line line-2 whitespace-nowrap">
+            <div className="type-line line-2 whitespace-nowrap text-[#2a1f0e]">
               of islands...
             </div>
           </div>
+
           <div className="overflow-hidden">
             <div className="type-line line-3 whitespace-nowrap">
-              flavors are never
+              flavors are{" "}
+              <span className="text-[#c2380f] italic">never</span>
             </div>
           </div>
+
           <div className="overflow-hidden">
             <div className="type-line line-4 whitespace-nowrap">
               the same.
@@ -461,273 +809,349 @@ const OpeningSequence = () => {
         </div>
       </div>
 
-      {/* TV SEQUENCE */}
-      <div className="absolute inset-0 overflow-hidden z-40">
+      {/* ASSET STAGE */}
+      <div className="absolute inset-0 z-20 overflow-hidden pointer-events-none">
         <div
           className="
+            relative
+            mx-auto
+            h-full
+            w-[min(100vw,1600px)]
+          "
+        >
+          {/* GLOBE */}
+          <img
+            id="globe-1"
+            src={globeImg}
+            alt=""
+            className="
+              absolute
+              z-20
+              will-change-transform
+
+              right-[-38%]
+              top-[19%]
+              w-[clamp(310px,92vw,540px)]
+
+              sm:right-[-34%]
+              sm:top-[18%]
+              sm:w-[clamp(360px,85vw,620px)]
+
+              md:right-[-18%]
+              md:top-[20%]
+              md:w-[clamp(500px,58vw,760px)]
+
+              lg:right-[-13%]
+              lg:top-[11%]
+              lg:w-[clamp(620px,56vw,880px)]
+
+              xl:right-[-10%]
+              xl:top-[8%]
+              xl:w-[clamp(720px,55vw,980px)]
+            "
+          />
+
+          {floatingAssets.map((asset) => (
+            <img
+              key={asset.id}
+              src={asset.src}
+              alt=""
+              className={`
+                ingredient
+                absolute
+                z-20
+                will-change-transform
+                ${asset.className}
+              `}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* TV SEQUENCE */}
+      <div className="absolute inset-0 z-40 overflow-hidden pointer-events-none">
+        <div
+          className={`
             tv-sequence
             absolute
             left-0
-            top-1/2
-            -translate-y-1/2
             flex
+            -translate-y-1/2
             items-center
-            gap-24
-            px-[10vw]
             will-change-transform
-          "
+
+            ${SCENE_ANCHOR_Y}
+
+            gap-[clamp(2rem,6vw,5rem)]
+            px-[clamp(2rem,8vw,9rem)]
+
+            md:gap-[clamp(3rem,5vw,5.5rem)]
+            md:px-[clamp(4rem,8vw,9rem)]
+
+            xl:gap-[clamp(4rem,6vw,7rem)]
+            xl:px-[clamp(6rem,9vw,10rem)]
+          `}
         >
-          {/* LANDS */}
-          <div className="flex flex-col items-center shrink-0">
-            <div className="font-title text-brand-green text-[5rem] leading-none tracking-[-0.05em] mb-[-2rem] text-center">
-              Different<br />Lands
-            </div>
-            <img src={tvLands} alt="" className="w-[420px] object-contain" />
-          </div>
+          {tvItems.map((item, index) => (
+            <div key={index} className="flex shrink-0 flex-col items-center">
+              <div
+                className="
+                  mb-[clamp(-1rem,-1.5vw,-0.6rem)]
+                  text-center
+                  font-title
+                  font-black
+                  leading-none
+                  tracking-[-0.025em]
+                  text-[#2a1f0e]
+                  [-webkit-text-stroke:0.35px_currentColor]
+                  [text-shadow:1px_1px_0_rgba(42,31,14,0.16)]
 
-          {/* CULTURES */}
-          <div className="flex flex-col items-center shrink-0">
-            <div className="font-title text-brand-green text-[5rem] leading-none tracking-[-0.05em] mb-[-2rem] text-center">
-              Different<br />Cultures
-            </div>
-            <img src={tvCultures} alt="" className="w-[420px] object-contain" />
-          </div>
+                  text-[clamp(2rem,9vw,3.5rem)]
+                  sm:text-[clamp(2.4rem,8vw,4rem)]
+                  md:text-[clamp(3rem,5.3vw,4.6rem)]
+                  lg:text-[clamp(3.4rem,5.7vw,5.2rem)]
+                  xl:text-[clamp(3.8rem,5.5vw,5.5rem)]
+                "
+              >
+                <span>{item.first}</span>
+                <br />
+                <span className="text-[#ff9721]">{item.second}</span>
+              </div>
 
-          {/* HANDS */}
-          <div className="flex flex-col items-center shrink-0">
-            <div className="font-title text-brand-green text-[5rem] leading-none tracking-[-0.05em] mb-[-2rem] text-center">
-              Different<br />Hands
+              <img
+                src={item.img}
+                alt=""
+                className="
+                  object-contain
+
+                  w-[clamp(230px,72vw,360px)]
+                  sm:w-[clamp(270px,62vw,400px)]
+                  md:w-[clamp(330px,34vw,430px)]
+                  lg:w-[clamp(390px,35vw,480px)]
+                  xl:w-[clamp(420px,34vw,520px)]
+                "
+              />
             </div>
-            <img src={tvHands} alt="" className="w-[420px] object-contain" />
-          </div>
+          ))}
         </div>
       </div>
 
       {/* ONE DISH SECTION */}
-      <div className="one-dish-section absolute inset-0 z-60 pointer-events-none">
-        <div className="one-dish-wrapper w-full h-full">
+      <div className="one-dish-section pointer-events-none absolute inset-0 z-60">
+        {/* STILL TEXT */}
+        <div
+          className={`
+            absolute
+            left-1/2
+            z-[70]
+            flex
+            w-full
+            -translate-x-1/2
+            -translate-y-1/2
+            flex-col
+            items-center
+            justify-center
+            px-4
 
-          {/* DISH BLOCK TEXT */}
+            ${STILL_ANCHOR_Y}
+          `}
+        >
           <div
             className="
-              dish-block
-              absolute
-              left-[6%]
-              top-[18%]
+              text-still
+              whitespace-nowrap
+              text-center
               font-title
-              text-brand-green
-              leading-[0.82]
-              tracking-[-0.05em]
-              text-[5.7rem]
-              drop-shadow-[0_1px_0_#00703C]
+              font-black
+              leading-none
+              tracking-[-0.025em]
+              text-[#2a1f0e]
+              [-webkit-text-stroke:0.45px_currentColor]
+
+              text-[clamp(3rem,14vw,5.5rem)]
+              md:text-[clamp(4rem,8vw,6.8rem)]
+              xl:text-[clamp(5rem,8vw,7.8rem)]
             "
           >
-            <div className="whitespace-nowrap">Still... one dish</div>
-            <div className="whitespace-nowrap">continues to</div>
-            <div className="whitespace-nowrap">appear.</div>
+            Still...
+          </div>
+        </div>
+
+        {/* ONE DISH TEXT */}
+        <div
+          className={`
+            absolute
+            left-1/2
+            z-[70]
+            flex
+            w-full
+            -translate-x-1/2
+            -translate-y-1/2
+            flex-col
+            items-center
+            justify-center
+            gap-1
+            px-4
+
+            ${ONE_DISH_ANCHOR_Y}
+
+            md:gap-2
+          `}
+        >
+          <div
+            className="
+              text-one-dish
+              whitespace-nowrap
+              text-center
+              font-title
+              font-black
+              leading-none
+              tracking-[-0.025em]
+              text-[#c2380f]
+              italic
+              
+              [-webkit-text-stroke:0.45px_currentColor]
+
+              text-[clamp(3rem,14vw,5.5rem)]
+              md:text-[clamp(4rem,8vw,6.8rem)]
+              xl:text-[clamp(5rem,8vw,7.8rem)]
+            "
+          >
+            one dish
           </div>
 
-          {/* SERVING LIDS */}
-          <div className="absolute right-[-5%] top-[10%] w-[1200px] h-[1200px]">
+          <div
+            className="
+              text-continues
+              whitespace-nowrap
+              text-center
+              font-title
+              font-black
+              leading-none
+              tracking-[-0.025em]
+              text-[#2a1f0e]
+              [-webkit-text-stroke:0.45px_currentColor]
 
-            {/* SOTO BASE */}
+              text-[clamp(2.3rem,10vw,4.6rem)]
+              md:text-[clamp(3.6rem,7vw,6.2rem)]
+              xl:text-[clamp(4.4rem,7vw,7rem)]
+            "
+          >
+            continues to appear.
+          </div>
+        </div>
+
+        {/* FINAL SOTO GROUP */}
+        <div
+          className={`
+            absolute
+            left-1/2
+            z-[72]
+            flex
+            w-full
+            -translate-x-1/2
+            -translate-y-1/2
+            flex-col
+            items-center
+            justify-center
+            px-4
+
+            ${SOTO_ANCHOR_Y}
+          `}
+        >
+          <div
+            className="
+              text-soto-final
+              translate-y-4
+              whitespace-nowrap
+              text-center
+              font-title
+              font-black
+              leading-none
+              tracking-[-0.025em]
+              text-[#ff9721]
+              italic
+              [-webkit-text-stroke:0.5px_currentColor]
+
+              text-[clamp(4.5rem,22vw,8rem)]
+              md:text-[clamp(6rem,12vw,10rem)]
+              xl:text-[clamp(7rem,13vw,12rem)]
+            "
+          >
+            Soto
+          </div>
+
+          <div
+            className="
+              soto-reveal-stage
+              relative
+              mt-[-0.8rem]
+              -translate-y-30
+              flex
+              items-center
+              justify-center
+
+              h-[clamp(190px,36vh,400px)]
+              w-[clamp(320px,82vw,620px)]
+
+              sm:mt-[-1rem]
+              sm:h-[clamp(210px,36vh,430px)]
+              sm:w-[clamp(360px,76vw,700px)]
+
+              md:mt-[-1.4rem]
+              md:h-[clamp(260px,40vh,480px)]
+              md:w-[clamp(460px,62vw,780px)]
+
+              lg:mt-[-1.8rem]
+              lg:h-[clamp(300px,42vh,520px)]
+              lg:w-[clamp(560px,58vw,840px)]
+
+              xl:mt-[-2.2rem]
+              xl:h-[clamp(320px,42vh,540px)]
+              xl:w-[clamp(640px,55vw,900px)]
+            "
+          >
             <img
               src={servinglidSoto}
               alt=""
               className="
                 lid-soto
                 absolute
-                top-[-115px]
-                right-[-50px]
-                w-[900px]
-                z-[59]
+                left-1/2
+                top-1/2
+                xl:top-[10%]
+                2xl:top-[10%]
+                z-[65]
+                w-full
+                -translate-x-1/2
+                -translate-y-1/2
                 object-contain
               "
             />
 
-            {/* LID 1 — tutup, keluar ke atas */}
             <img
               src={servinglid1}
               alt=""
               className="
                 lid-1
                 absolute
-                bottom-[42%]
-                right-[-13%]
-                w-[950px]
-                z-[62]
-                object-contain
-              "
-            />
-
-            {/* LID 2 — tatakan, keluar ke bawah */}
-            <img
-              src={servinglid2}
-              alt=""
-              className="
-                lid-2
-                absolute
-                bottom-[-55%]
-                right-[-15%]
-                w-[2500px]
-                h-[2500px]
-                z-[61]
+                left-1/2
+                top-1/2
+                xl:top-[20%]
+                2xl:top-[20%]
+                2xl:right-[60%]
+                z-[66]
+                w-[95%]
+                -translate-x-[53%]
+                -translate-y-1/2
                 object-contain
               "
             />
           </div>
         </div>
       </div>
-
-      {/* SOTO SCENE — pisah dari one-dish-section */}
-      <div className="soto-scene absolute inset-0 z-[54] pointer-events-none">
-
-        {/* SOTO TITLE */}
-        <div
-          className="
-            soto-title
-            absolute
-            top-[6%]
-            left-1/2
-            -translate-x-1/2
-            font-title
-            text-brand-green
-            text-[6rem]
-            leading-none
-            tracking-[-0.05em]
-            whitespace-nowrap
-            z-[60]
-          "
-        >
-          Soto
-        </div>
-
-        {/* SENDOK */}
-        <img
-          src={sendokImg}
-          alt=""
-          className="
-            soto-sendok
-            absolute
-            right-[700px]
-            top-[20%]
-            -translate-y-1/2
-            w-[700px]
-            z-[55]
-            object-contain
-          "
-        />
-
-        {/* PIRING*/}
-        <img
-          src={piringImg}
-          alt=""
-          className="
-            soto-piring
-            absolute
-            left-[650px]
-            top-[25%]
-            -translate-x-1/2
-            -translate-y-[45%]
-            w-[600px]
-            z-[58]
-            object-contain
-          "
-        />
-
-        {/* GARPU*/}
-        <img
-          src={garpuImg}
-          alt=""
-          className="
-            soto-garpu
-            absolute
-            left-[700px]
-            top-[20%]
-            -translate-y-1/2
-            w-[700px]
-            z-[55]
-            object-contain
-          "
-        />
-      </div>
-
-      {/* GLOBE */}
-      <img
-        id="globe-1"
-        src={globeImg}
-        alt=""
-        className="
-          absolute
-          right-[-15%]
-          top-[-4%]
-          w-[760px]
-          z-20
-          will-change-transform
-        "
-      />
-
-      {/* TOMATO */}
-      <img
-        src={tomatoImg}
-        alt=""
-        className="
-          ingredient
-          absolute
-          right-[3%]
-          top-[10%]
-          w-[450px]
-          z-20
-          will-change-transform
-        "
-      />
-
-      {/* CABE */}
-      <img
-        src={cabeImg}
-        alt=""
-        className="
-          ingredient
-          absolute
-          right-[-7%]
-          bottom-[-30%]
-          w-[630px]
-          z-20
-          will-change-transform
-        "
-      />
-
-      {/* BAWANG */}
-      <img
-        src={bawangImg}
-        alt=""
-        className="
-          ingredient
-          absolute
-          left-[30%]
-          bottom-[-18%]
-          w-[380px]
-          z-20
-          will-change-transform
-        "
-      />
-
-      {/* GARLIC */}
-      <img
-        src={garlicImg}
-        alt=""
-        className="
-          ingredient
-          absolute
-          left-[50%]
-          bottom-[-3%]
-          w-[360px]
-          z-20
-          will-change-transform
-        "
-      />
     </section>
   );
 };
 
-export default OpeningSequence;
+export default OpeningSection;
