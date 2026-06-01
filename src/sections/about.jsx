@@ -17,7 +17,7 @@ const members = [
     photo: fotoBila,
     rotate: "-3deg",
     accentColor: "#c2380f",
-    bio: "Namaku Sabila Bintang Kusuma Dewi. Aku mahasiswa tingkat 3 Politeknik statistika STIS. Dalam web story ini, aku mengerjakan konten dan isi website, mulai dari informasi, sampai narasi tentang beragam masakan soto di Indonesia.",
+    bio: "Namaku Sabila Bintang Kusuma Dewi. Aku mahasiswa tingkat 3 Politeknik Statistika STIS. Dalam web story ini, aku mengerjakan konten dan isi website, mulai dari informasi, sampai narasi tentang beragam masakan soto di Indonesia.",
  },
   {
     id: "dhira",
@@ -27,7 +27,7 @@ const members = [
     photo: fotoDhira,
     rotate: "3deg",
     accentColor: "#c2380f",
-    bio: "Namaku Qurany Nadhira Tsabita. Aku mahasiswa tingkat 3 Politeknik statistika STIS. Di web ini aku yang mengerjakan bagian opening, closing, footer dan game interaktif membuat soto, sampai section about us yang kamu lihat sekarang!.", },
+    bio: "Namaku Qurany Nadhira Tsabita. Aku mahasiswa tingkat 3 Politeknik Statistika STIS. Di web ini aku yang mengerjakan bagian opening, closing, footer dan game interaktif membuat soto, sampai section about us yang kamu lihat sekarang!", },
 ];
 
 /* ═══════════════════════════════════════════

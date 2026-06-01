@@ -57,10 +57,10 @@ export default function ClosingSection() {
   const quoteCardRef = useRef(null);
   const footerRef = useRef(null);
 
-  const QUOTE_1 = "Because in the end, soto was never just about taste.";
+  const QUOTE_1 = "In the end, soto is not just one recipe.";
 
   const QUOTE_2 =
-    "It was about how many differences could still feel like home at one table.";
+    "It is a shared idea, shaped by local taste, local ingredients, and local culture.";
 
   const splitWords = (text, refArray) => {
     refArray.current = [];
