@@ -114,7 +114,7 @@ export default function ScrollNavigator() {
                   font-[InriaSerif] text-[0.68rem] font-bold
                   tracking-[0.10em] whitespace-nowrap
                   transition-all duration-300 ease-out
-                  ${isHovered || isActive
+                  ${isHovered || (animating && isActive)
                     ? "translate-x-0 opacity-100"
                     : "translate-x-2 opacity-0"
                   }
@@ -170,21 +170,6 @@ export default function ScrollNavigator() {
             </button>
           );
         })}
-
-        {/* ── Active section label above dots ─────────── */}
-        <div
-          className="
-            absolute -bottom-9 right-0
-            rounded-full bg-[#2c1309]/80 px-3 py-1
-            font-[InriaSerif] text-[0.6rem] font-bold
-            tracking-[0.12em] uppercase text-[#ffbd59]
-            shadow-[0_2px_0_rgba(0,0,0,0.18)]
-            backdrop-blur-sm
-            transition-all duration-300
-          "
-        >
-          {NAV_SECTIONS.find((s) => s.id === activeSection)?.label}
-        </div>
       </nav>
 
       {/* ── Mobile bottom dots ────────────────────────── */}
