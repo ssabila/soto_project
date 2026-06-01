@@ -1,4 +1,4 @@
-import footerBg from "../assets/images/footer.svg";
+import footerBg from "../assets/images/footer.webp";
 
 const scrollToSection = (sectionId) => {
   const el =

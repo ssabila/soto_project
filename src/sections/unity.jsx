@@ -5,29 +5,29 @@ import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 import { storyContent } from '../data/storytext';
 
 // Bowls
-import sotoMakasar from '../assets/images/coto-makasar.svg';
-import sotoBanjar from '../assets/images/soto-banjar.svg';
-import sotoBetawi from '../assets/images/soto-betawi.svg';
-import sotoKudus from '../assets/images/soto-kudus.svg';
-import sotoLamongan from '../assets/images/soto-lamongan.svg';
-import sotoPadang from '../assets/images/soto-padang.svg';
+import sotoMakasar from '../assets/images/coto-makasar.webp';
+import sotoBanjar from '../assets/images/soto-banjar.webp';
+import sotoBetawi from '../assets/images/soto-betawi.webp';
+import sotoKudus from '../assets/images/soto-kudus.webp';
+import sotoLamongan from '../assets/images/soto-lamongan.webp';
+import sotoPadang from '../assets/images/soto-padang.webp';
 
 // Ingredients (Sesuai dengan permintaan yang baru)
-import rempah from '../assets/images/rempah.svg';
-import daging from '../assets/images/daging.svg';
-import santan from '../assets/images/santan.svg';
-import dagingSapi from '../assets/images/daging-sapi.svg';
-import jerukNipis from '../assets/images/jeruk-nipis.svg';
+import rempah from '../assets/images/rempah.webp';
+import daging from '../assets/images/daging.webp';
+import santan from '../assets/images/santan.webp';
+import dagingSapi from '../assets/images/daging-sapi.webp';
+import jerukNipis from '../assets/images/jeruk-nipis.webp';
 // Kita tetap pakai beberapa yang lama untuk meramaikan efek konfeti
-import cabe from '../assets/images/cabe.svg';
-import bawangRetro from '../assets/images/bawang-retro.svg';
+import cabe from '../assets/images/cabe.webp';
+import bawangRetro from '../assets/images/bawang-retro.webp';
 
 // Decors
-import bungaRetro from '../assets/images/bunga-retro.svg';
+import bungaRetro from '../assets/images/bunga-retro.webp';
 import starRetro from '../assets/images/star.svg';
 import decorRetro from '../assets/images/decor-retro.svg';
 import decorRetro2 from '../assets/images/decor-retro2.svg';
-import globe from '../assets/images/globe-1.svg';
+import globe from '../assets/images/globe-1.webp';
 import retroPattern from '../assets/images/retro-bg-pattern-v2.svg';
 import grainOverlay from '../assets/images/grain.webp';
 

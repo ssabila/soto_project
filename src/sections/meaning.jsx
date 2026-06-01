@@ -3,21 +3,21 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { storyContent } from "../data/storytext";
 
 // Import Assets
-import sotoBetawi    from "../assets/images/soto-betawi.svg";
-import sotoLamongan  from "../assets/images/soto-lamongan.svg";
-import sotoKudus     from "../assets/images/soto-kudus.svg";
-import sotoPadang    from "../assets/images/soto-padang.svg";
-import sotoBanjar    from "../assets/images/soto-banjar.svg";
-import cotoMakassar  from "../assets/images/coto-makasar.svg";
+import sotoBetawi    from "../assets/images/soto-betawi.webp";
+import sotoLamongan  from "../assets/images/soto-lamongan.webp";
+import sotoKudus     from "../assets/images/soto-kudus.webp";
+import sotoPadang    from "../assets/images/soto-padang.webp";
+import sotoBanjar    from "../assets/images/soto-banjar.webp";
+import cotoMakassar  from "../assets/images/coto-makasar.webp";
 import bawangMerah   from "../assets/images/bawang-merah.webp";
-import cabe          from "../assets/images/cabe.svg";
-import bungaRetro    from "../assets/images/bunga-retro.svg";
+import cabe          from "../assets/images/cabe.webp";
+import bungaRetro    from "../assets/images/bunga-retro.webp";
 import starRetro     from "../assets/images/star.svg";
 import daunJeruk     from "../assets/images/daun-jeruk.webp";
 import asap          from "../assets/images/asap.webp";
-import bgDecor3      from "../assets/images/background-3.svg";
-import bgDecor4      from "../assets/images/background-4.svg";
-import bgDecor5      from "../assets/images/background-5.svg";
+import bgDecor3      from "../assets/images/background-3.webp";
+import bgDecor4      from "../assets/images/background-4.webp";
+import bgDecor5      from "../assets/images/background-5.webp";
 
 const PHASE1_NODES = [
   { src: daunJeruk,    endX: "14vw",  endY: "18vh",  startOffX: "35vw",  startOffY: "40vh",  delay: 0.3, rotate: 25,  type: "decor" },

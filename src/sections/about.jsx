@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
-import backgroundUs from "../assets/images/background-us.svg";
-import fotoDhira from "../assets/images/foto-dhira.svg";
-import fotoBila from "../assets/images/foto-bila.svg";
+import backgroundUs from "../assets/images/background-us.webp";
+import fotoDhira from "../assets/images/foto-dhira.webp";
+import fotoBila from "../assets/images/foto-bila.webp";
 
 /* ═══════════════════════════════════════════
    DATA

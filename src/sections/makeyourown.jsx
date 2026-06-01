@@ -2,28 +2,28 @@ import React, { useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-import backgroundGame from "../assets/images/background-gamestart.svg";
-import mangkokMeja from "../assets/images/mangkokmeja-game.svg";
+import backgroundGame from "../assets/images/background-gamestart.webp";
+import mangkokMeja from "../assets/images/mangkokmeja-game.webp";
 
-import kuahBiasa from "../assets/images/kuah-biasa.svg";
-import kuahBening from "../assets/images/kuah-bening.svg";
-import kuahSantan from "../assets/images/kuah-santan.svg";
-import kuahCoto from "../assets/images/kuah-coto.svg";
+import kuahBiasa from "../assets/images/kuah-biasa.webp";
+import kuahBening from "../assets/images/kuah-bening.webp";
+import kuahSantan from "../assets/images/kuah-santan.webp";
+import kuahCoto from "../assets/images/kuah-coto.webp";
 
-import toppingAyam from "../assets/images/topping-ayam.svg";
-import toppingDaging from "../assets/images/topping-daging.svg";
-import toppingBabat from "../assets/images/topping-babat.svg";
+import toppingAyam from "../assets/images/topping-ayam.webp";
+import toppingDaging from "../assets/images/topping-daging.webp";
+import toppingBabat from "../assets/images/topping-babat.webp";
 
-import pelengkapKoya from "../assets/images/pelengkap-koya.svg";
-import pelengkapTauge from "../assets/images/pelengkap-tauge.svg";
-import pelengkapBawang from "../assets/images/pelengkap-bawang.svg";
+import pelengkapKoya from "../assets/images/pelengkap-koya.webp";
+import pelengkapTauge from "../assets/images/pelengkap-tauge.webp";
+import pelengkapBawang from "../assets/images/pelengkap-bawang.webp";
 
-import tambahanTelur from "../assets/images/tambahan-telur.svg";
-import tambahanKerupukudang from "../assets/images/tambahan-kerupukudang.svg";
-import tambahanLimau from "../assets/images/tambahan-limau.svg";
-import tambahanEmping from "../assets/images/tambahan-emping.svg";
+import tambahanTelur from "../assets/images/tambahan-telur.webp";
+import tambahanKerupukudang from "../assets/images/tambahan-kerupukudang.webp";
+import tambahanLimau from "../assets/images/tambahan-limau.webp";
+import tambahanEmping from "../assets/images/tambahan-emping.webp";
 
-import gameTitle from "../assets/images/game-title.svg";
+import gameTitle from "../assets/images/game-title.webp";
 
 // warna
 const C = {

@@ -4,20 +4,20 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
-import globeImg from "../assets/images/globe-1.svg";
-import bgImg from "../assets/images/background-1.svg";
+import globeImg from "../assets/images/globe-1.webp";
+import bgImg from "../assets/images/background-1.webp";
 
-import cabeImg from "../assets/images/cabe.svg";
-import tomatoImg from "../assets/images/tomato.svg";
-import bawangImg from "../assets/images/bawang-retro.svg";
-import garlicImg from "../assets/images/garlic-retro.svg";
+import cabeImg from "../assets/images/cabe.webp";
+import tomatoImg from "../assets/images/tomato.webp";
+import bawangImg from "../assets/images/bawang-retro.webp";
+import garlicImg from "../assets/images/garlic-retro.webp";
 
 import tvLands from "../assets/images/tv-lands.png";
 import tvCultures from "../assets/images/tv-cultures.png";
 import tvHands from "../assets/images/tv-hands.png";
 
-import servinglid1 from "../assets/images/servinglid1.svg";
-import servinglidSoto from "../assets/images/servinglid-soto.svg";
+import servinglid1 from "../assets/images/servinglid1.webp";
+import servinglidSoto from "../assets/images/servinglid-soto.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -324,18 +324,21 @@ const OpeningSection = () => {
 
       const introTl = gsap.timeline({ delay: 0.3 });
 
+      //intro masuk dengan efek typewriter
       introTl.to(".line-1", {
         clipPath: "inset(0 0% 0 0)",
         duration: 1.2,
         ease: "steps(18)",
       });
 
+      //line 2 masuk
       introTl.to(".line-2", {
         clipPath: "inset(0 0% 0 0)",
         duration: 1,
         ease: "steps(12)",
       });
 
+      //line 3 masuk 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: container.current,
@@ -358,6 +361,7 @@ const OpeningSection = () => {
         },
       });
 
+      //asset globe masuk
       tl.to(
         "#globe-1",
         {

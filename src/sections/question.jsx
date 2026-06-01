@@ -4,15 +4,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { storyContent } from '../data/storytext.js'
 
 import imgSereh      from '../assets/images/sereh.webp'
-import imgSoto       from '../assets/images/soto-retro.svg'
-import imgMangkok    from '../assets/images/mangkok.svg'
+import imgSoto       from '../assets/images/soto-retro.webp'
+import imgMangkok    from '../assets/images/mangkok.webp'
 import imgAsap       from '../assets/images/asap.webp'
 import imgBawangM    from '../assets/images/bawang-merah.webp'
 import imgBawangP    from '../assets/images/bawang-putih.webp'
 import imgDaunJeruk  from '../assets/images/daun-jeruk.webp'
 import imgGrain      from '../assets/images/grain.webp'
 import imgKunyit     from '../assets/images/kunyit.webp'
-import imgBlits      from '../assets/images/blits.svg'
+import imgBlits      from '../assets/images/blits.webp'
 import imgStar       from '../assets/images/star.svg'
 
 gsap.registerPlugin(ScrollTrigger)
