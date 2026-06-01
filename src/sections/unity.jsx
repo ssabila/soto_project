@@ -29,7 +29,6 @@ import decorRetro from '../assets/images/decor-retro.svg';
 import decorRetro2 from '../assets/images/decor-retro2.svg';
 import globe from '../assets/images/globe-1.svg';
 import retroPattern from '../assets/images/retro-bg-pattern-v2.svg';
-import paperOverlay from '../assets/images/paper-overlay.svg';
 import grainOverlay from '../assets/images/grain.webp';
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
@@ -384,10 +383,6 @@ export default function Unity() {
         <img src={retroPattern} alt="" style={{
           position:'absolute', inset:0, width:'100%', height:'100%',
           objectFit:'cover', opacity:0.4, mixBlendMode:'multiply', zIndex:0,
-        }}/>
-        <img src={paperOverlay} alt="" style={{
-          position:'absolute', inset:0, width:'100%', height:'100%',
-          objectFit:'cover', opacity:0.35, mixBlendMode:'multiply', zIndex:0,
         }}/>
         <img src={grainOverlay} alt="" style={{
           position:'absolute', inset:0, width:'100%', height:'100%',

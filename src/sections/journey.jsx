@@ -1,4 +1,4 @@
-// JourneySection.jsx — FIXED: layout retro, satu baris judul, bintang muncul
+// JourneySection.jsx — responsive, no white bg, image fits inside frame
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -32,21 +32,107 @@ const SOTO_RATINGS = [
   { richness: 4, spicy: 2, complexity: 3, texture: 3 }
 ]
 
-// Label & emoji yang berbeda per kategori — lebih ekspresif dari sekadar ⭐
 const RATING_CONFIG = [
   { key: 'richness',   label: 'Richness',    filledEmoji: '🟡', emptyEmoji: '⚪' },
   { key: 'spicy',      label: 'Spicy Level', filledEmoji: '🌶️', emptyEmoji: '⚪' },
-  { key: 'complexity', label: 'Complexity',  filledEmoji: '⭐', emptyEmoji: '☆' },
+  { key: 'complexity', label: 'Complexity',  filledEmoji: '⭐', emptyEmoji: '☆'  },
   { key: 'texture',    label: 'Texture',     filledEmoji: '🔶', emptyEmoji: '🔷' },
 ]
 
 const PARALLAX_FACTOR = 0.3
+
+// ─── Responsive CSS diinjek ke <head> via useEffect ───────────────────────────
+// TIDAK menggunakan <style> tag di dalam JSX karena menyebabkan
+// "removeChild: node is not a child" error saat React & GSAP sama-sama
+// memanipulasi DOM pada proses unmount.
+const RESPONSIVE_CSS = `
+  .journey-card {
+    flex-direction: row !important;
+    padding: 36px 40px !important;
+    gap: 48px !important;
+  }
+  .journey-frame-container {
+    width: min(42vw, 66vh) !important;
+    height: min(42vw, 66vh) !important;
+  }
+  .journey-text-container { gap: 20px !important; }
+  .journey-ratings-grid   { grid-template-columns: 1fr 1fr !important; }
+  .journey-decor          { width: 110px !important; }
+
+  @media (max-width: 1024px) {
+    .journey-card {
+      padding: 28px 32px !important;
+      gap: 32px !important;
+    }
+    .journey-frame-container {
+      width: min(38vw, 52vh) !important;
+      height: min(38vw, 52vh) !important;
+    }
+    .journey-text-container { gap: 14px !important; }
+    .journey-decor          { width: 80px !important; }
+  }
+
+  @media (max-width: 768px) {
+    .journey-card {
+      flex-direction: column !important;
+      padding: 24px 20px !important;
+      gap: 20px !important;
+      overflow-y: auto !important;
+      justify-content: flex-start !important;
+      align-items: center !important;
+    }
+    .journey-frame-container {
+      width: min(60vw, 38vh) !important;
+      height: min(60vw, 38vh) !important;
+      flex-shrink: 0 !important;
+    }
+    .journey-text-container {
+      gap: 10px !important;
+      height: auto !important;
+      width: 100% !important;
+    }
+    .journey-ratings-grid { gap: 8px 20px !important; }
+    .journey-decor        { width: 60px !important; }
+  }
+
+  @media (max-width: 480px) {
+    .journey-card {
+      padding: 18px 14px !important;
+      gap: 14px !important;
+      border-radius: 18px !important;
+    }
+    .journey-frame-container {
+      width: min(72vw, 34vh) !important;
+      height: min(72vw, 34vh) !important;
+    }
+    .journey-ratings-grid { gap: 6px 12px !important; }
+    .journey-decor        { width: 44px !important; }
+    .journey-content-wrapper {
+      width: 96vw !important;
+      height: 90vh !important;
+    }
+  }
+`
 
 export default function JourneySection() {
   const sectionRef = useRef(null)
   const wrapperRef = useRef(null)
   const panelsRef  = useRef([])
   const bgRef      = useRef(null)
+
+  // Inject responsive CSS ke <head> — aman dari konflik React/GSAP DOM
+  useEffect(() => {
+    const styleEl = document.createElement('style')
+    styleEl.setAttribute('data-journey', 'responsive')
+    styleEl.textContent = RESPONSIVE_CSS
+    document.head.appendChild(styleEl)
+    return () => {
+      // Cek dulu sebelum removeChild agar tidak error jika sudah terhapus
+      if (document.head.contains(styleEl)) {
+        document.head.removeChild(styleEl)
+      }
+    }
+  }, [])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -91,7 +177,7 @@ export default function JourneySection() {
         })
 
         gsap.to(img, {
-          xPercent: 12,
+          xPercent: 8,
           ease: 'none',
           scrollTrigger: {
             trigger: panel,
@@ -126,8 +212,6 @@ export default function JourneySection() {
           }
         })
 
-        // ✅ fromTo selalu menset opacity awal ke 0 sendiri,
-        // jadi tidak perlu opacity: 0 di inline style renderStars
         tl.fromTo(stars,
           { opacity: 0, scale: 0, rotation: -15 },
           { opacity: 1, scale: 1, rotation: 0, stagger: 0.04, duration: 0.4, ease: 'back.out(2)' }
@@ -155,19 +239,13 @@ export default function JourneySection() {
 
   // ─── HELPERS ──────────────────────────────────────────────────────────────
 
-  /*
-   * renderStars — TIDAK lagi set opacity: 0 di inline style.
-   * GSAP fromTo handle initial state. Ini fix utama kenapa bintang hilang:
-   * opacity: 0 di inline style lebih spesifik dari animasi GSAP yang
-   * menggunakan gsap.set, sehingga bintang tetap invisible meski GSAP jalan.
-   */
   const renderStars = (rating, config) => Array.from({ length: 5 }, (_, idx) => (
     <span
       key={idx}
       className="j-star"
       style={{
         display: 'inline-block',
-        fontSize: '1.2rem',
+        fontSize: 'clamp(0.85rem, 1.5vw, 1.2rem)',
         lineHeight: 1,
         filter: idx < rating ? 'none' : 'grayscale(1) opacity(0.3)',
       }}
@@ -176,11 +254,6 @@ export default function JourneySection() {
     </span>
   ))
 
-  /*
-   * renderTitle — render seluruh nama soto dalam SATU BARIS.
-   * Huruf pertama tiap kata pakai Beachfly (display font besar),
-   * sisanya pakai InriaSerif. Tidak ada <br/> lagi.
-   */
   const renderTitle = (name) => {
     return name.split(' ').map((word, wIdx, arr) => (
       <span
@@ -213,13 +286,17 @@ export default function JourneySection() {
               ref={el => (panelsRef.current[i] = el)}
               style={S.panel}
             >
-              <div style={S.contentWrapper}>
-                <div style={S.card}>
+              <div className="journey-content-wrapper" style={S.contentWrapper}>
+                <div className="journey-card" style={S.card}>
 
                   {/* ── KIRI: Foto dalam bingkai ── */}
-                  <div className="j-frame" style={S.frameContainer}>
+                  <div className="j-frame journey-frame-container" style={S.frameContainer}>
                     <img src={bingkaiRetro} alt="" style={S.frameBg} />
-                    <div style={S.imgWrapper}>
+                    {/*
+                     * imgMask — area pas di dalam lubang bingkai, TANPA background.
+                     * Asset gambar sudah transparan, tidak perlu warna apapun.
+                     */}
+                    <div style={S.imgMask}>
                       <img
                         className="j-img"
                         src={IMAGES[i]}
@@ -230,29 +307,19 @@ export default function JourneySection() {
                   </div>
 
                   {/* ── KANAN: Konten ── */}
-                  <div style={S.textContainer}>
+                  <div className="journey-text-container" style={S.textContainer}>
 
-                    {/* Nomor soto — aksen retro */}
                     <div style={S.indexBadge}>
                       #{String(i + 1).padStart(2, '0')}
                     </div>
 
-                    {/* Judul satu baris */}
-                    <h3
-                      className="j-region"
-                      style={S.titleWrapper}
-                    >
+                    <h3 className="j-region" style={S.titleWrapper}>
                       {renderTitle(fullName)}
                     </h3>
 
-                    {/* Divider garis dekoratif */}
-                    <div
-                      className="j-divider"
-                      style={S.divider}
-                    />
+                    <div className="j-divider" style={S.divider} />
 
-                    {/* Rating grid — 2 kolom */}
-                    <div style={S.ratingsGrid}>
+                    <div className="journey-ratings-grid" style={S.ratingsGrid}>
                       {RATING_CONFIG.map((cfg) => (
                         <div key={cfg.key} style={S.ratingItem}>
                           <span style={S.ratingLabel}>{cfg.label}</span>
@@ -263,10 +330,8 @@ export default function JourneySection() {
                       ))}
                     </div>
 
-                    {/* Divider kedua */}
                     <div style={{ ...S.divider, margin: '2px 0 6px' }} />
 
-                    {/* Teks deskripsi */}
                     <div style={S.linesWrapper}>
                       {region.lines.map((line, li) => (
                         <p key={li} className="j-text-line" style={{
@@ -282,10 +347,10 @@ export default function JourneySection() {
                 </div>
               </div>
 
-              {/* Decors — setelah card di DOM agar selalu di atas */}
-              <img src={DECORS[i % 4]}       alt="" className="j-decor" style={{ ...S.decor, top: '12%',  left: '8%'  }} />
-              <img src={DECORS[(i+1) % 4]}   alt="" className="j-decor" style={{ ...S.decor, bottom: '12%', right: '6%'  }} />
-              <img src={DECORS[(i+2) % 4]}   alt="" className="j-decor" style={{ ...S.decor, top: '8%',   right: '32%' }} />
+              {/* Decors */}
+              <img src={DECORS[i % 4]}     alt="" className="j-decor journey-decor" style={{ ...S.decor, top: '12%',    left: '8%'   }} />
+              <img src={DECORS[(i+1) % 4]} alt="" className="j-decor journey-decor" style={{ ...S.decor, bottom: '12%', right: '6%'  }} />
+              <img src={DECORS[(i+2) % 4]} alt="" className="j-decor journey-decor" style={{ ...S.decor, top: '8%',     right: '32%' }} />
             </div>
           )
         })}
@@ -307,8 +372,7 @@ const S = {
 
   bgLayer: {
     position: 'absolute',
-    top: 0,
-    left: 0,
+    top: 0, left: 0,
     width: `${storyContent.regions.length * 130}vw`,
     height: '100%',
     backgroundImage: `url(${filmstripBg})`,
@@ -373,9 +437,6 @@ const S = {
 
   // ── Foto ──────────────────────────────────────────────────────────────────
 
-  // Hanya ubah 3 ini di objek S:
-
-  // frameContainer — kotak responsif
   frameContainer: {
     position: 'relative',
     width: 'min(42vw, 66vh)',
@@ -386,7 +447,7 @@ const S = {
     justifyContent: 'center',
   },
 
-  // frameBg — proporsional mengikuti container kotak
+  // Bingkai SVG sedikit overflow agar ornamen tepi terlihat
   frameBg: {
     position: 'absolute',
     width: '130%',
@@ -396,36 +457,42 @@ const S = {
     pointerEvents: 'none',
   },
 
-  imgWrapper: {
-    width: '100%',
-    height: '100%',
-    overflow: 'hidden',
+  /*
+   * imgMask — area di dalam lubang bingkai.
+   * TIDAK ada backgroundColor maupun border berwarna,
+   * karena asset gambar sudah di-remove background-nya.
+   * 78% = perkiraan luas area "dalam" bingkai retro.
+   * Sesuaikan jika terlalu besar/kecil terhadap SVG bingkai.
+   */
+  imgMask: {
     position: 'relative',
     zIndex: 2,
-    backgroundColor: '#fff',
+    width: '78%',
+    height: '78%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: '8px',
+    overflow: 'hidden',
+    borderRadius: '4px',
   },
 
+  // contain agar gambar soto (yang mungkin tidak square) tidak terpotong
   img: {
-    width: '115%',
-    height: '115%',
-    objectFit: 'cover',
-    left: '-7.5%',
-    top: '-7.5%',
+    width: '110%',
+    height: '110%',
+    objectFit: 'contain',
     position: 'absolute',
+    top: '-5%',
+    left: '-5%',
   },
 
   // ── Teks ──────────────────────────────────────────────────────────────────
 
-  // textContainer — konten teks mengisi sisa ruang dengan lebih baik
   textContainer: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    gap: '20px',          // dari 16px → 20px
+    gap: '20px',
     minWidth: 0,
     height: '100%',
     justifyContent: 'center',
@@ -433,7 +500,7 @@ const S = {
 
   indexBadge: {
     fontFamily: 'InriaSerif, serif',
-    fontSize: '1rem',
+    fontSize: 'clamp(0.75rem, 1.2vw, 1rem)',
     color: '#B8860B',
     letterSpacing: '0.2em',
     fontStyle: 'italic',
@@ -450,13 +517,9 @@ const S = {
     gap: 0,
   },
 
-  /*
-   * Huruf pertama tiap kata — Beachfly display font, lebih besar
-   * Ukuran sengaja lebih besar dari sisa kata untuk efek drop-cap retro
-   */
   titleFirstChar: {
     fontFamily: 'Beachfly, serif',
-    fontSize: 'clamp(3.5rem, 6.5vw, 6rem)',
+    fontSize: 'clamp(2.8rem, 5.5vw, 6rem)',
     color: '#1a1a1a',
     fontWeight: 'normal',
     lineHeight: 1,
@@ -464,7 +527,7 @@ const S = {
 
   titleRest: {
     fontFamily: 'InriaSerif, serif',
-    fontSize: 'clamp(2.6rem, 5vw, 4.6rem)',
+    fontSize: 'clamp(2rem, 4vw, 4.6rem)',
     color: '#1a1a1a',
     fontWeight: 'normal',
     lineHeight: 1,
@@ -475,13 +538,9 @@ const S = {
     background: 'linear-gradient(to right, #D9A65B, #f0c878, #D9A65B)',
     borderRadius: '2px',
     margin: '0 0 4px',
-    transformOrigin: 'left center', // untuk animasi scaleX dari kiri
+    transformOrigin: 'left center',
   },
 
-  /*
-   * Rating ditampilkan dalam grid 2 kolom agar compact
-   * Sebelumnya 4 baris → sekarang 2×2 grid → menghemat vertikal space
-   */
   ratingsGrid: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
@@ -496,7 +555,7 @@ const S = {
 
   ratingLabel: {
     fontFamily: 'InriaSerif, serif',
-    fontSize: '0.85rem',
+    fontSize: 'clamp(0.65rem, 1vw, 0.85rem)',
     color: '#8B6914',
     textTransform: 'uppercase',
     letterSpacing: '0.08em',
@@ -505,7 +564,7 @@ const S = {
 
   starsRow: {
     display: 'flex',
-    gap: '5px',
+    gap: '4px',
     flexWrap: 'nowrap',
   },
 
@@ -517,7 +576,7 @@ const S = {
 
   textLine: {
     fontFamily: 'InriaSerif, serif',
-    fontSize: '1.15rem',
+    fontSize: 'clamp(0.85rem, 1.3vw, 1.15rem)',
     color: '#444',
     lineHeight: 1.55,
     margin: 0,
@@ -526,7 +585,7 @@ const S = {
   textLineQuote: {
     fontStyle: 'italic',
     color: '#8B6914',
-    fontSize: '1.1rem',
+    fontSize: 'clamp(0.8rem, 1.2vw, 1.1rem)',
     borderLeft: '4px solid #D9A65B',
     paddingLeft: '12px',
     marginTop: '4px',
