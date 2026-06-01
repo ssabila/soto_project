@@ -398,218 +398,6 @@ function spiceSplash({ color, done }) {
   }, 0.55);
 }
 
-/* ═══════════════════════════════════════
-   HANDLER: INGREDIENT MORPH (meaning → closing)
-═══════════════════════════════════════ */
-function ingredientMorph({ color, done }) {
-  const MORPH_COLORS = [P.rust, P.orange, P.saffron, P.green, color];
-  const circles = Array.from({ length: 5 }, (_, i) => {
-    const positions = [
-      { l: "0%",  t: "0%"  },
-      { l: "75%", t: "0%"  },
-      { l: "50%", t: "50%" },
-      { l: "0%",  t: "75%" },
-      { l: "80%", t: "70%" },
-    ];
-    return createOverlay({
-      width:        "12vw",
-      height:       "12vw",
-      borderRadius: "50%",
-      background:   MORPH_COLORS[i],
-      left:         positions[i].l,
-      top:          positions[i].t,
-      transform:    "translate(-50%, -50%) scale(0)",
-      opacity:      "0.9",
-      filter:       "blur(2px)",
-    });
-  });
-
-  const flash = createOverlay({
-    background: `linear-gradient(135deg, ${color} 0%, ${P.cream} 100%)`,
-    opacity:    "0",
-  });
-
-  const tl = gsap.timeline({
-    onComplete: () => { circles.forEach((c) => c.remove()); flash.remove(); done(); },
-  });
-
-  tl.to(circles, {
-    scale:    18,
-    duration: 0.7,
-    stagger:  0.06,
-    ease:     "power3.inOut",
-  }, 0);
-
-  tl.to(flash, { opacity: 1, duration: 0.2, ease: "power2.out" }, 0.5);
-  tl.to([...circles, flash], { opacity: 0, duration: 0.35, ease: "power2.in" }, 0.65);
-}
-
-/* ═══════════════════════════════════════
-   HANDLER: BOWL WIPE (closing → makeyourownsoto)
-═══════════════════════════════════════ */
-function bowlWipe({ color, done }) {
-  const W = window.innerWidth;
-  const H = window.innerHeight;
-  const R = Math.max(W, H) * 0.85;
-
-  const bowl = createOverlay({
-    width:        `${R * 2}px`,
-    height:       `${R * 2}px`,
-    borderRadius: "50%",
-    background:   `radial-gradient(circle at 48% 45%, ${color} 55%, ${P.saffron} 100%)`,
-    top:          `${H / 2 - R}px`,
-    left:         `${-R * 2.2}px`,
-    boxShadow:    `inset 0 -${R * 0.1}px ${R * 0.08}px rgba(44,19,9,0.18)`,
-    border:       `4px solid ${P.saffron}40`,
-  });
-
-  const kuah = createOverlay({
-    width:        `${R * 1.2}px`,
-    height:       `${R * 0.3}px`,
-    borderRadius: "50%",
-    background:   `radial-gradient(ellipse, ${P.orange}cc, ${P.rust}88)`,
-    top:          `${H / 2 + R * 0.15}px`,
-    left:         `${-R * 1.6}px`,
-    filter:       "blur(8px)",
-    opacity:      "0.8",
-  });
-
-  const tl = gsap.timeline({
-    onComplete: () => { bowl.remove(); kuah.remove(); done(); },
-  });
-
-  tl.to([bowl, kuah], {
-    x:        `${W + R * 2.5}px`,
-    duration: 0.9,
-    ease:     "power2.inOut",
-  }, 0);
-
-  tl.to(bowl, {
-    y:        "-30px",
-    duration: 0.25,
-    ease:     "power1.out",
-    yoyo:     true,
-    repeat:   1,
-  }, 0.2);
-}
-
-/* ═══════════════════════════════════════
-   HANDLER: TABLECLOTH PULL (makeyourownsoto → about)
-═══════════════════════════════════════ */
-function tableclothPull({ color, done }) {
-  const W = window.innerWidth;
-  const H = window.innerHeight;
-
-  const canvas = document.createElement("canvas");
-  canvas.width  = W;
-  canvas.height = H;
-  const ctx     = canvas.getContext("2d");
-
-  const size = 40;
-  for (let r = 0; r < Math.ceil(H / size) + 1; r++) {
-    for (let c = 0; c < Math.ceil(W / size) + 1; c++) {
-      ctx.fillStyle = (r + c) % 2 === 0 ? color : P.rust;
-      ctx.fillRect(c * size, r * size, size, size);
-    }
-  }
-  ctx.strokeStyle = P.brown;
-  ctx.lineWidth   = 6;
-  ctx.strokeRect(0, 0, W, H);
-
-  const fringeH     = 28;
-  const fringeCount = Math.ceil(W / 14);
-  ctx.fillStyle     = P.saffron;
-  for (let i = 0; i < fringeCount; i++) {
-    ctx.beginPath();
-    ctx.moveTo(i * 14, H - fringeH);
-    ctx.lineTo(i * 14 + 7, H);
-    ctx.lineTo(i * 14 + 14, H - fringeH);
-    ctx.fill();
-  }
-
-  const tablecloth = createOverlay({
-    backgroundImage: `url(${canvas.toDataURL()})`,
-    backgroundSize:  "100% 100%",
-    transformOrigin: "top center",
-  });
-
-  const tl = gsap.timeline({
-    onComplete: () => { tablecloth.remove(); done(); },
-  });
-
-  tl.fromTo(tablecloth, { y: "-102%" }, { y: "0%", duration: 0.5, ease: "power3.out" }, 0);
-  tl.to(tablecloth, { y: "102%", duration: 0.7, ease: "power4.in", delay: 0.1 }, 0.5);
-}
-
-/* ═══════════════════════════════════════
-   HANDLER: STEAM CURTAIN (about → footer)
-═══════════════════════════════════════ */
-function steamCurtain({ color, done }) {
-  const W = window.innerWidth;
-
-  const strips = Array.from({ length: 9 }, (_, i) => {
-    const w = W / 9 + Math.sin(i * 1.3) * W * 0.04;
-    return createOverlay({
-      width:        `${w + 4}px`,
-      height:       "0px",
-      left:         `${(W / 9) * i - 2}px`,
-      top:          "0",
-      background:   i % 2 === 0
-        ? `linear-gradient(to bottom, ${color}, ${color}cc)`
-        : `linear-gradient(to bottom, ${P.brown}ee, ${color}aa)`,
-      borderRadius: "0 0 40% 40%",
-      opacity:      "0.97",
-    });
-  });
-
-  const tl = gsap.timeline({
-    onComplete: () => { strips.forEach((s) => s.remove()); done(); },
-  });
-
-  tl.to(strips, {
-    height:   "110vh",
-    duration: 0.55,
-    stagger:  { each: 0.045, from: "center" },
-    ease:     "power3.inOut",
-  });
-
-  tl.to({}, { duration: 0.1 });
-
-  tl.to(strips, {
-    height:   "0px",
-    y:        "-110vh",
-    duration: 0.5,
-    stagger:  { each: 0.04, from: "edges" },
-    ease:     "power3.inOut",
-  });
-}
-
-/* ═══════════════════════════════════════
-   HANDLER: SAUCE DRIP (footer)
-═══════════════════════════════════════ */
-function sauceDrip({ color, done }) {
-  const W = window.innerWidth;
-  const H = window.innerHeight;
-
-  const dripCount = 11;
-  const dripPaths = Array.from({ length: dripCount }, (_, i) => {
-    const x     = (W / dripCount) * i + (W / dripCount) * 0.5;
-    const dropH = 80 + Math.sin(i * 1.7 + 2) * 55;
-    const w     = 18 + Math.sin(i * 2.3) * 10;
-    return `<path d="M${x - w / 2},0 L${x + w / 2},0 L${x + w * 0.3},${dropH * 0.6} Q${x + w * 0.4},${dropH} ${x},${dropH} Q${x - w * 0.4},${dropH} ${x - w * 0.3},${dropH * 0.6} Z" fill="${color}" opacity="${0.8 + (i % 3) * 0.07}"/>`;
-  }).join("");
-
-  const overlay = createOverlay();
-  overlay.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" style="display:block"><rect width="${W}" height="${H}" fill="${color}" y="-${H}" id="bg-rect"/><g id="drips" transform="translate(0,-140)">${dripPaths}</g></svg>`;
-
-  const tl = gsap.timeline({
-    onComplete: () => { overlay.remove(); done(); },
-  });
-
-  tl.to(overlay.querySelector("#drips"),    { y: H * 0.15, duration: 0.45, ease: "power2.out" });
-  tl.to(overlay.querySelector("#bg-rect"),  { y: H, duration: 0.5, ease: "power3.inOut" }, 0.2);
-  tl.to(overlay, { y: "110%", duration: 0.55, ease: "power3.inOut", delay: 0.15 });
-}
 
 /* ═══════════════════════════════════════
    HANDLER MAP
@@ -619,11 +407,8 @@ const HANDLERS = {
   liquidSplash:    liquidSplash,
   filmstripPull:   filmstripPull,
   spiceSplash:     spiceSplash,
-  ingredientMorph: ingredientMorph,
-  bowlWipe:        bowlWipe,
-  tableclothPull:  tableclothPull,
-  steamCurtain:    steamCurtain,
-  sauceDrip:       sauceDrip,
+  
+  
 };
 
 /* ═══════════════════════════════════════
@@ -637,11 +422,8 @@ const TRANSITIONS = [
   { from: "question",        to: "journey",           type: "liquidSplash",    color: P.brown      },
   { from: "journey",         to: "unity",             type: "filmstripPull",   color: P.saffron    },
   { from: "unity",           to: "meaning",           type: "spiceSplash",     color: P.orange     },
-  { from: "meaning",         to: "closing",           type: "ingredientMorph", color: P.warmBg     },
-  { from: "closing",         to: "makeyourownsoto",   type: "bowlWipe",        color: P.cream      },
-  { from: "makeyourownsoto", to: "about",             type: "tableclothPull",  color: P.yellow     },
-  { from: "about",           to: "footer",            type: "steamCurtain",    color: P.brown      },
-];
+ 
+  ];
 
 /* ═══════════════════════════════════════
    SETUP TRANSISI

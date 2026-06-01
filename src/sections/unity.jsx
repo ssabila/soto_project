@@ -309,27 +309,45 @@ export default function Unity() {
     //  PHASE 5 
     tl.to(text5Ref.current, { autoAlpha: 1, y: 0, duration: 2, ease: 'expo.out' });
 
-    //  PHASE 6 
-    tl.to(text5Ref.current, { autoAlpha: 0, y: -40, duration: 1 }, '+=0.6')
-      .to(blobs, {
-        autoAlpha: 0.5,
-        scale: (i) => [1.8, 2.2, 1.5, 2.5, 1.3, 1.9, 2.0, 1.6][i] ?? 1.5,
-        rotation: '+=180', stagger: 0.07, duration: 3, ease: 'expo.out',
-      }, '<')
-      .to(decors, {
-        autoAlpha: 0.65, scale: 1, rotation: '+=20',
-        stagger: 0.1, duration: 2.5, ease: 'back.out(1.4)',
-      }, '<')
-      .to(bowls, {
-        x: (i) => [-500, 420, -380, 460, -440, 390][i] ?? 0,
-        y: (i) => [-320, -340, 340, 320, 120, -130][i] ?? 0,
-        scale: 0.5, autoAlpha: 0.25, rotation: '+=360',
-        stagger: 0.1, duration: 2.5, ease: 'back.out(1.2)',
-      }, '<0.3')
-      .to(sotoRef.current, {
-        autoAlpha: 1, scale: 1, rotation: 0,
-        duration: 2.5, ease: 'elastic.out(1, 0.5)',
-      }, '-=1.5');
+    //  PHASE 6 ─ Final state, stay on screen
+tl.to(text5Ref.current, { autoAlpha: 0, y: -40, duration: 1 }, '+=0.6')
+  .to(blobs, {
+    autoAlpha: 0.5,
+    scale: (i) => [1.8, 2.2, 1.5, 2.5, 1.3, 1.9, 2.0, 1.6][i] ?? 1.5,
+    rotation: '+=180',
+    stagger: 0.07,
+    duration: 3,
+    ease: 'expo.out',
+  }, '<')
+  .to(decors, {
+    autoAlpha: 0.65,
+    scale: 1,
+    rotation: '+=20',
+    stagger: 0.1,
+    duration: 2.5,
+    ease: 'back.out(1.4)',
+  }, '<')
+  .to(bowls, {
+    x: (i) => [-500, 420, -380, 460, -440, 390][i] ?? 0,
+    y: (i) => [-320, -340, 340, 320, 120, -130][i] ?? 0,
+    scale: 0.5,
+    autoAlpha: 0.25,
+    rotation: '+=360',
+    stagger: 0.1,
+    duration: 2.5,
+    ease: 'back.out(1.2)',
+  }, '<0.3')
+  .to(sotoRef.current, {
+    autoAlpha: 1,
+    scale: 1,
+    rotation: 0,
+    duration: 2.5,
+    ease: 'elastic.out(1, 0.5)',
+  }, '-=1.5')
+
+  // HOLD FINAL FRAME
+  // Ini yang bikin layar tetap di final state Unity sebelum masuk Closing.
+  .to({}, { duration: 2.2 });
 
     return () => {
       ScrollTrigger.getAll().forEach((st) => st.kill());

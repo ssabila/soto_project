@@ -20,12 +20,11 @@ import bgDecor4      from "../assets/images/background-4.svg";
 import bgDecor5      from "../assets/images/background-5.svg";
 
 const PHASE1_NODES = [
-  // Sebelumnya endX:"25vw" → sekarang "14vw", endY:"35vh" → "18vh"
   { src: daunJeruk,    endX: "14vw",  endY: "18vh",  startOffX: "35vw",  startOffY: "40vh",  delay: 0.3, rotate: 25,  type: "decor" },
   { src: bawangMerah,  endX: "22vw",  endY: "-16vh", startOffX: "40vw",  startOffY: "-35vh", delay: 0.5, rotate: 45,  type: "decor" },
   { src: bungaRetro,   endX: "-22vw", endY: "-20vh", startOffX: "-45vw", startOffY: "-45vh", delay: 0.4, rotate: 60,  type: "decor" },
   { src: cabe,         endX: "-18vw", endY: "16vh",  startOffX: "-38vw", startOffY: "35vh",  delay: 0.2, rotate: -15, type: "decor" },
-  { src: starRetro,    endX: "16vw",  endY: "-14vh", startOffX: "35vw",  startOffY: "-30vh", delay: 0.6, rotate: 35,  type: "decor" }
+  { src: starRetro,    endX: "16vw",  endY: "-14vh", startOffX: "35vw",  startOffY: "-30vh", delay: 0.6, rotate: 35,  type: "decor" },
 ];
 
 const PHASE2_NODES = [
@@ -36,7 +35,7 @@ const PHASE2_NODES = [
   { src: daunJeruk,    endX: "16vw",  endY: "-10vh", startOffX: "40vw",  startOffY: "-28vh", delay: 0.2, rotate:  30, type: "decor" },
   { src: starRetro,    endX: "28vw",  endY: "-14vh", startOffX: "50vw",  startOffY: "-48vh", delay: 0.8, rotate: -45, type: "decor" },
   { src: cabe,         endX: "10vw",  endY: "18vh",  startOffX: "28vw",  startOffY: "42vh",  delay: 0.3, rotate:  25, type: "decor" },
-  { src: bungaRetro,   endX: "-10vw", endY: "0vh",   startOffX: "-22vw", startOffY: "14vh",  delay: 0.5, rotate:  60, type: "decor" }
+  { src: bungaRetro,   endX: "-10vw", endY: "0vh",   startOffX: "-22vw", startOffY: "14vh",  delay: 0.5, rotate:  60, type: "decor" },
 ];
 
 const PHASE3_NODES = [
@@ -46,7 +45,7 @@ const PHASE3_NODES = [
   { src: bawangMerah,  endX: "-18vw", endY: "-20vh", startOffX: "-34vw", startOffY: "-42vh", delay: 0.2, rotate: -10, type: "decor" },
   { src: starRetro,    endX: "0vw",   endY: "26vh",  startOffX: "0vw",   startOffY: "50vh",  delay: 0.4, rotate:  60, type: "decor" },
   { src: daunJeruk,    endX: "-26vw", endY: "5vh",   startOffX: "-44vw", startOffY: "18vh",  delay: 0.6, rotate: -35, type: "decor" },
-  { src: bungaRetro,   endX: "5vw",   endY: "-22vh", startOffX: "8vw",   startOffY: "-55vh", delay: 0.2, rotate:  45, type: "decor" }
+  { src: bungaRetro,   endX: "5vw",   endY: "-22vh", startOffX: "8vw",   startOffY: "-55vh", delay: 0.2, rotate:  45, type: "decor" },
 ];
 
 const AFTERGLOW = [
@@ -58,7 +57,7 @@ const AFTERGLOW = [
   { src: daunJeruk,  x: "-50vw", y: "-20vh", scale: 0.28, rotate: -35, spd: 5.6, op: 0.09 },
 ];
 
-//  Komponen per-huruf dengan efek uap 
+// Komponen per-huruf dengan efek uap
 function WavyText({ text, className, style }) {
   return (
     <motion.span
@@ -87,7 +86,7 @@ function WavyText({ text, className, style }) {
   );
 }
 
-//  Single MapNode 
+// Single MapNode
 function MapNode({ node, scrollYProgress, inRange, outRange }) {
   const [inStartRaw, inEndRaw] = inRange;
   const [outStartRaw, outEndRaw] = outRange;
@@ -145,78 +144,213 @@ function MapNode({ node, scrollYProgress, inRange, outRange }) {
   );
 }
 
-//  Komponen Utama 
+// Komponen Utama
 export default function MeaningSection() {
   const containerRef = useRef(null);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
-  const bg3Op = useTransform(scrollYProgress, [0.0, 0.25, 0.4],          [1, 1, 0]);
-  const bg4Op = useTransform(scrollYProgress, [0.3, 0.45, 0.55, 0.7],    [0, 1, 1, 0]);
-  const bg5Op = useTransform(scrollYProgress, [0.6, 0.75, 1.0],          [0, 1, 1]);
+  /*
+    Timing:
+    - Scroll section dipanjangkan ke 950vh.
+    - Tiap teks punya fase fade in, stay, fade out.
+    - Blur dikurangin biar lebih clean.
+  */
 
-  //  PHASE 1: 0.00 → 0.32 
-  const t1Opacity = useTransform(scrollYProgress, [0.00, 0.10, 0.22, 0.32], [0, 1, 1, 0]);
-  const t1Y       = useTransform(scrollYProgress, [0.00, 0.10, 0.32],       [60, 0, -40]);
-  const t1Blur    = useTransform(scrollYProgress, [0.00, 0.12],              ["blur(20px)", "blur(0px)"]);
-  const t1Scale   = useTransform(scrollYProgress, [0.00, 0.10, 0.32],       [0.88, 1, 1.04]);
+  const bg3Op = useTransform(
+    scrollYProgress,
+    [0.00, 0.30, 0.42],
+    [1, 1, 0]
+  );
 
-  const steamOpacity = useTransform(scrollYProgress, [0.00, 0.08, 0.20, 0.32], [0, 0.65, 0.65, 0]);
-  const steamY       = useTransform(scrollYProgress, [0.00, 0.32],             [100, -200]);
-  const steamScale   = useTransform(scrollYProgress, [0.00, 0.32],             [0.9, 1.7]);
+  const bg4Op = useTransform(
+    scrollYProgress,
+    [0.36, 0.48, 0.64, 0.74],
+    [0, 1, 1, 0]
+  );
 
-  //  PHASE 2: 0.30 → 0.62 
-  const t2Opacity = useTransform(scrollYProgress, [0.30, 0.40, 0.52, 0.62], [0, 1, 1, 0]);
-  const t2Y       = useTransform(scrollYProgress, [0.30, 0.40, 0.62],       [30, 0, -30]);
-  const t2Blur    = useTransform(scrollYProgress, [0.30, 0.42],              ["blur(10px)", "blur(0px)"]);
-  const t2Scale   = useTransform(scrollYProgress, [0.30, 0.40, 0.62],       [0.84, 1, 1.06]);
+  const bg5Op = useTransform(
+    scrollYProgress,
+    [0.68, 0.78, 1.00],
+    [0, 1, 1]
+  );
 
-  //  PHASE 3: 0.60 → 1.00 
-  const t3aOpacity   = useTransform(scrollYProgress, [0.62, 0.70], [0, 1]);
-  const t3aY         = useTransform(scrollYProgress, [0.62, 0.70], [40, 0]);
-  const t3aBlur      = useTransform(scrollYProgress, [0.62, 0.70], ["blur(12px)", "blur(0px)"]);
+  // PHASE 1: "Soto is more than a dish."
+  const t1Opacity = useTransform(
+    scrollYProgress,
+    [0.00, 0.08, 0.30, 0.38],
+    [0, 1, 1, 0]
+  );
 
-  const t3yetOpacity = useTransform(scrollYProgress, [0.72, 0.80], [0, 1]);
-  const t3yetScale   = useTransform(scrollYProgress, [0.72, 0.80], [0.65, 1]);
-  const t3yetBlur    = useTransform(scrollYProgress, [0.72, 0.80], ["blur(8px)", "blur(0px)"]);
+  const t1Y = useTransform(
+    scrollYProgress,
+    [0.00, 0.08, 0.38],
+    [60, 0, -35]
+  );
 
-  const t3bOpacity   = useTransform(scrollYProgress, [0.82, 0.92], [0, 1]);
-  const t3bScale     = useTransform(scrollYProgress, [0.82, 0.94], [0.82, 1]);
-  const t3bBlur      = useTransform(scrollYProgress, [0.82, 0.92], ["blur(14px)", "blur(0px)"]);
+  const t1Blur = useTransform(
+    scrollYProgress,
+    [0.00, 0.08],
+    ["blur(6px)", "blur(0px)"]
+  );
+
+  const t1Scale = useTransform(
+    scrollYProgress,
+    [0.00, 0.08, 0.38],
+    [0.88, 1, 1.03]
+  );
+
+  const steamOpacity = useTransform(
+    scrollYProgress,
+    [0.00, 0.08, 0.30, 0.38],
+    [0, 0.65, 0.65, 0]
+  );
+
+  const steamY = useTransform(
+    scrollYProgress,
+    [0.00, 0.38],
+    [100, -200]
+  );
+
+  const steamScale = useTransform(
+    scrollYProgress,
+    [0.00, 0.38],
+    [0.9, 1.7]
+  );
+
+  // PHASE 2: "It is a reflection of a nation."
+  const t2Opacity = useTransform(
+    scrollYProgress,
+    [0.38, 0.48, 0.66, 0.74],
+    [0, 1, 1, 0]
+  );
+
+  const t2Y = useTransform(
+    scrollYProgress,
+    [0.38, 0.48, 0.74],
+    [30, 0, -30]
+  );
+
+  const t2Blur = useTransform(
+    scrollYProgress,
+    [0.38, 0.48],
+    ["blur(4px)", "blur(0px)"]
+  );
+
+  const t2Scale = useTransform(
+    scrollYProgress,
+    [0.38, 0.48, 0.74],
+    [0.84, 1, 1.04]
+  );
+
+  // PHASE 3: "Diverse… yet deeply connected."
+  const t3aOpacity = useTransform(
+    scrollYProgress,
+    [0.72, 0.80],
+    [0, 1]
+  );
+
+  const t3aY = useTransform(
+    scrollYProgress,
+    [0.72, 0.80],
+    [40, 0]
+  );
+
+  const t3aBlur = useTransform(
+    scrollYProgress,
+    [0.72, 0.80],
+    ["blur(4px)", "blur(0px)"]
+  );
+
+  const t3yetOpacity = useTransform(
+    scrollYProgress,
+    [0.80, 0.86],
+    [0, 1]
+  );
+
+  const t3yetScale = useTransform(
+    scrollYProgress,
+    [0.80, 0.86],
+    [0.65, 1]
+  );
+
+  const t3yetBlur = useTransform(
+    scrollYProgress,
+    [0.80, 0.86],
+    ["blur(3px)", "blur(0px)"]
+  );
+
+  const t3bOpacity = useTransform(
+    scrollYProgress,
+    [0.86, 0.94],
+    [0, 1]
+  );
+
+  const t3bScale = useTransform(
+    scrollYProgress,
+    [0.86, 0.96],
+    [0.82, 1]
+  );
+
+  const t3bBlur = useTransform(
+    scrollYProgress,
+    [0.86, 0.94],
+    ["blur(5px)", "blur(0px)"]
+  );
 
   return (
     <motion.section
+      id="meaning"
+      data-section="meaning"
       ref={containerRef}
-      className="relative h-[700vh]"
+      className="relative h-[950vh]"
       style={{ fontFamily: "var(--font-body, 'InriaSerif', serif)" }}
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
 
         {/* Background SVGs */}
-        <motion.img src={bgDecor3} alt="" aria-hidden="true"
+        <motion.img
+          src={bgDecor3}
+          alt=""
+          aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover pointer-events-none z-[-1]"
           style={{ opacity: bg3Op }}
         />
-        <motion.img src={bgDecor4} alt="" aria-hidden="true"
+
+        <motion.img
+          src={bgDecor4}
+          alt=""
+          aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover pointer-events-none z-[-1]"
           style={{ opacity: bg4Op }}
         />
-        <motion.img src={bgDecor5} alt="" aria-hidden="true"
+
+        <motion.img
+          src={bgDecor5}
+          alt=""
+          aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover pointer-events-none z-[-1]"
           style={{ opacity: bg5Op }}
         />
 
-        {/* Afterglow — sisa elemen Unity */}
+        {/* Afterglow */}
         <div className="absolute inset-0 pointer-events-none z-[5]">
           {AFTERGLOW.map((item, i) => (
-            <motion.img key={`ag-${i}`} src={item.src} alt="" aria-hidden="true"
+            <motion.img
+              key={`ag-${i}`}
+              src={item.src}
+              alt=""
+              aria-hidden="true"
               className="absolute object-contain"
               style={{
                 width: "clamp(20px, 3.5vw, 44px)",
-                left: "50%", top: "50%",
-                x: item.x, y: item.y,
+                left: "50%",
+                top: "50%",
+                x: item.x,
+                y: item.y,
                 opacity: item.op,
                 scale: item.scale,
                 rotate: item.rotate,
@@ -225,73 +359,124 @@ export default function MeaningSection() {
                 y: [item.y, `calc(${item.y} - 14px)`, item.y],
                 rotate: [item.rotate, item.rotate + 10, item.rotate],
               }}
-              transition={{ repeat: Infinity, duration: item.spd, ease: "easeInOut" }}
+              transition={{
+                repeat: Infinity,
+                duration: item.spd,
+                ease: "easeInOut",
+              }}
             />
           ))}
         </div>
 
-        {/*  Map Nodes  */}
+        {/* Map Nodes */}
         <div className="absolute inset-0 flex items-center justify-center z-[30]">
           {PHASE1_NODES.map((node, i) => (
-            <MapNode key={`p1-${i}`} node={node} scrollYProgress={scrollYProgress} inRange={[0.0, 0.15]} outRange={[0.25, 0.33]} />
+            <MapNode
+              key={`p1-${i}`}
+              node={node}
+              scrollYProgress={scrollYProgress}
+              inRange={[0.00, 0.14]}
+              outRange={[0.32, 0.40]}
+            />
           ))}
+
           {PHASE2_NODES.map((node, i) => (
-            <MapNode key={`p2-${i}`} node={node} scrollYProgress={scrollYProgress} inRange={[0.33, 0.45]} outRange={[0.60, 0.65]} />
+            <MapNode
+              key={`p2-${i}`}
+              node={node}
+              scrollYProgress={scrollYProgress}
+              inRange={[0.40, 0.52]}
+              outRange={[0.68, 0.75]}
+            />
           ))}
+
           {PHASE3_NODES.map((node, i) => (
-            <MapNode key={`p3-${i}`} node={node} scrollYProgress={scrollYProgress} inRange={[0.65, 0.75]} outRange={[0.95, 1.0]} />
+            <MapNode
+              key={`p3-${i}`}
+              node={node}
+              scrollYProgress={scrollYProgress}
+              inRange={[0.72, 0.82]}
+              outRange={[0.96, 1.00]}
+            />
           ))}
         </div>
 
         <div className="absolute inset-0 flex items-center justify-center z-[40] pointer-events-none text-center px-4 md:px-10">
 
-          {/*  Phase 1: "Soto is more than a dish."  */}
+          {/* Phase 1 */}
           <motion.div
             className="absolute flex flex-col items-center gap-2"
-            style={{ opacity: t1Opacity, y: t1Y, scale: t1Scale, filter: t1Blur }}
+            style={{
+              opacity: t1Opacity,
+              y: t1Y,
+              scale: t1Scale,
+              filter: t1Blur,
+            }}
           >
-            {/* Steam */}
-            <motion.img src={asap} alt="" aria-hidden="true"
+            <motion.img
+              src={asap}
+              alt=""
+              aria-hidden="true"
               className="absolute -top-36 md:-top-52 w-[260%] max-w-[700px] object-contain mix-blend-screen pointer-events-none"
-              style={{ opacity: steamOpacity, y: steamY, scale: steamScale }}
+              style={{
+                opacity: steamOpacity,
+                y: steamY,
+                scale: steamScale,
+              }}
             />
 
-            {/* Eyebrow label */}
             <motion.span
               className="text-[11px] md:text-xs tracking-[0.38em] uppercase mb-1 italic opacity-70"
-              style={{ color: "#f63b1c", fontFamily: "var(--font-body, 'InriaSerif', serif)", fontWeight: "bold" }}
+              style={{
+                color: "#f63b1c",
+                fontFamily: "var(--font-body, 'InriaSerif', serif)",
+                fontWeight: "bold",
+              }}
               animate={{ opacity: [0.55, 0.80, 0.55] }}
               transition={{ repeat: Infinity, duration: 3.5 }}
             >
               nusantara dalam semangkuk
             </motion.span>
 
-            {/* Teks wavy utama */}
             <WavyText
               text={storyContent.meaning.lines[0] ?? "Soto is more than a dish."}
               className="text-[#1A0B04] font-bold italic text-2xl md:text-4xl lg:text-5xl tracking-wide leading-relaxed"
               style={{ fontFamily: "var(--font-body, 'InriaSerif', serif)" }}
             />
 
-            {/* Garis bawah */}
-            <svg viewBox="0 0 300 18" className="w-48 md:w-72 mt-1 opacity-45" fill="none">
-              <path d="M10 9 Q75 2 150 9 Q225 16 290 9" stroke="#FF9721" strokeWidth="1.5" strokeLinecap="round"/>
-              <circle cx="10"  cy="9" r="2.5" fill="#FF9721" opacity="0.7"/>
-              <circle cx="290" cy="9" r="2.5" fill="#FF9721" opacity="0.7"/>
-              <circle cx="150" cy="9" r="2"   fill="#FFF073" opacity="0.9"/>
+            <svg
+              viewBox="0 0 300 18"
+              className="w-48 md:w-72 mt-1 opacity-45"
+              fill="none"
+            >
+              <path
+                d="M10 9 Q75 2 150 9 Q225 16 290 9"
+                stroke="#FF9721"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <circle cx="10"  cy="9" r="2.5" fill="#FF9721" opacity="0.7" />
+              <circle cx="290" cy="9" r="2.5" fill="#FF9721" opacity="0.7" />
+              <circle cx="150" cy="9" r="2"   fill="#FFF073" opacity="0.9" />
             </svg>
           </motion.div>
 
-          {/*  Phase 2: "It is a reflection of a nation."  */}
+          {/* Phase 2 */}
           <motion.div
             className="absolute flex flex-col items-center gap-3"
-            style={{ opacity: t2Opacity, scale: t2Scale, y: t2Y, filter: t2Blur }}
+            style={{
+              opacity: t2Opacity,
+              scale: t2Scale,
+              y: t2Y,
+              filter: t2Blur,
+            }}
           >
             <motion.h2
               className="text-[#FFF073] font-bold text-3xl md:text-5xl lg:text-6xl tracking-widest leading-tight"
               style={{
                 fontFamily: "var(--font-title, 'Beachfly', serif)",
-                textShadow: "0 0 40px rgba(255,240,115,0.30), 0 6px 20px rgba(0,0,0,0.8)",
+                textShadow:
+                  "0 0 40px rgba(255,240,115,0.30), 0 6px 20px rgba(0,0,0,0.8)",
               }}
             >
               {storyContent.meaning.lines[1] ?? "It is a reflection of a nation."}
@@ -299,69 +484,98 @@ export default function MeaningSection() {
 
             <div className="flex items-center gap-4 opacity-45 mt-1">
               <svg viewBox="0 0 24 24" className="w-4 md:w-5 fill-[#FF9721]">
-                <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
+                <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" />
               </svg>
+
               <svg viewBox="0 0 40 6" className="w-24 md:w-32" fill="none">
-                <path d="M4 3 Q20 0.5 36 3" stroke="#FF9721" strokeWidth="1" strokeLinecap="round"/>
+                <path
+                  d="M4 3 Q20 0.5 36 3"
+                  stroke="#FF9721"
+                  strokeWidth="1"
+                  strokeLinecap="round"
+                />
               </svg>
+
               <svg viewBox="0 0 24 24" className="w-4 md:w-5 fill-[#FF9721]">
-                <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
+                <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" />
               </svg>
             </div>
           </motion.div>
-
         </div>
 
-        {/*  Phase 3  */}
+        {/* Phase 3 */}
         <div className="absolute inset-0 flex items-center justify-center z-[50] pointer-events-none text-center px-4 md:px-10">
           <div className="flex flex-col items-center gap-3 md:gap-5">
 
-            {/* "Diverse…" */}
             <motion.h2
               className="text-[#FFF5D1] font-bold italic text-2xl md:text-4xl lg:text-5xl tracking-wider"
               style={{
-                opacity: t3aOpacity, y: t3aY, filter: t3aBlur,
+                opacity: t3aOpacity,
+                y: t3aY,
+                filter: t3aBlur,
                 fontFamily: "var(--font-body, 'InriaSerif', serif)",
-                textShadow: "0 4px 24px rgba(0,0,0,0.9), 0 2px 8px rgba(0,0,0,1)",
+                textShadow:
+                  "0 4px 24px rgba(0,0,0,0.9), 0 2px 8px rgba(0,0,0,1)",
               }}
             >
               Diverse…
             </motion.h2>
 
-            {/* "yet" */}
             <motion.span
               className="text-[#FF9721] italic text-xl md:text-3xl lg:text-4xl"
               style={{
-                opacity: t3yetOpacity, scale: t3yetScale, filter: t3yetBlur,
+                opacity: t3yetOpacity,
+                scale: t3yetScale,
+                filter: t3yetBlur,
                 fontFamily: "var(--font-body, 'InriaSerif', serif)",
-                textShadow: "0 0 24px rgba(255,151,33,0.55), 0 2px 12px rgba(0,0,0,1)",
+                textShadow:
+                  "0 0 24px rgba(255,151,33,0.55), 0 2px 12px rgba(0,0,0,1)",
               }}
             >
               yet
             </motion.span>
 
-            {/* "deeply connected." */}
             <motion.div className="flex flex-col items-center gap-1">
               <motion.h2
                 className="font-bold text-3xl md:text-5xl lg:text-6xl xl:text-7xl tracking-[0.08em]"
                 style={{
-                  opacity: t3bOpacity, scale: t3bScale, filter: t3bBlur,
+                  opacity: t3bOpacity,
+                  scale: t3bScale,
+                  filter: t3bBlur,
                   fontFamily: "var(--font-title, 'Beachfly', serif)",
                   color: "var(--color-brand-yellow, #fff073)",
-                  textShadow: "0 0 32px rgba(255,240,115,0.5), 0 0 64px rgba(255,151,33,0.28), 0 8px 32px rgba(0,0,0,1)",
+                  textShadow:
+                    "0 0 32px rgba(255,240,115,0.5), 0 0 64px rgba(255,151,33,0.28), 0 8px 32px rgba(0,0,0,1)",
                 }}
               >
                 deeply connected.
               </motion.h2>
 
               <motion.svg
-                viewBox="0 0 400 14" className="w-56 md:w-96" fill="none"
+                viewBox="0 0 400 14"
+                className="w-56 md:w-96"
+                fill="none"
                 style={{ opacity: t3bOpacity }}
                 animate={{ opacity: [0.35, 0.80, 0.35] }}
-                transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut" }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 2.4,
+                  ease: "easeInOut",
+                }}
               >
-                <path d="M10 7 Q100 2 200 7 Q300 12 390 7"   stroke="#FFF073" strokeWidth="1.2" strokeLinecap="round"/>
-                <path d="M30 10 Q100 6 200 10 Q300 14 370 10" stroke="#FF9721" strokeWidth="0.6" strokeLinecap="round" opacity="0.5"/>
+                <path
+                  d="M10 7 Q100 2 200 7 Q300 12 390 7"
+                  stroke="#FFF073"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M30 10 Q100 6 200 10 Q300 14 370 10"
+                  stroke="#FF9721"
+                  strokeWidth="0.6"
+                  strokeLinecap="round"
+                  opacity="0.5"
+                />
               </motion.svg>
             </motion.div>
           </div>
