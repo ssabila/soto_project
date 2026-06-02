@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { storyContent } from "../data/storytext.js";
@@ -60,6 +60,18 @@ const scSotoWord = q1Parts[1].trim();
 export default function QuestionSection() {
   const pinWrapRef = useRef(null);
   const stageRef = useRef(null);
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Angka 1024px biasanya mencakup layar iPad/Tablet dan Mobile
+    const handleResize = () => setIsMobile(window.innerWidth <= 1024);
+    
+    handleResize(); // Cek saat pertama kali render
+    window.addEventListener("resize", handleResize);
+    
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Scene A
   const saLine1Ref = useRef(null);
@@ -964,9 +976,12 @@ export default function QuestionSection() {
               ref={saStampTL}
               style={{
                 ...S.stamp,
-                top: 52,
-                left: "clamp(72px,10vw,140px)",
-                transform: "rotate(-5deg)",
+                top: isMobile ? 30 : 52, // Sedikit lebih ke atas di mobile
+                left: isMobile ? 0 : "clamp(72px,10vw,140px)",
+                right: isMobile ? 0 : "auto",
+                margin: isMobile ? "0 auto" : "0",
+                width: "fit-content", // Wajib agar margin auto bekerja
+                transform: isMobile ? "rotate(0deg)" : "rotate(-5deg)",
               }}
             >
               Nusantara Collection
@@ -975,9 +990,13 @@ export default function QuestionSection() {
               ref={saStampTR}
               style={{
                 ...S.stamp,
-                top: 60,
-                right: "clamp(24px,5vw,80px)",
-                transform: "rotate(3deg)",
+                top: isMobile ? "auto" : 60,
+                bottom: isMobile ? 80 : "auto", // Beri jarak dari bawah saat mobile
+                left: isMobile ? 0 : "auto",
+                right: isMobile ? 0 : "clamp(24px,5vw,80px)",
+                margin: isMobile ? "0 auto" : "0",
+                width: "fit-content", // Wajib agar margin auto bekerja
+                transform: isMobile ? "rotate(0deg)" : "rotate(3deg)",
               }}
             >
               Est. Abad XVI
