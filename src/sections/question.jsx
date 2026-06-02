@@ -67,8 +67,6 @@ const scDescMobile =
   "Soto is a beloved Indonesian soup, a warm bowl of spiced broth layered with tender meats like chicken or beef, fresh vegetables, and fragrant toppings.";
 
 export default function QuestionSection() {
-  const [isMobile, setIsMobile] = useState(false);
-
   const pinWrapRef = useRef(null);
   const stageRef = useRef(null);
 
