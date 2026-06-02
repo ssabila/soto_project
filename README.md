@@ -12,12 +12,6 @@
 | Sabila Bintang Kusuma Dewi | 222313323 | 3SI2 |
 | Qurany Nadhira Tsabita | 222313363 | 3SI2 |
 
-**Institusi:** Politeknik Statistika STIS
-
-**Mata Kuliah:** Web Design Paradoks
-
-**Tahun:** 2026
-
 ---
 
 ## Deskripsi Proyek
