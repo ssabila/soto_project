@@ -33,7 +33,7 @@ gsap.registerPlugin(ScrollTrigger)
  * @returns {React.RefObject}   — ref yang bisa disambungkan ke elemen <section>
  */
 export function useSectionTransition(sectionName, delay = 400, options = {}) {
-  const { autoScroll = false } = options  // ✅ opsi baru
+  const { autoScroll = false } = options 
   const sectionRef = useRef(null)
 
   useEffect(() => {
@@ -85,7 +85,6 @@ export function useSectionTransition(sectionName, delay = 400, options = {}) {
                 })
               }
 
-              // ✅ Scroll otomatis ke section tujuan setelah transisi
               if (autoScroll && el) {
                 el.scrollIntoView({ behavior: 'instant' })
               }
@@ -113,7 +112,10 @@ export function useSectionTransition(sectionName, delay = 400, options = {}) {
       clearTimeout(timer)
       if (selfEl) gsap.set(selfEl, { opacity: 1, visibility: 'visible' })
       if (trigger) {
-        try { trigger.kill() } catch (_) {}
+        try { trigger.kill() } 
+        catch (err) {
+          console.warn("Failed to kill trigger:", err)
+        }
       }
     }
   }, [sectionName, delay, autoScroll])
