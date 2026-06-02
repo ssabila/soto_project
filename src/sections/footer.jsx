@@ -1,4 +1,4 @@
-import footerBg from "../assets/images/footer.svg";
+import footerBg from "../assets/images/footer.webp";
 
 const scrollToSection = (sectionId) => {
   const el =
@@ -31,39 +31,39 @@ export default function FooterSection() {
 
   return (
     <section
-      id="footer"
-      data-section="footer"
-      className="
-        relative
-        w-full
-        overflow-hidden
-        bg-[#ffbd59]
+  id="footer"
+  data-section="footer"
+  className="
+    relative
+    -mt-[2px]
+    w-full
+    overflow-hidden
+    bg-[#ffbd59]
 
-        min-h-[clamp(245px,34vh,330px)]
-        md:min-h-[clamp(300px,39vh,390px)]
-      "
-    >
-      {/*scrap bg */}
-      <img
-        src={footerBg}
-        alt=""
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          z-[1]
-          h-[112%]
-          w-full
-          translate-y-[8px]
-          object-cover
-          object-[center_18%]
+    min-h-[clamp(245px,34vh,330px)]
+    md:min-h-[clamp(300px,39vh,390px)]
+  "
+>
+  {/* scrap bg */}
+  <img
+    src={footerBg}
+    alt=""
+    aria-hidden="true"
+    className="
+      pointer-events-none
+      absolute
+      inset-x-0
+      top-[-2px]
+      z-[1]
+      h-[114%]
+      w-full
+      object-cover
+      object-[center_18%]
 
-          md:h-[110%]
-          md:translate-y-[10px]
-          md:object-[center_10%]
-        "
-      />
+      md:h-[112%]
+      md:object-[center_10%]
+    "
+  />
 
       {/* MAIN CONTENT */}
       <div
@@ -214,7 +214,7 @@ export default function FooterSection() {
                 drop-shadow-[0_2px_0_rgba(250,253,218,0.25)]
               "
             >
-              Every bowl tells a story.
+              Soto Across the Islands
             </p>
 
             <p
@@ -343,7 +343,7 @@ export default function FooterSection() {
             md:text-[clamp(11px,1.1vw,12.5px)]
           "
         >
-          © 2026 Kicau Mania Team. All rights reserved.
+          © 2026 Kicau Mania Team - Sabila & Qurany. All rights reserved.
         </p>
 
         <p

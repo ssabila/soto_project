@@ -1,5 +1,4 @@
 export const storyContent = {
-
   opening: {
     id: "opening",
     lines: [
@@ -8,7 +7,7 @@ export const storyContent = {
       "Different lands. Different cultures. Different hands.",
       "Yet one dish continues to appear.",
       "Soto.",
-    ]
+    ],
   },
 
   question: {
@@ -16,7 +15,7 @@ export const storyContent = {
     lines: [
       "How can one dish… carry so many different identities?",
       "What makes them all… soto?",
-    ]
+    ],
   },
 
   journey: {
@@ -34,7 +33,7 @@ export const storyContent = {
         "In the capital, richness defines the flavor.",
         "Creamy, bold, layered—",
         "shaped by a city of endless influences.",
-      ]
+      ],
     },
     {
       id: "soto-lamongan",
@@ -44,7 +43,7 @@ export const storyContent = {
         "Further east, simplicity becomes strength.",
         "A clear broth, elevated by koya—",
         "subtle, yet unforgettable.",
-      ]
+      ],
     },
     {
       id: "soto-kudus",
@@ -54,7 +53,7 @@ export const storyContent = {
         "Served in smaller portions…",
         "not because it lacks—",
         "but because it is enough.",
-      ]
+      ],
     },
     {
       id: "soto-padang",
@@ -65,7 +64,7 @@ export const storyContent = {
         "Crispy beef, rich broth—",
         "a flavor that speaks with confidence.",
         "Strong. Direct. Unapologetic.",
-      ]
+      ],
     },
     {
       id: "soto-banjar",
@@ -75,7 +74,7 @@ export const storyContent = {
         "Across the rivers, the flavor softens.",
         "Light, aromatic, and comforting—",
         "a quiet expression of warmth.",
-      ]
+      ],
     },
     {
       id: "coto-makassar",
@@ -86,7 +85,7 @@ export const storyContent = {
         "Rich, nutty, and intense—",
         "built from spices and time.",
         "A flavor that lingers.",
-      ]
+      ],
     },
   ],
 
@@ -98,7 +97,7 @@ export const storyContent = {
       "Different ingredients.",
       "Different philosophies.",
       "Yet they all share the same name.",
-    ]
+    ],
   },
 
   meaning: {
@@ -107,7 +106,7 @@ export const storyContent = {
       "Soto is more than a dish.",
       "It is a reflection of a nation.",
       "Diverse… yet deeply connected.",
-    ]
+    ],
   },
 
   closing: {
@@ -116,16 +115,12 @@ export const storyContent = {
       "Because in the end, soto was never just about taste.",
       "It is about how different people…",
       "can still belong to the same table.",
-    ]
+    ],
   },
 
   makeYourOwn: {
     id: "make-your-own",
-    lines: [
-      "Every bowl tells a story.",
-      "Now, it's your turn to create one.",
-    ],
+    lines: ["Every bowl tells a story.", "Now, it's your turn to create one."],
     resultTemplate: (region) => `You created a Soto inspired by ${region}`,
   },
-
-}
+};

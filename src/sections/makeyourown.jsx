@@ -1,29 +1,29 @@
-import React, { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-import backgroundGame from "../assets/images/background-gamestart.svg";
-import mangkokMeja from "../assets/images/mangkokmeja-game.svg";
+import backgroundGame from "../assets/images/background-gamestart.webp";
+import mangkokMeja from "../assets/images/mangkokmeja-game.webp";
 
-import kuahBiasa from "../assets/images/kuah-biasa.svg";
-import kuahBening from "../assets/images/kuah-bening.svg";
-import kuahSantan from "../assets/images/kuah-santan.svg";
-import kuahCoto from "../assets/images/kuah-coto.svg";
+import kuahBiasa from "../assets/images/kuah-biasa.webp";
+import kuahBening from "../assets/images/kuah-bening.webp";
+import kuahSantan from "../assets/images/kuah-santan.webp";
+import kuahCoto from "../assets/images/kuah-coto.webp";
 
-import toppingAyam from "../assets/images/topping-ayam.svg";
-import toppingDaging from "../assets/images/topping-daging.svg";
-import toppingBabat from "../assets/images/topping-babat.svg";
+import toppingAyam from "../assets/images/topping-ayam.webp";
+import toppingDaging from "../assets/images/topping-daging.webp";
+import toppingBabat from "../assets/images/topping-babat.webp";
 
-import pelengkapKoya from "../assets/images/pelengkap-koya.svg";
-import pelengkapTauge from "../assets/images/pelengkap-tauge.svg";
-import pelengkapBawang from "../assets/images/pelengkap-bawang.svg";
+import pelengkapKoya from "../assets/images/pelengkap-koya.webp";
+import pelengkapTauge from "../assets/images/pelengkap-tauge.webp";
+import pelengkapBawang from "../assets/images/pelengkap-bawang.webp";
 
-import tambahanTelur from "../assets/images/tambahan-telur.svg";
-import tambahanKerupukudang from "../assets/images/tambahan-kerupukudang.svg";
-import tambahanLimau from "../assets/images/tambahan-limau.svg";
-import tambahanEmping from "../assets/images/tambahan-emping.svg";
+import tambahanTelur from "../assets/images/tambahan-telur.webp";
+import tambahanKerupukudang from "../assets/images/tambahan-kerupukudang.webp";
+import tambahanLimau from "../assets/images/tambahan-limau.webp";
+import tambahanEmping from "../assets/images/tambahan-emping.webp";
 
-import gameTitle from "../assets/images/game-title.svg";
+import gameTitle from "../assets/images/game-title.webp";
 
 // warna
 const C = {
@@ -285,9 +285,7 @@ function IngredientCard({
       <div
         className={[
           "pointer-events-none relative flex items-center justify-center",
-          compact
-            ? "h-[48px] w-[62px]"
-            : "h-[clamp(44px,5.5vw,70px)] w-full",
+          compact ? "h-[48px] w-[62px]" : "h-[clamp(44px,5.5vw,70px)] w-full",
         ].join(" ")}
       >
         <img
@@ -297,10 +295,10 @@ function IngredientCard({
             item.group === "topping"
               ? "h-[260%] w-[260%]"
               : item.group === "pelengkap"
-              ? "h-[350%] w-[350%]"
-              : item.group === "tambahan"
-              ? "h-[230%] w-[230%]"
-              : "h-[145%] w-[145%]",
+                ? "h-[350%] w-[350%]"
+                : item.group === "tambahan"
+                  ? "h-[230%] w-[230%]"
+                  : "h-[145%] w-[145%]",
             "max-w-none object-contain transition-transform duration-200 group-hover:scale-110",
           ].join(" ")}
           style={{
@@ -419,10 +417,10 @@ function StepTab({ label, active, done, locked, onClick }) {
         active
           ? "border-[#2a1f0e] bg-[#ff9721] text-[#2a1f0e]"
           : done
-          ? "border-[#8a6a3a] bg-[#fafdda] text-[#8a6a3a]"
-          : locked
-          ? "border-[#8a6a3a]/40 bg-[rgba(250,253,218,0.36)] text-[#8a6a3a]/45"
-          : "border-[#c8a86a] bg-[rgba(250,253,218,0.75)] text-[#8a6a3a]",
+            ? "border-[#8a6a3a] bg-[#fafdda] text-[#8a6a3a]"
+            : locked
+              ? "border-[#8a6a3a]/40 bg-[rgba(250,253,218,0.36)] text-[#8a6a3a]/45"
+              : "border-[#c8a86a] bg-[rgba(250,253,218,0.75)] text-[#8a6a3a]",
       ].join(" ")}
     >
       <span className="hidden sm:inline">{done && !active ? "✓ " : ""}</span>
@@ -580,6 +578,7 @@ const Makeyourownsoto = () => {
   const playTimeline = useRef(null);
   const dragItemId = useRef(null);
   const bowlRef = useRef(null);
+  const toastTimerRef = useRef(null);
 
   const [gameStarted, setGameStarted] = useState(false);
   const [step, setStep] = useState(0);
@@ -612,8 +611,9 @@ const Makeyourownsoto = () => {
   const showToast = useCallback((msg) => {
     setToast({ msg, show: true });
 
-    window.clearTimeout(showToast.timer);
-    showToast.timer = window.setTimeout(() => {
+    window.clearTimeout(toastTimerRef.current);
+
+    toastTimerRef.current = window.setTimeout(() => {
       setToast((t) => ({ ...t, show: false }));
     }, 1700);
   }, []);
@@ -638,9 +638,10 @@ const Makeyourownsoto = () => {
 
       return () => {
         playTimeline.current?.kill();
+        window.clearTimeout(toastTimerRef.current);
       };
     },
-    { scope: container }
+    { scope: container },
   );
 
   const handlePlay = () => {
@@ -667,7 +668,7 @@ const Makeyourownsoto = () => {
         stagger: 0.08,
         ease: "power2.inOut",
       },
-      0
+      0,
     );
 
     tl.to(
@@ -679,7 +680,7 @@ const Makeyourownsoto = () => {
         duration: 0.45,
         ease: "power2.inOut",
       },
-      0
+      0,
     );
 
     tl.to(
@@ -689,7 +690,7 @@ const Makeyourownsoto = () => {
         duration: 0.28,
         ease: "power2.out",
       },
-      "-=0.08"
+      "-=0.08",
     );
 
     tl.to(q(".soto-loading-dots"), {
@@ -711,7 +712,7 @@ const Makeyourownsoto = () => {
         duration: 0.45,
         ease: "power2.inOut",
       },
-      "-=0.05"
+      "-=0.05",
     );
 
     tl.set(q(".soto-actual-game"), {
@@ -777,7 +778,7 @@ const Makeyourownsoto = () => {
       if (item.group === "topping") {
         setBowlItems((prev) => replaceGroupItem(prev, "topping", item.id));
         showToast(
-          `${item.label} dipilih. Lanjut pilih taburan atau sajikan soto.`
+          `${item.label} dipilih. Lanjut pilih taburan atau sajikan soto.`,
         );
         goNextStep("topping");
         return;
@@ -792,7 +793,7 @@ const Makeyourownsoto = () => {
       if (item.group === "pelengkap") {
         setBowlItems((prev) => replaceGroupItem(prev, "pelengkap", item.id));
         showToast(
-          `${item.label} ditabur. Lanjut pilih topping ekstra atau sajikan soto.`
+          `${item.label} ditabur. Lanjut pilih topping ekstra atau sajikan soto.`,
         );
         goNextStep("pelengkap");
         return;
@@ -803,7 +804,7 @@ const Makeyourownsoto = () => {
         showToast(`${item.label} jadi topping pelengkap, sajikan soto!.`);
       }
     },
-    [selectedKuah, topping, showToast, goNextStep]
+    [selectedKuah, topping, showToast, goNextStep],
   );
 
   const onDragStart = (e) => {
@@ -919,13 +920,13 @@ const Makeyourownsoto = () => {
         resultKuah?.id,
         resultTopping?.id,
         resultPelengkap?.id,
-        resultTambahan?.id
+        resultTambahan?.id,
       ),
       copy: getResultCopy(
         resultKuah,
         resultTopping,
         resultPelengkap,
-        resultTambahan
+        resultTambahan,
       ),
       kuah: resultKuah,
       topping: resultTopping,
@@ -937,28 +938,29 @@ const Makeyourownsoto = () => {
   return (
     <section
       id="makeyourownsoto"
-  data-section="makeyourownsoto"
+      data-section="makeyourownsoto"
       ref={container}
       className="relative w-full overflow-hidden bg-[#fafdda]"
     >
       {/* BG GRADIENT */}
-<div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,#fafdda_0%,#ffbd59_100%)]" />
-      
-	  {/* SPICE DOTS */}
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,#fafdda_0%,#ffbd59_100%)]" />
+
+      {/* SPICE DOTS */}
       <div className="pointer-events-none absolute inset-0 z-[2] overflow-hidden">
         {spiceDots.map((dot, i) => (
           <span
             key={i}
-  className="absolute rounded-full"
-  style={{
-    top: dot.top,
-    left: dot.left,
-    width: `${dot.size}px`,
-    height: `${dot.size}px`,
-    backgroundColor: dot.color,
-    opacity: dot.opacity,
-    boxShadow: `0 2px ${dot.size * 1.4}px rgba(44,19,9,0.16)`,
-    transform: `rotate(${i * 17}deg)`,}}
+            className="absolute rounded-full"
+            style={{
+              top: dot.top,
+              left: dot.left,
+              width: `${dot.size}px`,
+              height: `${dot.size}px`,
+              backgroundColor: dot.color,
+              opacity: dot.opacity,
+              boxShadow: `0 2px ${dot.size * 1.4}px rgba(44,19,9,0.16)`,
+              transform: `rotate(${i * 17}deg)`,
+            }}
           />
         ))}
       </div>
@@ -1053,8 +1055,8 @@ const Makeyourownsoto = () => {
                   <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_60px_rgba(42,31,14,0.22)]" />
 
                   {/* TOP BAR */}
-<div
-  className="
+                  <div
+                    className="
     absolute
     left-1/2
     top-[2%]
@@ -1068,10 +1070,10 @@ const Makeyourownsoto = () => {
     md:translate-x-0
     md:px-[2%]
   "
->
-  {/* MOBILE TOP BAR */}
-  <div
-    className="
+                  >
+                    {/* MOBILE TOP BAR */}
+                    <div
+                      className="
       flex
       flex-col
       items-center
@@ -1079,21 +1081,21 @@ const Makeyourownsoto = () => {
 
       md:hidden
     "
-  >
-    {/* ACTION ROW */}
-    <div
-      className="
+                    >
+                      {/* ACTION ROW */}
+                      <div
+                        className="
         flex
         w-full
         items-center
         justify-between
         gap-2
       "
-    >
-      <button
-        type="button"
-        onClick={handleBackToStart}
-        className="
+                      >
+                        <button
+                          type="button"
+                          onClick={handleBackToStart}
+                          className="
           shrink-0
           rounded-full
           border-[2.5px]
@@ -1111,65 +1113,65 @@ const Makeyourownsoto = () => {
           hover:bg-white
           active:translate-y-0.5
         "
-      >
-        BACK
-      </button>
+                        >
+                          BACK
+                        </button>
 
-      <button
-        type="button"
-        onClick={handleFinish}
-        className={[
-          "shrink-0 rounded-full border-[2.5px] border-[#2a1f0e]",
-          "px-[clamp(11px,3.2vw,28px)] py-[clamp(5px,1.5vw,11px)]",
-          "font-title text-[clamp(0.65rem,2.8vw,1.18rem)] font-black",
-          "shadow-[0_4px_0_rgba(42,31,14,0.25)] transition-all active:translate-y-0.5",
-          hasRequiredBase
-            ? "bg-[#e83a2a] text-[#fafdda] hover:-translate-y-0.5 hover:bg-[#ff5040]"
-            : "bg-[#c8a86a] text-[#5a3e28] opacity-80 hover:bg-[#d8b879]",
-        ].join(" ")}
-      >
-        FINISH
-      </button>
-    </div>
+                        <button
+                          type="button"
+                          onClick={handleFinish}
+                          className={[
+                            "shrink-0 rounded-full border-[2.5px] border-[#2a1f0e]",
+                            "px-[clamp(11px,3.2vw,28px)] py-[clamp(5px,1.5vw,11px)]",
+                            "font-title text-[clamp(0.65rem,2.8vw,1.18rem)] font-black",
+                            "shadow-[0_4px_0_rgba(42,31,14,0.25)] transition-all active:translate-y-0.5",
+                            hasRequiredBase
+                              ? "bg-[#e83a2a] text-[#fafdda] hover:-translate-y-0.5 hover:bg-[#ff5040]"
+                              : "bg-[#c8a86a] text-[#5a3e28] opacity-80 hover:bg-[#d8b879]",
+                          ].join(" ")}
+                        >
+                          FINISH
+                        </button>
+                      </div>
 
-    {/* STEP ROW */}
-    <div
-      className="
+                      {/* STEP ROW */}
+                      <div
+                        className="
         flex
         w-full
         items-center
         justify-center
         gap-[3px]
       "
-    >
-      {STEPS.map((s, i) => {
-        const locked =
-          (i === 1 && !selectedKuah) ||
-          (i > 1 && (!selectedKuah || !topping));
+                      >
+                        {STEPS.map((s, i) => {
+                          const locked =
+                            (i === 1 && !selectedKuah) ||
+                            (i > 1 && (!selectedKuah || !topping));
 
-        const done =
-          (i === 0 && !!selectedKuah) ||
-          (i === 1 && !!topping) ||
-          (i === 2 && !!pelengkap) ||
-          (i === 3 && !!tambahan);
+                          const done =
+                            (i === 0 && !!selectedKuah) ||
+                            (i === 1 && !!topping) ||
+                            (i === 2 && !!pelengkap) ||
+                            (i === 3 && !!tambahan);
 
-        return (
-          <StepTab
-            key={s.label}
-            label={s.label}
-            active={step === i}
-            done={done}
-            locked={locked}
-            onClick={() => handleStepClick(i)}
-          />
-        );
-      })}
-    </div>
-  </div>
+                          return (
+                            <StepTab
+                              key={s.label}
+                              label={s.label}
+                              active={step === i}
+                              done={done}
+                              locked={locked}
+                              onClick={() => handleStepClick(i)}
+                            />
+                          );
+                        })}
+                      </div>
+                    </div>
 
-  {/* DESKTOP TOP BAR */}
-  <div
-    className="
+                    {/* DESKTOP TOP BAR */}
+                    <div
+                      className="
       hidden
 
       md:grid
@@ -1177,13 +1179,13 @@ const Makeyourownsoto = () => {
       md:items-center
       md:gap-4
     "
-  >
-    {/* LEFT: BACK */}
-    <div className="flex justify-start">
-      <button
-        type="button"
-        onClick={handleBackToStart}
-        className="
+                    >
+                      {/* LEFT: BACK */}
+                      <div className="flex justify-start">
+                        <button
+                          type="button"
+                          onClick={handleBackToStart}
+                          className="
           shrink-0
           rounded-full
           border-[3px]
@@ -1201,66 +1203,66 @@ const Makeyourownsoto = () => {
           hover:bg-white
           active:translate-y-0.5
         "
-      >
-        BACK
-      </button>
-    </div>
+                        >
+                          BACK
+                        </button>
+                      </div>
 
-    {/* tahapan pembuatan */}
-    <div className="flex justify-center">
-      <div
-        className="
+                      {/* tahapan pembuatan */}
+                      <div className="flex justify-center">
+                        <div
+                          className="
           flex
           items-center
           justify-center
           gap-[8px]
         "
-      >
-        {STEPS.map((s, i) => {
-          const locked =
-            (i === 1 && !selectedKuah) ||
-            (i > 1 && (!selectedKuah || !topping));
+                        >
+                          {STEPS.map((s, i) => {
+                            const locked =
+                              (i === 1 && !selectedKuah) ||
+                              (i > 1 && (!selectedKuah || !topping));
 
-          const done =
-            (i === 0 && !!selectedKuah) ||
-            (i === 1 && !!topping) ||
-            (i === 2 && !!pelengkap) ||
-            (i === 3 && !!tambahan);
+                            const done =
+                              (i === 0 && !!selectedKuah) ||
+                              (i === 1 && !!topping) ||
+                              (i === 2 && !!pelengkap) ||
+                              (i === 3 && !!tambahan);
 
-          return (
-            <StepTab
-              key={s.label}
-              label={s.label}
-              active={step === i}
-              done={done}
-              locked={locked}
-              onClick={() => handleStepClick(i)}
-            />
-          );
-        })}
-      </div>
-    </div>
+                            return (
+                              <StepTab
+                                key={s.label}
+                                label={s.label}
+                                active={step === i}
+                                done={done}
+                                locked={locked}
+                                onClick={() => handleStepClick(i)}
+                              />
+                            );
+                          })}
+                        </div>
+                      </div>
 
-    {/* tombol FINISH */}
-    <div className="flex justify-end">
-      <button
-        type="button"
-        onClick={handleFinish}
-        className={[
-          "shrink-0 rounded-full border-[3px] border-[#2a1f0e]",
-          "px-[clamp(14px,3.6vw,28px)] py-[clamp(7px,1.2vw,11px)]",
-          "font-title text-[clamp(0.9rem,1.9vw,1.18rem)] font-black",
-          "shadow-[0_5px_0_rgba(42,31,14,0.25)] transition-all active:translate-y-0.5",
-          hasRequiredBase
-            ? "bg-[#e83a2a] text-[#fafdda] hover:-translate-y-0.5 hover:bg-[#ff5040]"
-            : "bg-[#c8a86a] text-[#5a3e28] opacity-80 hover:bg-[#d8b879]",
-        ].join(" ")}
-      >
-        FINISH
-      </button>
-    </div>
-  </div>
-</div>
+                      {/* tombol FINISH */}
+                      <div className="flex justify-end">
+                        <button
+                          type="button"
+                          onClick={handleFinish}
+                          className={[
+                            "shrink-0 rounded-full border-[3px] border-[#2a1f0e]",
+                            "px-[clamp(14px,3.6vw,28px)] py-[clamp(7px,1.2vw,11px)]",
+                            "font-title text-[clamp(0.9rem,1.9vw,1.18rem)] font-black",
+                            "shadow-[0_5px_0_rgba(42,31,14,0.25)] transition-all active:translate-y-0.5",
+                            hasRequiredBase
+                              ? "bg-[#e83a2a] text-[#fafdda] hover:-translate-y-0.5 hover:bg-[#ff5040]"
+                              : "bg-[#c8a86a] text-[#5a3e28] opacity-80 hover:bg-[#d8b879]",
+                          ].join(" ")}
+                        >
+                          FINISH
+                        </button>
+                      </div>
+                    </div>
+                  </div>
 
                   {/* DESKTOP PANELS */}
                   {leftItems.length > 0 && (
@@ -1338,7 +1340,9 @@ const Makeyourownsoto = () => {
                       "rounded-full bg-[rgba(42,31,14,0.94)] px-[clamp(16px,2.5vw,24px)] py-[clamp(8px,1vw,12px)]",
                       "font-title text-[clamp(0.72rem,1.2vw,0.92rem)] font-black text-[#fafdda]",
                       "transition-all duration-300 whitespace-nowrap shadow-[0_5px_0_rgba(0,0,0,0.18)]",
-                      toast.show ? "top-[17%] opacity-100 md:top-[14%]" : "top-[15%] opacity-0 md:top-[12%]",
+                      toast.show
+                        ? "top-[17%] opacity-100 md:top-[14%]"
+                        : "top-[15%] opacity-0 md:top-[12%]",
                     ].join(" ")}
                   >
                     {toast.msg}
@@ -1357,10 +1361,10 @@ const Makeyourownsoto = () => {
                       {step === 0
                         ? "Pilih kuah soto — klik card atau drag ke mangkok"
                         : step === 1
-                        ? "Pilih isi utama soto — klik card atau drag ke mangkok"
-                        : step === 2
-                        ? "Pilih taburan soto — klik card atau drag ke mangkok"
-                        : "Pilih extra topping soto — klik card atau drag ke mangkok"}
+                          ? "Pilih isi utama soto — klik card atau drag ke mangkok"
+                          : step === 2
+                            ? "Pilih taburan soto — klik card atau drag ke mangkok"
+                            : "Pilih extra topping soto — klik card atau drag ke mangkok"}
                     </p>
                   </div>
 

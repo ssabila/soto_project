@@ -1,21 +1,21 @@
 import { useEffect, useState, useRef } from "react";
 
 const NAV_SECTIONS = [
-  { id: "opening",        label: "Opening" },
-  { id: "question",       label: "The Question" },
-  { id: "journey",        label: "Journey Begins" },
-  { id: "unity",          label: "Unity" },
-  { id: "meaning",        label: "Meaning" },
-  { id: "closing",        label: "Closing" },
-  { id: "makeyourownsoto",label: "Make Your Own Soto" },
-  { id: "about",          label: "About Us" },
+  { id: "opening", label: "Opening" },
+  { id: "question", label: "The Question" },
+  { id: "journey", label: "Journey Begins" },
+  { id: "unity", label: "Unity" },
+  { id: "meaning", label: "Meaning" },
+  { id: "closing", label: "Closing" },
+  { id: "makeyourownsoto", label: "Make Your Own Soto" },
+  { id: "about", label: "About Us" },
 ];
 
 export default function ScrollNavigator() {
   const [activeSection, setActiveSection] = useState("opening");
   const [hoveredSection, setHoveredSection] = useState(null);
-  const [prevActive, setPrevActive]         = useState("opening");
-  const [animating, setAnimating]           = useState(false);
+  const [prevActive, setPrevActive] = useState("opening");
+  const [animating, setAnimating] = useState(false);
   const animTimerRef = useRef(null);
 
   /* ── find active section ─────────────────────────────── */
@@ -76,13 +76,9 @@ export default function ScrollNavigator() {
     target.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const activeIdx  = NAV_SECTIONS.findIndex((s) => s.id === activeSection);
-  const prevIdx    = NAV_SECTIONS.findIndex((s) => s.id === prevActive);
-  const isMovingDown = activeIdx >= prevIdx;
-
   return (
     <>
-      {/* ── Navigator ─────────────────────────────────── */}
+      {/*navigator */}
       <nav
         className="
           fixed right-5 top-1/2 z-[9999]
@@ -91,10 +87,10 @@ export default function ScrollNavigator() {
         "
         aria-label="Story navigation"
       >
-        {NAV_SECTIONS.map((item, idx) => {
-          const isActive  = activeSection   === item.id;
-          const isHovered = hoveredSection  === item.id;
-          const wasActive = prevActive      === item.id && animating;
+        {NAV_SECTIONS.map((item) => {
+          const isActive = activeSection === item.id;
+          const isHovered = hoveredSection === item.id;
+          const wasActive = prevActive === item.id && animating;
 
           return (
             <button
@@ -114,13 +110,15 @@ export default function ScrollNavigator() {
                   font-[InriaSerif] text-[0.68rem] font-bold
                   tracking-[0.10em] whitespace-nowrap
                   transition-all duration-300 ease-out
-                  ${isHovered || (animating && isActive)
-                    ? "translate-x-0 opacity-100"
-                    : "translate-x-2 opacity-0"
+                  ${
+                    isHovered || (animating && isActive)
+                      ? "translate-x-0 opacity-100"
+                      : "translate-x-2 opacity-0"
                   }
-                  ${isActive
-                    ? "bg-[#ffbd59] text-[#2c1309] shadow-[0_3px_0_rgba(44,19,9,0.22)]"
-                    : "bg-[#2c1309] text-[#fafdda] shadow-[0_3px_0_rgba(0,0,0,0.18)]"
+                  ${
+                    isActive
+                      ? "bg-[#ffbd59] text-[#2c1309] shadow-[0_3px_0_rgba(44,19,9,0.22)]"
+                      : "bg-[#2c1309] text-[#fafdda] shadow-[0_3px_0_rgba(0,0,0,0.18)]"
                   }
                 `}
               >
@@ -130,10 +128,7 @@ export default function ScrollNavigator() {
                     absolute left-0 top-1/2 -translate-x-[5px] -translate-y-1/2
                     border-[5px] border-transparent
                     transition-[border-right-color] duration-300
-                    ${isActive
-                      ? "border-r-[#ffbd59]"
-                      : "border-r-[#2c1309]"
-                    }
+                    ${isActive ? "border-r-[#ffbd59]" : "border-r-[#2c1309]"}
                   `}
                 />
                 {item.label}
@@ -145,7 +140,10 @@ export default function ScrollNavigator() {
                 {isActive && (
                   <span
                     className="absolute inline-flex h-full w-full rounded-full bg-[#ffbd59] opacity-40"
-                    style={{ animation: "navPing 1.4s cubic-bezier(0,0,0.2,1) infinite" }}
+                    style={{
+                      animation:
+                        "navPing 1.4s cubic-bezier(0,0,0.2,1) infinite",
+                    }}
                   />
                 )}
 
@@ -154,11 +152,12 @@ export default function ScrollNavigator() {
                   className={`
                     relative block rounded-full border-2
                     transition-all duration-300 ease-out
-                    ${isActive
-                      ? "h-3.5 w-3.5 border-[#2c1309] bg-[#ffbd59] shadow-[0_0_0_4px_rgba(255,189,89,0.22)]"
-                      : isHovered
-                      ? "h-3 w-3 border-[#2c1309] bg-[#ffbd59]/70"
-                      : "h-2 w-2 border-[#2c1309]/60 bg-[#fafdda]"
+                    ${
+                      isActive
+                        ? "h-3.5 w-3.5 border-[#2c1309] bg-[#ffbd59] shadow-[0_0_0_4px_rgba(255,189,89,0.22)]"
+                        : isHovered
+                          ? "h-3 w-3 border-[#2c1309] bg-[#ffbd59]/70"
+                          : "h-2 w-2 border-[#2c1309]/60 bg-[#fafdda]"
                     }
                     ${animating && wasActive ? "scale-[0.6] opacity-60" : "scale-100 opacity-100"}
                   `}
@@ -195,9 +194,10 @@ export default function ScrollNavigator() {
               aria-label={`Go to ${item.label}`}
               className={`
                 block rounded-full border-[1.5px] transition-all duration-300
-                ${isActive
-                  ? "h-3 w-3 border-[#2c1309] bg-[#ffbd59] shadow-[0_0_0_3px_rgba(255,189,89,0.3)]"
-                  : "h-2 w-2 border-[#2c1309]/50 bg-[#2c1309]/20"
+                ${
+                  isActive
+                    ? "h-3 w-3 border-[#2c1309] bg-[#ffbd59] shadow-[0_0_0_3px_rgba(255,189,89,0.3)]"
+                    : "h-2 w-2 border-[#2c1309]/50 bg-[#2c1309]/20"
                 }
               `}
             />

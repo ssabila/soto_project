@@ -2,12 +2,10 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 import backgroundUs from "../assets/images/background-us.svg";
-import fotoDhira from "../assets/images/foto-dhira.svg";
-import fotoBila from "../assets/images/foto-bila.svg";
+import fotoDhira from "../assets/images/foto-dhira.webp";
+import fotoBila from "../assets/images/foto-bila.webp";
 
-/* ═══════════════════════════════════════════
-   DATA
-═══════════════════════════════════════════ */
+/* data member */
 const members = [
   {
     id: "bila",
@@ -18,7 +16,7 @@ const members = [
     rotate: "-3deg",
     accentColor: "#c2380f",
     bio: "Namaku Sabila Bintang Kusuma Dewi. Aku mahasiswa tingkat 3 Politeknik Statistika STIS. Dalam web story ini, aku mengerjakan konten dan isi website, mulai dari informasi, sampai narasi tentang beragam masakan soto di Indonesia.",
- },
+  },
   {
     id: "dhira",
     greeting: "Halo! aku",
@@ -27,12 +25,11 @@ const members = [
     photo: fotoDhira,
     rotate: "3deg",
     accentColor: "#c2380f",
-    bio: "Namaku Qurany Nadhira Tsabita. Aku mahasiswa tingkat 3 Politeknik Statistika STIS. Di web ini aku yang mengerjakan bagian opening, closing, footer dan game interaktif membuat soto, sampai section about us yang kamu lihat sekarang!", },
+    bio: "Namaku Qurany Nadhira Tsabita. Aku mahasiswa tingkat 3 Politeknik Statistika STIS. Di web ini aku yang mengerjakan bagian opening, closing, footer dan game interaktif membuat soto, sampai section about us yang kamu lihat sekarang!",
+  },
 ];
 
-/* ═══════════════════════════════════════════
-   COMPONENT
-═══════════════════════════════════════════ */
+/* komponen */
 export default function AboutUs() {
   const containerRef = useRef(null);
   const isMountedRef = useRef(true);
@@ -54,37 +51,37 @@ export default function AboutUs() {
     timeoutsRef.current = [];
   };
 
-  const wait = (ms) =>
-    new Promise((resolve) => {
-      const id = setTimeout(resolve, ms);
-      timeoutsRef.current.push(id);
-    });
-
-  const getDelay = (char, base = 42) => {
-    if (char === ".") return 250;
-    if (char === ",") return 120;
-    if (char === " ") return 24;
-    if (char === "!") return 170;
-    return base + Math.random() * 18;
-  };
-
-  const typeText = async (target, cursor, text) => {
-    if (!target || !cursor) return;
-
-    target.textContent = "";
-    gsap.set(cursor, { opacity: 0 });
-
-    for (let i = 0; i <= text.length; i++) {
-      if (!isMountedRef.current) return;
-      target.textContent = text.slice(0, i);
-      await wait(getDelay(text[i] || ""));
-    }
-  };
-
   /* ─── main effect ─── */
   useEffect(() => {
     isMountedRef.current = true;
     clearAllTimeouts();
+
+    const wait = (ms) =>
+      new Promise((resolve) => {
+        const id = setTimeout(resolve, ms);
+        timeoutsRef.current.push(id);
+      });
+
+    const getDelay = (char, base = 42) => {
+      if (char === ".") return 250;
+      if (char === ",") return 120;
+      if (char === " ") return 24;
+      if (char === "!") return 170;
+      return base + Math.random() * 18;
+    };
+
+    const typeText = async (target, cursor, text) => {
+      if (!target || !cursor) return;
+
+      target.textContent = "";
+      gsap.set(cursor, { opacity: 0 });
+
+      for (let i = 0; i <= text.length; i++) {
+        if (!isMountedRef.current) return;
+        target.textContent = text.slice(0, i);
+        await wait(getDelay(text[i] || ""));
+      }
+    };
 
     const ctx = gsap.context(() => {
       slideRefs.current.forEach((el, i) => {
@@ -165,7 +162,7 @@ export default function AboutUs() {
               duration: 0.55,
               ease: "power3.out",
             },
-            "-=0.8"
+            "-=0.8",
           )
           .to(
             greet,
@@ -175,7 +172,7 @@ export default function AboutUs() {
               duration: 0.55,
               ease: "power3.out",
             },
-            "-=0.45"
+            "-=0.45",
           )
           .to(
             nameEl,
@@ -186,7 +183,7 @@ export default function AboutUs() {
               duration: 0.7,
               ease: "back.out(1.5)",
             },
-            "-=0.35"
+            "-=0.35",
           )
           .to(
             bioBox,
@@ -196,7 +193,7 @@ export default function AboutUs() {
               duration: 0.45,
               ease: "power2.out",
             },
-            "-=0.1"
+            "-=0.1",
           )
           .to(
             pill,
@@ -206,7 +203,7 @@ export default function AboutUs() {
               duration: 0.45,
               ease: "back.out(2.2)",
             },
-            "-=0.25"
+            "-=0.25",
           );
 
         await inTl;
@@ -235,7 +232,7 @@ export default function AboutUs() {
               duration: 0.7,
               ease: "power3.in",
             },
-            "-=0.3"
+            "-=0.3",
           );
 
         await outTl;
@@ -333,7 +330,7 @@ export default function AboutUs() {
               pointerEvents: "none",
             }}
           >
-            {/* FOTO  */}
+            {/* FOTO */}
             <div
               className="about-photo-wrap"
               style={{
@@ -568,120 +565,120 @@ export default function AboutUs() {
           }
         }
 
-        /* TABLET*/
-@media (max-width: 1024px) {
-  [data-section="about"] {
-    min-height: 100svh !important;
-  }
+        /* TABLET */
+        @media (max-width: 1024px) {
+          [data-section="about"] {
+            min-height: 100svh !important;
+          }
 
-  .about-stage {
-    min-height: 100svh !important;
-    max-width: 760px !important;
-    padding: clamp(1.4rem, 3vw, 2.4rem) clamp(1.2rem, 4vw, 2.4rem) !important;
-    align-items: center !important;
-  }
+          .about-stage {
+            min-height: 100svh !important;
+            max-width: 760px !important;
+            padding: clamp(1.4rem, 3vw, 2.4rem) clamp(1.2rem, 4vw, 2.4rem) !important;
+            align-items: center !important;
+          }
 
-  .about-slide {
-    flex-direction: column !important;
-    flex-wrap: nowrap !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: clamp(0.9rem, 2vw, 1.35rem) !important;
-    text-align: center !important;
-  }
+          .about-slide {
+            flex-direction: column !important;
+            flex-wrap: nowrap !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: clamp(0.9rem, 2vw, 1.35rem) !important;
+            text-align: center !important;
+          }
 
-  .about-photo-wrap {
-    width: 100% !important;
-    justify-content: center !important;
-    align-items: center !important;
-  }
+          .about-photo-wrap {
+            width: 100% !important;
+            justify-content: center !important;
+            align-items: center !important;
+          }
 
-  .about-photo {
-    width: clamp(270px, 52vw, 390px) !important;
-    max-width: 100% !important;
-  }
+          .about-photo {
+            width: clamp(270px, 52vw, 390px) !important;
+            max-width: 100% !important;
+          }
 
-  .about-text {
-    width: min(92vw, 600px) !important;
-    min-width: 0 !important;
-    max-width: 600px !important;
-    flex: 0 1 auto !important;
-    align-items: center !important;
-    text-align: center !important;
-    transform: none !important;
-  }
+          .about-text {
+            width: min(92vw, 600px) !important;
+            min-width: 0 !important;
+            max-width: 600px !important;
+            flex: 0 1 auto !important;
+            align-items: center !important;
+            text-align: center !important;
+            transform: none !important;
+          }
 
-  .about-header {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
-    width: 100% !important;
-    margin-bottom: clamp(0.75rem, 1.6vw, 1rem) !important;
-  }
+          .about-header {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            text-align: center !important;
+            width: 100% !important;
+            margin-bottom: clamp(0.75rem, 1.6vw, 1rem) !important;
+          }
 
-  .about-text h2 {
-    font-size: clamp(2.45rem, 7vw, 4.45rem) !important;
-    line-height: 0.94 !important;
-    text-align: center !important;
-    max-width: 600px !important;
-    width: 100% !important;
-    letter-spacing: -0.055em !important;
-  }
+          .about-text h2 {
+            font-size: clamp(2.45rem, 7vw, 4.45rem) !important;
+            line-height: 0.94 !important;
+            text-align: center !important;
+            max-width: 600px !important;
+            width: 100% !important;
+            letter-spacing: -0.055em !important;
+          }
 
-  .about-bio-box {
-    width: 100% !important;
-    max-width: 520px !important;
-    min-height: clamp(150px, 20vh, 190px) !important;
-    text-align: center !important;
-  }
+          .about-bio-box {
+            width: 100% !important;
+            max-width: 520px !important;
+            min-height: clamp(150px, 20vh, 190px) !important;
+            text-align: center !important;
+          }
 
-  .about-pill {
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
+          .about-pill {
+            margin-left: auto !important;
+            margin-right: auto !important;
+          }
 
-  .about-bio-text {
-    font-size: clamp(0.84rem, 2.1vw, 1rem) !important;
-    line-height: 1.68 !important;
-    text-align: center !important;
-  }
-}
+          .about-bio-text {
+            font-size: clamp(0.84rem, 2.1vw, 1rem) !important;
+            line-height: 1.68 !important;
+            text-align: center !important;
+          }
+        }
 
-/* MOBILE */
-@media (max-width: 900px) {
-  .about-stage {
-    max-width: 680px !important;
-    padding: 1.6rem 1.25rem !important;
-  }
+        /* MOBILE BESAR */
+        @media (max-width: 900px) {
+          .about-stage {
+            max-width: 680px !important;
+            padding: 1.6rem 1.25rem !important;
+          }
 
-  .about-slide {
-    gap: 0.95rem !important;
-  }
+          .about-slide {
+            gap: 0.95rem !important;
+          }
 
-  .about-photo {
-    width: clamp(245px, 54vw, 350px) !important;
-  }
+          .about-photo {
+            width: clamp(245px, 54vw, 350px) !important;
+          }
 
-  .about-text {
-    width: min(94vw, 560px) !important;
-    max-width: 560px !important;
-  }
+          .about-text {
+            width: min(94vw, 560px) !important;
+            max-width: 560px !important;
+          }
 
-  .about-text h2 {
-    font-size: clamp(2.25rem, 7.4vw, 4rem) !important;
-    max-width: 560px !important;
-  }
+          .about-text h2 {
+            font-size: clamp(2.25rem, 7.4vw, 4rem) !important;
+            max-width: 560px !important;
+          }
 
-  .about-bio-box {
-    max-width: 500px !important;
-  }
+          .about-bio-box {
+            max-width: 500px !important;
+          }
 
-  .about-bio-text {
-    font-size: clamp(0.82rem, 2.2vw, 0.98rem) !important;
-    line-height: 1.65 !important;
-  }
-}
+          .about-bio-text {
+            font-size: clamp(0.82rem, 2.2vw, 0.98rem) !important;
+            line-height: 1.65 !important;
+          }
+        }
 
         /* MOBILE */
         @media (max-width: 767px) {

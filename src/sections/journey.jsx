@@ -1,3 +1,4 @@
+// JourneySection.jsx — responsive, no white bg, image fits inside frame
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -113,7 +114,7 @@ const RESPONSIVE_CSS = `
       height: 90vh !important;
     }
   }
-`
+`;
 
 //  Komponen utama 
 export default function JourneySection() {
@@ -142,17 +143,17 @@ export default function JourneySection() {
   //  GSAP horizontal scroll + per-panel animations 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const panels = panelsRef.current
+      const panels = panelsRef.current;
 
       // Tween utama: scroll horizontal
       const scrollTween = gsap.to(wrapperRef.current, {
         x: () => -(wrapperRef.current.scrollWidth - window.innerWidth),
-        ease: 'sine.inOut',
+        ease: "sine.inOut",
         scrollTrigger: {
           trigger: sectionRef.current,
           pin: true,
           scrub: 1,
-          end: () => '+=' + wrapperRef.current.scrollWidth,
+          end: () => "+=" + wrapperRef.current.scrollWidth,
           onUpdate: (self) => {
             const totalMove = wrapperRef.current.scrollWidth - window.innerWidth
             gsap.set(bgRef.current, {
@@ -236,16 +237,23 @@ export default function JourneySection() {
         tl.fromTo(
           stars,
           { opacity: 0, scale: 0, rotation: -15 },
-          { opacity: 1, scale: 1, rotation: 0, stagger: 0.04, duration: 0.4, ease: 'back.out(2)' }
-        )
+          {
+            opacity: 1,
+            scale: 1,
+            rotation: 0,
+            stagger: 0.04,
+            duration: 0.4,
+            ease: "back.out(2)",
+          },
+        );
 
         if (divider) {
           tl.fromTo(
             divider,
             { scaleX: 0 },
-            { scaleX: 1, duration: 0.5, ease: 'power2.out' },
-            '-=0.2'
-          )
+            { scaleX: 1, duration: 0.5, ease: "power2.out" },
+            "-=0.2",
+          );
         }
 
         tl.fromTo(
@@ -320,8 +328,8 @@ export default function JourneySection() {
       {/* Wrapper horizontal scroll */}
       <div ref={wrapperRef} style={S.wrapper}>
         {storyContent.regions.map((region, i) => {
-          const rating   = SOTO_RATINGS[i] || SOTO_RATINGS[0]
-          const fullName = i === 5 ? 'Coto Makassar' : region.name
+          const rating = SOTO_RATINGS[i] || SOTO_RATINGS[0];
+          const fullName = i === 5 ? "Coto Makassar" : region.name;
 
           return (
             <div
@@ -349,7 +357,7 @@ export default function JourneySection() {
                   <div className="journey-text-container" style={S.textContainer}>
 
                     <div style={S.indexBadge}>
-                      #{String(i + 1).padStart(2, '0')}
+                      #{String(i + 1).padStart(2, "0")}
                     </div>
 
                     <h3 className="j-region" style={S.titleWrapper}>
@@ -369,7 +377,7 @@ export default function JourneySection() {
                       ))}
                     </div>
 
-                    <div style={{ ...S.divider, margin: '2px 0 6px' }} />
+                    <div style={{ ...S.divider, margin: "2px 0 6px" }} />
 
                     <div style={S.linesWrapper}>
                       {region.lines.map((line, li) => (
@@ -385,7 +393,6 @@ export default function JourneySection() {
                         </p>
                       ))}
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -410,14 +417,14 @@ export default function JourneySection() {
                 style={{ ...S.decor, top: '8%', right: '32%' }}
               />
             </div>
-          )
+          );
         })}
       </div>
     </section>
-  )
+  );
 }
 
-// ── Styles ────────────────────────────────────────────────────────────────────
+//  Styles 
 const S = {
   container: {
     width:           '100vw',
@@ -635,4 +642,4 @@ const S = {
     paddingLeft:  '12px',
     marginTop:    '4px',
   },
-}
+};
