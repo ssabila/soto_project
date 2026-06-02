@@ -54,8 +54,8 @@ const RESPONSIVE_CSS = `
     gap: 48px !important;
   }
   .journey-frame-container {
-    width: min(42vw, 66vh) !important;
-    height: min(42vw, 66vh) !important;
+    width: min(50.4vw, 79.2vh) !important;
+    height: min(50.4vw, 79.2vh) !important;
   }
   .journey-text-container { gap: 20px !important; }
   .journey-ratings-grid   { grid-template-columns: 1fr 1fr !important; }
@@ -67,8 +67,8 @@ const RESPONSIVE_CSS = `
       gap: 32px !important;
     }
     .journey-frame-container {
-      width: min(38vw, 52vh) !important;
-      height: min(38vw, 52vh) !important;
+      width: min(45.6vw, 62.4vh) !important;
+      height: min(45.6vw, 62.4vh) !important;
     }
     .journey-text-container { gap: 14px !important; }
     .journey-decor          { width: 80px !important; }
@@ -84,8 +84,8 @@ const RESPONSIVE_CSS = `
       align-items: center !important;
     }
     .journey-frame-container {
-      width: min(60vw, 38vh) !important;
-      height: min(60vw, 38vh) !important;
+      width: min(72vw, 45.6vh) !important;
+      height: min(72vw, 45.6vh) !important;
       flex-shrink: 0 !important;
     }
     .journey-text-container {
@@ -104,8 +104,8 @@ const RESPONSIVE_CSS = `
       border-radius: 18px !important;
     }
     .journey-frame-container {
-      width: min(72vw, 34vh) !important;
-      height: min(72vw, 34vh) !important;
+      width: min(86.4vw, 40.8vh) !important;
+      height: min(86.4vw, 40.8vh) !important;
     }
     .journey-ratings-grid { gap: 6px 12px !important; }
     .journey-decor        { width: 44px !important; }
@@ -114,7 +114,7 @@ const RESPONSIVE_CSS = `
       height: 90vh !important;
     }
   }
-`
+`;
 
 //  Komponen utama 
 export default function JourneySection() {
@@ -135,25 +135,25 @@ export default function JourneySection() {
 
     return () => {
       if (document.head.contains(styleEl)) {
-        document.head.removeChild(styleEl)
+        document.head.removeChild(styleEl);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   //  GSAP horizontal scroll + per-panel animations 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const panels = panelsRef.current
+      const panels = panelsRef.current;
 
       // Tween utama: scroll horizontal
       const scrollTween = gsap.to(wrapperRef.current, {
         x: () => -(wrapperRef.current.scrollWidth - window.innerWidth),
-        ease: 'sine.inOut',
+        ease: "sine.inOut",
         scrollTrigger: {
           trigger: sectionRef.current,
           pin: true,
           scrub: 1,
-          end: () => '+=' + wrapperRef.current.scrollWidth,
+          end: () => "+=" + wrapperRef.current.scrollWidth,
           onUpdate: (self) => {
             const totalMove = wrapperRef.current.scrollWidth - window.innerWidth
             gsap.set(bgRef.current, {
@@ -213,12 +213,12 @@ export default function JourneySection() {
           gsap.to(dec, {
             yPercent: gsap.utils.random(-20, 20),
             rotation: gsap.utils.random(-15, 15),
-            ease: 'none',
+            ease: "none",
             scrollTrigger: {
               trigger: panel,
               containerAnimation: scrollTween,
-              start: 'left right',
-              end: 'right left',
+              start: "left right",
+              end: "right left",
               scrub: true,
             },
           })
@@ -237,16 +237,23 @@ export default function JourneySection() {
         tl.fromTo(
           stars,
           { opacity: 0, scale: 0, rotation: -15 },
-          { opacity: 1, scale: 1, rotation: 0, stagger: 0.04, duration: 0.4, ease: 'back.out(2)' }
-        )
+          {
+            opacity: 1,
+            scale: 1,
+            rotation: 0,
+            stagger: 0.04,
+            duration: 0.4,
+            ease: "back.out(2)",
+          },
+        );
 
         if (divider) {
           tl.fromTo(
             divider,
             { scaleX: 0 },
-            { scaleX: 1, duration: 0.5, ease: 'power2.out' },
-            '-=0.2'
-          )
+            { scaleX: 1, duration: 0.5, ease: "power2.out" },
+            "-=0.2",
+          );
         }
 
         tl.fromTo(
@@ -321,8 +328,8 @@ export default function JourneySection() {
       {/* Wrapper horizontal scroll */}
       <div ref={wrapperRef} style={S.wrapper}>
         {storyContent.regions.map((region, i) => {
-          const rating   = SOTO_RATINGS[i] || SOTO_RATINGS[0]
-          const fullName = i === 5 ? 'Coto Makassar' : region.name
+          const rating = SOTO_RATINGS[i] || SOTO_RATINGS[0];
+          const fullName = i === 5 ? "Coto Makassar" : region.name;
 
           return (
             <div
@@ -350,7 +357,7 @@ export default function JourneySection() {
                   <div className="journey-text-container" style={S.textContainer}>
 
                     <div style={S.indexBadge}>
-                      #{String(i + 1).padStart(2, '0')}
+                      #{String(i + 1).padStart(2, "0")}
                     </div>
 
                     <h3 className="j-region" style={S.titleWrapper}>
@@ -370,7 +377,7 @@ export default function JourneySection() {
                       ))}
                     </div>
 
-                    <div style={{ ...S.divider, margin: '2px 0 6px' }} />
+                    <div style={{ ...S.divider, margin: "2px 0 6px" }} />
 
                     <div style={S.linesWrapper}>
                       {region.lines.map((line, li) => (
@@ -386,7 +393,6 @@ export default function JourneySection() {
                         </p>
                       ))}
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -411,11 +417,11 @@ export default function JourneySection() {
                 style={{ ...S.decor, top: '8%', right: '32%' }}
               />
             </div>
-          )
+          );
         })}
       </div>
     </section>
-  )
+  );
 }
 
 //  Styles 
@@ -513,13 +519,6 @@ const S = {
     pointerEvents: 'none',
   },
 
-  /*
-   * imgMask — area di dalam lubang bingkai.
-   * TIDAK ada backgroundColor maupun border berwarna,
-   * karena asset gambar sudah di-remove background-nya.
-   * 78% = perkiraan luas area "dalam" bingkai retro.
-   * Sesuaikan jika terlalu besar/kecil terhadap SVG bingkai.
-   */
   imgMask: {
     position:        'relative',
     zIndex:          2,
@@ -532,7 +531,6 @@ const S = {
     borderRadius:    '4px',
   },
 
-  // contain agar gambar soto (yang mungkin tidak square) tidak terpotong
   img: {
     width:      '110%',
     height:     '110%',
@@ -644,4 +642,4 @@ const S = {
     paddingLeft:  '12px',
     marginTop:    '4px',
   },
-}
+};

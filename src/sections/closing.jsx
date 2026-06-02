@@ -2,11 +2,11 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+import background5 from "../assets/images/background-5.webp";
+
 gsap.registerPlugin(ScrollTrigger);
 
-/* ═════════════════════════════════════════════════════════════
-   COLORS
-═════════════════════════════════════════════════════════════ */
+/* warna*/
 const C = {
   cream: "#fafdda",
   brown: "#2c1309",
@@ -15,6 +15,12 @@ const C = {
   saffron: "#c9880a",
   darkSaffron: "#9f6708",
   deepRed: "#8f2410",
+
+  green: "#22a83a",
+  deepGreen: "#14521c",
+
+  tomato: "#f63b1c",
+  warmYellow: "#ffbd59",
 };
 
 /* decoration elements */
@@ -36,18 +42,43 @@ const spiceDots = [
   { top: "84%", left: "22%", size: 8, color: C.burntOrange, opacity: 0.62 },
 ];
 
-/* komponen */
+const introQuoteParts = [
+  { text: "In", className: "" },
+  { text: "the", className: "" },
+  { text: "end,", className: "" },
+  { text: "soto", className: "text-[#f63b1c]" },
+  { text: "is", className: "" },
+  { text: "not", className: "" },
+  { text: "just", className: "" },
+  { text: "one", className: "" },
+  { text: "recipe.", className: "" },
+
+  { text: "It", className: "" },
+  { text: "is", className: "" },
+  { text: "a", className: "" },
+  { text: "shared", className: "italic" },
+  { text: "idea,", className: "italic" },
+  { text: "shaped", className: "" },
+  { text: "by", className: "" },
+  { text: "local", className: "" },
+
+  { text: "taste,", className: "text-[#ffbd59]" },
+  { text: "local", className: "" },
+  { text: "ingredients,", className: "text-[#ffbd59]" },
+  { text: "and", className: "" },
+  { text: "local", className: "" },
+  { text: "culture.", className: "text-[#ffbd59]" },
+];
+
 export default function ClosingSection() {
   const containerRef = useRef(null);
 
-  const brownLayerRef = useRef(null);
+  const greenLayerRef = useRef(null);
   const dotsRef = useRef(null);
 
-  const quote1Ref = useRef(null);
-  const quote2Ref = useRef(null);
-
-  const quote1WordRefs = useRef([]);
-  const quote2WordRefs = useRef([]);
+  const introQuoteTextRef = useRef(null);
+  const introQuoteCharRefs = useRef([]);
+  const typeCursorRef = useRef(null);
 
   const finalLayoutRef = useRef(null);
   const topLineRef = useRef(null);
@@ -57,27 +88,39 @@ export default function ClosingSection() {
   const quoteCardRef = useRef(null);
   const footerRef = useRef(null);
 
-  const QUOTE_1 = "Because in the end, soto was never just about taste.";
+  const renderStyledIntroQuote = () => {
+    let charIndex = 0;
 
-  const QUOTE_2 =
-    "It was about how many differences could still feel like home at one table.";
-
-  const splitWords = (text, refArray) => {
-    refArray.current = [];
-
-    return text.split(" ").map((word, i) => (
+    return introQuoteParts.map((part, wordIndex) => (
       <span
-        key={`${word}-${i}`}
-        ref={(el) => {
-          if (el) refArray.current[i] = el;
-        }}
-        className="
-          mr-[0.25em]
-          inline-block
-          will-change-[transform,opacity,filter]
-        "
+        key={`${part.text}-${wordIndex}`}
+        className={`
+        mr-[0.24em]
+        inline-block
+        ${part.className}
+      `}
       >
-        {word}
+        {part.text.split("").map((char, i) => {
+          const currentIndex = charIndex;
+          charIndex += 1;
+
+          return (
+            <span
+              key={`${part.text}-${wordIndex}-${i}`}
+              ref={(el) => {
+                if (el) {
+                  introQuoteCharRefs.current[currentIndex] = el;
+                }
+              }}
+              className="
+              inline-block
+              will-change-[opacity,transform,filter]
+            "
+            >
+              {char}
+            </span>
+          );
+        })}
       </span>
     ));
   };
@@ -86,24 +129,28 @@ export default function ClosingSection() {
     if (!containerRef.current) return;
 
     const ctx = gsap.context(() => {
-      const q1 = quote1WordRefs.current;
-      const q2 = quote2WordRefs.current;
+      const introChars = introQuoteCharRefs.current.filter(Boolean);
 
-      /* Initial quote states */
-      gsap.set(q1, {
-        y: 42,
-        opacity: 0,
-        filter: "blur(8px)",
+      /* ═════════════════════════════════════════════
+         INITIAL STATES
+      ═════════════════════════════════════════════ */
+
+      gsap.set(introQuoteTextRef.current, {
+        opacity: 1,
       });
 
-      gsap.set(q2, {
-        y: 24,
+      gsap.set(introChars, {
         opacity: 0,
-        filter: "blur(12px)",
+        y: 0,
+        filter: "blur(0px)",
       });
 
-      /* Brown overlay states */
-      gsap.set(brownLayerRef.current, {
+      gsap.set(typeCursorRef.current, {
+        opacity: 0,
+      });
+
+      /* Green batik intro layer */
+      gsap.set(greenLayerRef.current, {
         opacity: 1,
         scale: 1,
         transformOrigin: "center center",
@@ -129,27 +176,79 @@ export default function ClosingSection() {
       gsap.set([titleLine1Ref.current, titleLine2Ref.current], {
         y: 36,
         opacity: 0,
-        filter: "blur(12px)",
+        filter: "blur(8px)",
       });
 
       gsap.set(quoteCardRef.current, {
         y: 28,
         opacity: 0,
-        filter: "blur(10px)",
+        filter: "blur(6px)",
         scale: 0.98,
       });
 
       gsap.set(footerRef.current, {
         y: 18,
         opacity: 0,
-        filter: "blur(8px)",
+        filter: "blur(4px)",
       });
+
+      /* ═════════════════════════════════════════════
+         AUTO TYPEWRITER INTRO ANIMATION
+         Jalan saat closing mulai masuk viewport
+      ═════════════════════════════════════════════ */
+
+      const introInTl = gsap.timeline({ paused: true });
+
+      introInTl
+        .to(typeCursorRef.current, {
+          opacity: 1,
+          duration: 0.15,
+          ease: "none",
+        })
+        .to(
+          introChars,
+          {
+            opacity: 1,
+            duration: 0.015,
+            ease: "none",
+            stagger: {
+              each: 0.035,
+              from: "start",
+            },
+          },
+          "<",
+        )
+        .to(typeCursorRef.current, {
+          opacity: 0,
+          duration: 0.25,
+          ease: "power2.out",
+        });
+
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top 82%",
+        once: true,
+        onEnter: () => introInTl.play(),
+      });
+
+      /* Cursor blink selama typewriter jalan */
+      gsap.to(typeCursorRef.current, {
+        opacity: 0.18,
+        duration: 0.45,
+        repeat: -1,
+        yoyo: true,
+        ease: "none",
+      });
+
+      /* ═════════════════════════════════════════════
+         PINNED SCROLL TIMELINE
+      ═════════════════════════════════════════════ */
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "+=4400",
+          end: "+=2800",
           scrub: 1,
           pin: true,
           anticipatePin: 1,
@@ -158,87 +257,65 @@ export default function ClosingSection() {
         },
       });
 
-      /* quote1 masuk */
-      tl.to(q1, {
-        y: 0,
-        opacity: 1,
-        filter: "blur(0px)",
-        duration: 0.9,
-        ease: "power3.out",
-        stagger: 0.055,
-      });
+      /*
+        Hold dulu.
+        Karena teks typewriter auto masuk sebelum pin,
+        bagian ini bikin user sempet baca sebelum keluar.
+      */
+      tl.to({}, { duration: 1.5 });
 
-      tl.to({}, { duration: 0.8 });
-
-      /* Quote 1 keluar */
-      tl.to(q1, {
-        y: -46,
+      /* Intro quote keluar */
+      tl.to(introChars, {
+        y: -36,
         opacity: 0,
-        filter: "blur(10px)",
-        duration: 0.75,
+        filter: "blur(5px)",
+        duration: 0.7,
         ease: "power2.in",
         stagger: {
-          each: 0.035,
+          each: 0.006,
           from: "start",
         },
       });
 
-      tl.to({}, { duration: 0.22 });
-
-      /* quote 2 masuk */
-      tl.to(q2, {
-        y: 0,
-        opacity: 1,
-        filter: "blur(0px)",
-        duration: 0.95,
-        ease: "power3.out",
-        stagger: 0.055,
-      });
-
-      tl.to({}, { duration: 0.95 });
-
-      /* Quote 2 keluar */
-      tl.to(q2, {
-        y: -46,
-        opacity: 0,
-        filter: "blur(12px)",
-        duration: 0.8,
-        ease: "power2.in",
-        stagger: {
-          each: 0.035,
-          from: "start",
-        },
-      });
-
-      /* zoom out brown layer */
       tl.to(
-        brownLayerRef.current,
+        typeCursorRef.current,
         {
-          scale: 1.08,
           opacity: 0,
-          duration: 1.05,
-          ease: "power2.inOut",
+          duration: 0.15,
+          ease: "none",
         },
-        "+=0.05"
+        "<",
       );
 
-      /* Dots muncul*/
+      /* Green batik layer fade out to cream */
+      tl.to(
+        greenLayerRef.current,
+        {
+          scale: 1.04,
+          opacity: 0,
+          duration: 1,
+          ease: "power2.inOut",
+        },
+        "-=0.05",
+      );
+
+      /* Dots muncul */
       tl.to(
         dotsRef.current,
         {
           opacity: 1,
           scale: 1,
-          duration: 0.8,
+          duration: 0.75,
           ease: "power2.out",
         },
-        "-=0.55"
+        "-=0.55",
       );
 
-      /* final layout */
+      /* Final layout masuk */
       tl.to(topLineRef.current, {
         scaleX: 1,
         opacity: 1,
-        duration: 0.7,
+        duration: 0.65,
         ease: "power3.out",
       });
 
@@ -248,10 +325,10 @@ export default function ClosingSection() {
           y: 0,
           opacity: 1,
           filter: "blur(0px)",
-          duration: 0.75,
+          duration: 0.7,
           ease: "power3.out",
         },
-        "-=0.35"
+        "-=0.35",
       );
 
       tl.to(
@@ -260,10 +337,10 @@ export default function ClosingSection() {
           y: 0,
           opacity: 1,
           filter: "blur(0px)",
-          duration: 0.75,
+          duration: 0.7,
           ease: "power3.out",
         },
-        "-=0.45"
+        "-=0.45",
       );
 
       tl.to(
@@ -271,10 +348,10 @@ export default function ClosingSection() {
         {
           scaleX: 1,
           opacity: 1,
-          duration: 0.65,
+          duration: 0.6,
           ease: "power3.out",
         },
-        "-=0.25"
+        "-=0.25",
       );
 
       tl.to(
@@ -284,10 +361,10 @@ export default function ClosingSection() {
           opacity: 1,
           filter: "blur(0px)",
           scale: 1,
-          duration: 0.75,
+          duration: 0.7,
           ease: "power3.out",
         },
-        "-=0.2"
+        "-=0.2",
       );
 
       tl.to(
@@ -296,13 +373,13 @@ export default function ClosingSection() {
           y: 0,
           opacity: 1,
           filter: "blur(0px)",
-          duration: 0.6,
+          duration: 0.55,
           ease: "power2.out",
         },
-        "-=0.2"
+        "-=0.2",
       );
 
-      tl.to({}, { duration: 1.3 });
+      tl.to({}, { duration: 0.8 });
     }, containerRef);
 
     return () => ctx.revert();
@@ -310,8 +387,8 @@ export default function ClosingSection() {
 
   return (
     <section
-         id="closing"
-            data-section="closing"
+      id="closing"
+      data-section="closing"
       ref={containerRef}
       className="
         relative
@@ -332,7 +409,6 @@ export default function ClosingSection() {
           bg-[#fafdda]
         "
       >
-        
         <div
           className="
             pointer-events-none
@@ -380,7 +456,7 @@ export default function ClosingSection() {
         </div>
       </div>
 
-      
+      {/* FINAL CREAM CONTENT */}
       <div
         ref={finalLayoutRef}
         className="
@@ -396,11 +472,10 @@ export default function ClosingSection() {
           text-center
         "
       >
-       
         <div
           ref={topLineRef}
           className="
-            mb-[clamp(1.4rem,3.5vh,2.5rem)]
+            mb-[clamp(1.2rem,3vh,2.2rem)]
             h-[2px]
             w-[min(48vw,580px)]
             bg-[#c2380f]
@@ -428,11 +503,11 @@ export default function ClosingSection() {
               [-webkit-text-stroke:0.45px_currentColor]
               [text-shadow:1px_1px_0_rgba(44,19,9,0.18)]
 
-              text-[clamp(2.6rem,8.6vw,6.6rem)]
-              sm:text-[clamp(3rem,8.2vw,7rem)]
-              md:text-[clamp(4rem,7.3vw,7.4rem)]
-              lg:text-[clamp(4.7rem,6.9vw,7.8rem)]
-              xl:text-[clamp(5.2rem,6.6vw,8.4rem)]
+              text-[clamp(2.35rem,8vw,6.4rem)]
+              sm:text-[clamp(2.8rem,7.8vw,6.8rem)]
+              md:text-[clamp(3.8rem,7vw,7.2rem)]
+              lg:text-[clamp(4.5rem,6.6vw,7.7rem)]
+              xl:text-[clamp(5rem,6.3vw,8.2rem)]
             "
           >
             Every bowl tells a story.
@@ -452,11 +527,11 @@ export default function ClosingSection() {
               [-webkit-text-stroke:0.35px_currentColor]
               [text-shadow:1px_1px_0_rgba(194,56,15,0.15)]
 
-              text-[clamp(2rem,6.9vw,4.8rem)]
-              sm:text-[clamp(2.4rem,6.5vw,5.2rem)]
-              md:text-[clamp(3.1rem,5.9vw,5.8rem)]
-              lg:text-[clamp(3.7rem,5.3vw,6.2rem)]
-              xl:text-[clamp(4.1rem,5vw,6.6rem)]
+              text-[clamp(1.8rem,6.4vw,4.6rem)]
+              sm:text-[clamp(2.25rem,6vw,5rem)]
+              md:text-[clamp(3rem,5.6vw,5.6rem)]
+              lg:text-[clamp(3.5rem,5.1vw,6rem)]
+              xl:text-[clamp(3.9rem,4.8vw,6.4rem)]
             "
           >
             Now, it's your turn to create one.
@@ -467,7 +542,7 @@ export default function ClosingSection() {
         <div
           ref={midLineRef}
           className="
-            mt-[clamp(1.7rem,4.5vh,3rem)]
+            mt-[clamp(1.4rem,3.8vh,2.6rem)]
             h-[2px]
             w-[min(48vw,580px)]
             bg-[#c2380f]
@@ -479,20 +554,19 @@ export default function ClosingSection() {
           ref={quoteCardRef}
           className="
             relative
-            mt-[clamp(1.8rem,5vh,3rem)]
-            w-[min(82vw,500px)]
+            mt-[clamp(1.4rem,4vh,2.5rem)]
+            w-[min(84vw,520px)]
             rounded-[1rem]
             border
             border-[#c2380f]/60
             bg-[#fafdda]/55
-            px-[clamp(1.5rem,4vw,2.8rem)]
-            py-[clamp(1.2rem,3.2vh,2rem)]
+            px-[clamp(1.35rem,4vw,2.7rem)]
+            py-[clamp(1.1rem,3vh,1.8rem)]
             text-center
             shadow-[0_14px_34px_rgba(44,19,9,0.12)]
             backdrop-blur-[1px]
           "
         >
-         
           <span className="absolute left-4 top-4 h-5 w-5 border-l-2 border-t-2 border-[#c2380f]" />
           <span className="absolute right-4 top-4 h-5 w-5 border-r-2 border-t-2 border-[#c2380f]" />
           <span className="absolute bottom-4 left-4 h-5 w-5 border-b-2 border-l-2 border-[#c2380f]" />
@@ -501,34 +575,64 @@ export default function ClosingSection() {
           <p
             className="
               font-serif
+              text-center
               text-[clamp(0.75rem,1.2vw,0.95rem)]
               font-normal
               leading-relaxed
               tracking-[0.03em]
               text-[#2c1309]
-              text-center
             "
           >
-            From Aceh to Papua, soto takes a thousand forms —
-            each one is a reflection of the hands that made it, the
-            land it came from, and the table it was shared on.
+            From Aceh to Papua, soto takes a thousand forms — each one is a
+            reflection of the hands that made it, the land it came from, and the
+            table it was shared on.
           </p>
         </div>
 
+        <div ref={footerRef} className="hidden" />
       </div>
 
-      {/* brown layer */}
+      {/* GREEN BATIK INTRO LAYER */}
       <div
-        ref={brownLayerRef}
+        ref={greenLayerRef}
         className="
           absolute
           inset-0
           z-[6]
           h-full
           w-full
-          bg-[#2c1309]
+          overflow-hidden
+          bg-[#22a83a]
         "
       >
+        {/* background-5 pattern */}
+        <div
+          className="
+            pointer-events-none
+            absolute
+            inset-0
+            h-full
+            w-full
+            bg-cover
+            bg-center
+            bg-repeat
+          "
+          style={{
+            backgroundImage: `url(${background5})`,
+          }}
+        />
+
+        {/* glow cream tipis aja, gradient gelap dihapus biar seamless */}
+        <div
+          className="
+            pointer-events-none
+            absolute
+            inset-0
+            bg-[radial-gradient(circle_at_50%_46%,rgba(250,253,218,0.04),transparent_52%)]
+          "
+        />
+
+        {/* INTRO QUOTE */}
         <div
           className="
             pointer-events-none
@@ -537,66 +641,52 @@ export default function ClosingSection() {
             flex
             items-center
             justify-center
-            px-[clamp(1.5rem,5vw,4rem)]
+            px-[clamp(1.2rem,5vw,5rem)]
             text-center
           "
         >
-          {/* Quote 1 */}
           <div
-            ref={quote1Ref}
+            ref={introQuoteTextRef}
             className="
               absolute
               left-1/2
               top-1/2
-              w-[min(88vw,980px)]
+              w-[min(90vw,1120px)]
               -translate-x-1/2
               -translate-y-1/2
 
               font-title
               font-black
-              leading-none
-              tracking-[-0.025em]
+              leading-[0.95]
+              tracking-[-0.035em]
               text-[#fafdda]
-              [-webkit-text-stroke:0.45px_currentColor]
-              [text-shadow:1px_1px_0_rgba(250,253,218,0.18)]
 
-              text-[clamp(2.8rem,11vw,5.4rem)]
-              sm:text-[clamp(3.2rem,9vw,6rem)]
-              md:text-[clamp(3.8rem,7vw,7rem)]
-              lg:text-[clamp(4.2rem,6.6vw,7.7rem)]
-              xl:text-[clamp(4.6rem,6.5vw,8.4rem)]
+              [-webkit-text-stroke:0.35px_rgba(250,253,218,0.35)]
+              [text-shadow:0_2px_10px_rgba(20,82,28,0.32),0_1px_2px_rgba(0,0,0,0.18)]
+
+              text-[clamp(2.15rem,8.7vw,4.6rem)]
+              sm:text-[clamp(2.55rem,7.4vw,5.3rem)]
+              md:text-[clamp(3.1rem,5.9vw,6rem)]
+              lg:text-[clamp(3.5rem,5.2vw,6.6rem)]
+              xl:text-[clamp(3.9rem,4.9vw,7rem)]
             "
           >
-            {splitWords(QUOTE_1, quote1WordRefs)}
-          </div>
+            {renderStyledIntroQuote()}
 
-          {/* Quote 2 */}
-          <div
-            ref={quote2Ref}
-            className="
-              absolute
-              left-1/2
-              top-1/2
-              w-[min(90vw,1080px)]
-              -translate-x-1/2
-              -translate-y-1/2
-
-              font-title
-              font-black
-              leading-none
-              tracking-[-0.025em]
-              text-[#fafdda]
-              [-webkit-text-stroke:0.42px_currentColor]
-              [text-shadow:1px_1px_0_rgba(250,253,218,0.16)]
-
-              text-[clamp(2.35rem,9.5vw,4.7rem)]
-              sm:text-[clamp(2.8rem,8vw,5.3rem)]
-              md:text-[clamp(3.3rem,6.2vw,6.1rem)]
-              lg:text-[clamp(3.6rem,5.7vw,6.6rem)]
-              xl:text-[clamp(4rem,5.5vw,7.2rem)]
-            "
-          >
-            {splitWords(QUOTE_2, quote2WordRefs)}
+            {/* TYPEWRITER CURSOR */}
+            <span
+              ref={typeCursorRef}
+              className="
+                ml-[0.12em]
+                inline-block
+                h-[0.86em]
+                w-[0.055em]
+                translate-y-[0.08em]
+                rounded-full
+                bg-[#fafdda]
+                align-baseline
+              "
+            />
           </div>
         </div>
       </div>

@@ -1,14 +1,3 @@
-/**
- * SectionTransitions.jsx  (FIXED)
- *
- * Perbaikan utama:
- * 1. Pakai ScrollTrigger GSAP (bukan IntersectionObserver) agar
- *    bekerja meski section di-pin oleh ScrollTrigger lain.
- * 2. Transisi question→journey pakai "liquid splash" yang
- *    berganti warna dengan gradasi agar lebih mulus.
- * 3. Gradasi lembut setiap transisi warna background.
- */
-
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
