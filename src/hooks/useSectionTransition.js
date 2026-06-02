@@ -33,7 +33,7 @@ gsap.registerPlugin(ScrollTrigger)
  * @returns {React.RefObject}   — ref yang bisa disambungkan ke elemen <section>
  */
 export function useSectionTransition(sectionName, delay = 400, options = {}) {
-  const { autoScroll = false } = options 
+  const { autoScroll = true } = options 
   const sectionRef = useRef(null)
 
   useEffect(() => {
@@ -63,10 +63,10 @@ export function useSectionTransition(sectionName, delay = 400, options = {}) {
 
       trigger = ScrollTrigger.create({
         trigger: fromEl,
-        start: 'bottom 80%',
-        end: 'bottom top',
+        start: 'bottom 95%',
+        //end: 'bottom top',
         invalidateOnRefresh: true,
-        onLeave: () => {
+        onEnter: () => {
           if (isAnimating || fired) return
           fired       = true
           isAnimating = true

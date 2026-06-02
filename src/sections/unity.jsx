@@ -208,7 +208,7 @@ export default function Unity() {
   const spacerRef  = useRef(null);
   const panelRef   = useRef(null);
 
-  const transitionRef = useSectionTransition('unity', 600, { autoScroll: false }) 
+  const transitionRef = useSectionTransition('unity', 600, { autoScroll: true }) 
 
   const bowlRefs    = useRef([]);
   const blobRefs    = useRef([]);
