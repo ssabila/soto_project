@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { storyContent } from "../data/storytext";
+import { useSectionTransition } from '../hooks/useSectionTransition'
 
 // Import Assets
 import sotoBetawi    from "../assets/images/soto-betawi.svg";
@@ -166,6 +167,7 @@ function MapNode({ node, scrollYProgress, inRange, outRange }) {
 // ── Komponen Utama ────────────────────────────────────────────────────────────
 export default function MeaningSection() {
   const containerRef = useRef(null);
+  const transitionRef = useSectionTransition("meaning", 600, { autoScroll: true })  // ✅ aktifkan auto-scroll ke section ini saat transisi;
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
@@ -205,12 +207,15 @@ export default function MeaningSection() {
   const t3bBlur      = useTransform(scrollYProgress, [0.82, 0.92], ["blur(14px)", "blur(0px)"]);
 
   return (
-    <section 
-     id="meaning"
-  data-section="meaning"
-  ref={containerRef} className="relative h-[450vh] bg-[#2C1309] font-inria">
-      
-      {/* Sticky Viewport Container */}
+    <motion.section
+      ref={(el) => {
+        containerRef.current   = el   // untuk framer-motion scroll
+        transitionRef.current  = el   // untuk useSectionTransition
+      }}
+      data-section="meaning" 
+      className="relative h-[700vh]"
+      style={{ fontFamily: "var(--font-body, 'InriaSerif', serif)" }}
+    >
       <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
 
         {/* Background SVGs */}

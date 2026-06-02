@@ -15,7 +15,6 @@ function App() {
   return (
     <main className="w-full overflow-clip">
       <ScrollNavigator />
-      
       <OpeningSection />
       <QuestionSection />
       <JourneySection />
