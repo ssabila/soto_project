@@ -61,7 +61,7 @@ const scTitleWords = "What makes them all".split(" ");
 const scSotoWord = "soto?";
 
 const scDescDesktop =
-  "Soto is a beloved Indonesian soup, a warm bowl of spiced broth layered with tender meats like chicken or beef, fresh vegetables such as bean sprouts and cabbage, and fragrant toppings like garlic and onions. Across the archipelago, every bowl carries its own flavor, shaped by the land, the spices and the people behind it.";
+  "Soto is a beloved Indonesian soup, a warm bowl of spiced broth layered with tender meats like chicken or beef, fresh vegetables such as bean sprouts and cabbage, and fragrant toppings like garlic and onions.";
 
 const scDescMobile =
   "Soto is a beloved Indonesian soup, a warm bowl of spiced broth layered with tender meats like chicken or beef, fresh vegetables, and fragrant toppings.";
