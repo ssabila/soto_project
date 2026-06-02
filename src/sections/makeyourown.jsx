@@ -25,7 +25,7 @@ import tambahanEmping from "../assets/images/tambahan-emping.webp";
 
 import gameTitle from "../assets/images/game-title.webp";
 
-// warna
+// colors
 const C = {
   brown: "#2c1309",
   rust: "#c2380f",
@@ -34,7 +34,7 @@ const C = {
   burntOrange: "#d05a1f",
 };
 
-// dots dekorasi
+// decorative dots
 const spiceDots = [
   { top: "7%", left: "5%", size: 11, color: C.rust, opacity: 0.72 },
   { top: "11%", left: "87%", size: 7, color: C.brown, opacity: 0.38 },
@@ -49,57 +49,57 @@ const spiceDots = [
   { top: "45%", left: "96%", size: 8, color: C.scarlet, opacity: 0.58 },
 ];
 
-//data game
+// game data
 const KUAH_LIST = [
   {
     id: "biasa",
-    label: "Kuah Kuning",
+    label: "Classic Broth",
     img: kuahBiasa,
-    desc: "Gurih & hangat",
+    desc: "Warm & savory",
     group: "kuah",
   },
   {
     id: "bening",
-    label: "Kuah Bening",
+    label: "Clear Broth",
     img: kuahBening,
-    desc: "Segar & ringan",
+    desc: "Light & fresh",
     group: "kuah",
   },
   {
     id: "santan",
-    label: "Kuah Santan",
+    label: "Coconut milk Broth",
     img: kuahSantan,
-    desc: "Creamy & enak",
+    desc: "Rich & creamy",
     group: "kuah",
   },
   {
     id: "coto",
-    label: "Kuah Coto",
+    label: "Coto Broth",
     img: kuahCoto,
-    desc: "Kaya rempah",
+    desc: "Bold & spiced",
     group: "kuah",
   },
 ];
 
 const TOPPING_LIST = [
-  { id: "ayam", label: "Ayam", img: toppingAyam, group: "topping" },
-  { id: "daging", label: "Daging", img: toppingDaging, group: "topping" },
-  { id: "babat", label: "Babat", img: toppingBabat, group: "topping" },
+  { id: "ayam", label: "Chicken", img: toppingAyam, group: "topping" },
+  { id: "daging", label: "Beef", img: toppingDaging, group: "topping" },
+  { id: "babat", label: "Beef Tripe (Babat)", img: toppingBabat, group: "topping" },
 ];
 
 const PELENGKAP_LIST = [
   { id: "koya", label: "Koya", img: pelengkapKoya, group: "pelengkap" },
-  { id: "tauge", label: "Tauge", img: pelengkapTauge, group: "pelengkap" },
-  { id: "bawang", label: "Bawang", img: pelengkapBawang, group: "pelengkap" },
+  { id: "tauge", label: "Bean Sprouts", img: pelengkapTauge, group: "pelengkap" },
+  { id: "bawang", label: "Fried onion", img: pelengkapBawang, group: "pelengkap" },
 ];
 
 const TAMBAHAN_LIST = [
-  { id: "telur", label: "Telur", img: tambahanTelur, group: "tambahan" },
-  { id: "limau", label: "Limau", img: tambahanLimau, group: "tambahan" },
+  { id: "telur", label: "Egg", img: tambahanTelur, group: "tambahan" },
+  { id: "limau", label: "Lime", img: tambahanLimau, group: "tambahan" },
   { id: "emping", label: "Emping", img: tambahanEmping, group: "tambahan" },
   {
     id: "kerupuk",
-    label: "Kerupuk Udang",
+    label: "Shrimp Crackers",
     img: tambahanKerupukudang,
     group: "tambahan",
   },
@@ -115,26 +115,26 @@ const ALL_ITEMS = [
 const STEPS = [
   {
     key: "kuah",
-    label: "Kuah",
-    hint: "Pilih kuah soto kamu",
+    label: "Broth",
+    hint: "Choose your soto broth",
     items: KUAH_LIST,
   },
   {
     key: "topping",
-    label: "Isi",
-    hint: "Pilih isi utama soto kamu",
+    label: "Filling",
+    hint: "Choose the main filling",
     items: TOPPING_LIST,
   },
   {
     key: "pelengkap",
-    label: "Taburan",
-    hint: "Pilih taburan soto kamu",
+    label: "Topping",
+    hint: "Add a topping",
     items: PELENGKAP_LIST,
   },
   {
     key: "tambahan",
     label: "Extra",
-    hint: "Pilih extra terakhir",
+    hint: "Choose the final extra",
     items: TAMBAHAN_LIST,
   },
 ];
@@ -160,34 +160,63 @@ function replaceGroupItem(prev, group, nextId) {
 }
 
 function getSotoName(kuahId, toppingId, pelengkapId, tambahanId) {
-  if (!kuahId) return "Soto Spesialmu";
+  if (!kuahId) return "Your own soto creation";
+
+  // Coconut milk broth family
+  if (kuahId === "santan" && toppingId === "daging" && tambahanId === "emping") {
+    return "Soto Betawi";
+  }
 
   if (kuahId === "santan" && toppingId === "daging") {
-    return "Soto Betawi Daging";
+    return "Soto Betawi with Beef";
+  }
+
+  if (kuahId === "santan" && toppingId === "ayam" && tambahanId === "telur") {
+    return "Soto Medan";
+  }
+
+  if (kuahId === "santan" && toppingId === "ayam" && tambahanId === "emping") {
+    return "Soto Medan";
   }
 
   if (kuahId === "santan" && toppingId === "ayam") {
-    return "Soto Ayam Santan";
+    return "Soto with coconut milk broth";
   }
 
+  // Lamongan-style: chicken + koya
   if (kuahId === "bening" && toppingId === "ayam" && pelengkapId === "koya") {
-    return "Soto Lamongan Koya";
-  }
-
-  if (kuahId === "bening" && toppingId === "ayam") {
-    return "Soto Bening Ayam";
-  }
-
-  if (kuahId === "coto" && toppingId === "babat") {
-    return "Coto dengan Babat";
-  }
-
-  if (kuahId === "coto" && toppingId === "daging") {
-    return "Coto dengan Daging ";
+    return "Soto Lamongan";
   }
 
   if (kuahId === "biasa" && toppingId === "ayam" && pelengkapId === "koya") {
     return "Soto Lamongan";
+  }
+
+  // Kudus-style: clear/light broth + chicken + sprouts or fried shallots
+  if (kuahId === "bening" && toppingId === "ayam" && pelengkapId === "tauge") {
+    return "Soto Kudus";
+  }
+
+  if (kuahId === "bening" && toppingId === "ayam" && pelengkapId === "bawang") {
+    return "Soto Kudus";
+  }
+
+  // Makassar-style: coto broth + beef/tripe
+  if (kuahId === "coto" && toppingId === "babat") {
+    return "Coto Makassar";
+  }
+
+  if (kuahId === "coto" && toppingId === "daging") {
+    return "Coto Makassar";
+  }
+
+  // General matches
+  if (kuahId === "bening" && toppingId === "ayam") {
+    return "Soto Bening with Chicken";
+  }
+
+  if (kuahId === "biasa" && toppingId === "ayam") {
+    return "Soto Ayam";
   }
 
   if (kuahId === "biasa" && toppingId === "daging") {
@@ -199,10 +228,10 @@ function getSotoName(kuahId, toppingId, pelengkapId, tambahanId) {
   }
 
   if (tambahanId === "telur") {
-    return "Soto Telur Sederhana";
+    return "Soto with Egg";
   }
 
-  return "Soto Racikan Ala Kamu";
+  return "Your own soto creation";
 }
 
 function getResultCopy(kuah, topping, pelengkap, tambahan) {
@@ -215,18 +244,18 @@ function getResultCopy(kuah, topping, pelengkap, tambahan) {
 
   if (topping?.id === "ayam") vibes.push("comforting");
   if (topping?.id === "daging") vibes.push("rich");
-  if (topping?.id === "babat") vibes.push("berani");
+  if (topping?.id === "babat") vibes.push("distinctive");
 
-  if (pelengkap?.id === "koya") vibes.push("gurih");
-  if (tambahan?.id === "limau") vibes.push("segar");
+  if (pelengkap?.id === "koya") vibes.push("savory");
+  if (tambahan?.id === "limau") vibes.push("bright");
 
   if (vibes.length === 0) {
-    return "Racikan kamu sederhana, tapi tetap siap jadi comfort food.";
+    return "Your bowl is simple, but it still carries the warmth of soto.";
   }
 
-  return `Racikan kamu terasa ${vibes
+  return `Your bowl feels ${vibes
     .slice(0, 3)
-    .join(", ")}. Selamat menikmati sotomu!.`;
+    .join(", ")}. A small mix, but full of character.`;
 }
 
 // frame
@@ -571,7 +600,7 @@ function FinalSotoPreview({ kuah, topping, pelengkap, tambahan }) {
   );
 }
 
-// komponen utama
+// main component
 const Makeyourownsoto = () => {
   const container = useRef(null);
   const hasPlayed = useRef(false);
@@ -764,44 +793,40 @@ const Makeyourownsoto = () => {
       if (item.group === "kuah") {
         setSelectedKuah(item.id);
         setBowlItems((prev) => replaceGroupItem(prev, "kuah", item.id));
-        showToast(`${item.label} dipilih. Lanjut pilih isi soto!`);
+        showToast(`${item.label} selected. Now choose the main filling.`);
         goNextStep("kuah");
         return;
       }
 
       if (!selectedKuah) {
-        showToast("Kuah dulu bestie, biar sotonya punya pondasi.");
+        showToast("Choose the broth first to build the base of your soto.");
         setStep(0);
         return;
       }
 
       if (item.group === "topping") {
         setBowlItems((prev) => replaceGroupItem(prev, "topping", item.id));
-        showToast(
-          `${item.label} dipilih. Lanjut pilih taburan atau sajikan soto.`,
-        );
+        showToast(`${item.label} selected. Add a topping or serve your soto.`);
         goNextStep("topping");
         return;
       }
 
       if (!topping && item.group !== "topping") {
-        showToast("Pilih isi dulu, baru topping lucu-lucuan.");
+        showToast("Choose the main filling first before adding toppings.");
         setStep(1);
         return;
       }
 
       if (item.group === "pelengkap") {
         setBowlItems((prev) => replaceGroupItem(prev, "pelengkap", item.id));
-        showToast(
-          `${item.label} ditabur. Lanjut pilih topping ekstra atau sajikan soto.`,
-        );
+        showToast(`${item.label} added. Choose an extra or serve your soto.`);
         goNextStep("pelengkap");
         return;
       }
 
       if (item.group === "tambahan") {
         setBowlItems((prev) => replaceGroupItem(prev, "tambahan", item.id));
-        showToast(`${item.label} jadi topping pelengkap, sajikan soto!.`);
+        showToast(`${item.label} added. Your soto is ready to serve.`);
       }
     },
     [selectedKuah, topping, showToast, goNextStep],
@@ -883,13 +908,13 @@ const Makeyourownsoto = () => {
     }
 
     if (i === 1 && !selectedKuah) {
-      showToast("Kuah dulu, baru isi. Soto juga butuh komitmen.");
+      showToast("Choose the broth first, then add the filling.");
       setStep(0);
       return;
     }
 
     if (i > 1 && !topping) {
-      showToast("Isi dulu ya, biar nggak cuma kuah doang.");
+      showToast("Choose the main filling first.");
       setStep(1);
       return;
     }
@@ -899,13 +924,13 @@ const Makeyourownsoto = () => {
 
   const handleFinish = () => {
     if (!selectedKuah) {
-      showToast("Pilih kuah dulu ya!");
+      showToast("Choose the broth first.");
       setStep(0);
       return;
     }
 
     if (!topping) {
-      showToast("Isi utama belum dipilih.");
+      showToast("Choose the main filling first.");
       setStep(1);
       return;
     }
@@ -1038,7 +1063,7 @@ const Makeyourownsoto = () => {
               ))}
             </div>
 
-            {/* transisi */}
+            {/* transition */}
             <div className="soto-frame-blackout pointer-events-none absolute inset-0 z-[100] bg-black opacity-0" />
 
             {/* GAME */}
@@ -1057,62 +1082,62 @@ const Makeyourownsoto = () => {
                   {/* TOP BAR */}
                   <div
                     className="
-    absolute
-    left-1/2
-    top-[2%]
-    z-50
-    w-[calc(100%-18px)]
-    -translate-x-1/2
+                      absolute
+                      left-1/2
+                      top-[2%]
+                      z-50
+                      w-[calc(100%-18px)]
+                      -translate-x-1/2
 
-    md:left-0
-    md:right-0
-    md:w-auto
-    md:translate-x-0
-    md:px-[2%]
-  "
+                      md:left-0
+                      md:right-0
+                      md:w-auto
+                      md:translate-x-0
+                      md:px-[2%]
+                    "
                   >
                     {/* MOBILE TOP BAR */}
                     <div
                       className="
-      flex
-      flex-col
-      items-center
-      gap-1.5
+                        flex
+                        flex-col
+                        items-center
+                        gap-1.5
 
-      md:hidden
-    "
+                        md:hidden
+                      "
                     >
                       {/* ACTION ROW */}
                       <div
                         className="
-        flex
-        w-full
-        items-center
-        justify-between
-        gap-2
-      "
+                          flex
+                          w-full
+                          items-center
+                          justify-between
+                          gap-2
+                        "
                       >
                         <button
                           type="button"
                           onClick={handleBackToStart}
                           className="
-          shrink-0
-          rounded-full
-          border-[2.5px]
-          border-[#2a1f0e]
-          bg-[#fafdda]
-          px-[clamp(11px,3.2vw,28px)]
-          py-[clamp(5px,1.5vw,11px)]
-          font-title
-          text-[clamp(0.65rem,2.8vw,1.18rem)]
-          font-regular
-          text-[#2a1f0e]
-          shadow-[0_4px_0_rgba(42,31,14,0.25)]
-          transition-all
-          hover:-translate-y-0.5
-          hover:bg-white
-          active:translate-y-0.5
-        "
+                            shrink-0
+                            rounded-full
+                            border-[2.5px]
+                            border-[#2a1f0e]
+                            bg-[#fafdda]
+                            px-[clamp(11px,3.2vw,28px)]
+                            py-[clamp(5px,1.5vw,11px)]
+                            font-title
+                            text-[clamp(0.65rem,2.8vw,1.18rem)]
+                            font-regular
+                            text-[#2a1f0e]
+                            shadow-[0_4px_0_rgba(42,31,14,0.25)]
+                            transition-all
+                            hover:-translate-y-0.5
+                            hover:bg-white
+                            active:translate-y-0.5
+                          "
                         >
                           BACK
                         </button>
@@ -1137,12 +1162,12 @@ const Makeyourownsoto = () => {
                       {/* STEP ROW */}
                       <div
                         className="
-        flex
-        w-full
-        items-center
-        justify-center
-        gap-[3px]
-      "
+                          flex
+                          w-full
+                          items-center
+                          justify-center
+                          gap-[3px]
+                        "
                       >
                         {STEPS.map((s, i) => {
                           const locked =
@@ -1172,13 +1197,13 @@ const Makeyourownsoto = () => {
                     {/* DESKTOP TOP BAR */}
                     <div
                       className="
-      hidden
+                        hidden
 
-      md:grid
-      md:grid-cols-[auto_1fr_auto]
-      md:items-center
-      md:gap-4
-    "
+                        md:grid
+                        md:grid-cols-[auto_1fr_auto]
+                        md:items-center
+                        md:gap-4
+                      "
                     >
                       {/* LEFT: BACK */}
                       <div className="flex justify-start">
@@ -1186,37 +1211,37 @@ const Makeyourownsoto = () => {
                           type="button"
                           onClick={handleBackToStart}
                           className="
-          shrink-0
-          rounded-full
-          border-[3px]
-          border-[#2a1f0e]
-          bg-[#fafdda]
-          px-[clamp(14px,3.6vw,28px)]
-          py-[clamp(7px,1.2vw,11px)]
-          font-title
-          text-[clamp(0.9rem,1.9vw,1.18rem)]
-          font-regular 
-          text-[#2a1f0e]
-          shadow-[0_5px_0_rgba(42,31,14,0.25)]
-          transition-all
-          hover:-translate-y-0.5
-          hover:bg-white
-          active:translate-y-0.5
-        "
+                            shrink-0
+                            rounded-full
+                            border-[3px]
+                            border-[#2a1f0e]
+                            bg-[#fafdda]
+                            px-[clamp(14px,3.6vw,28px)]
+                            py-[clamp(7px,1.2vw,11px)]
+                            font-title
+                            text-[clamp(0.9rem,1.9vw,1.18rem)]
+                            font-regular 
+                            text-[#2a1f0e]
+                            shadow-[0_5px_0_rgba(42,31,14,0.25)]
+                            transition-all
+                            hover:-translate-y-0.5
+                            hover:bg-white
+                            active:translate-y-0.5
+                          "
                         >
                           BACK
                         </button>
                       </div>
 
-                      {/* tahapan pembuatan */}
+                      {/* steps */}
                       <div className="flex justify-center">
                         <div
                           className="
-          flex
-          items-center
-          justify-center
-          gap-[8px]
-        "
+                            flex
+                            items-center
+                            justify-center
+                            gap-[8px]
+                          "
                         >
                           {STEPS.map((s, i) => {
                             const locked =
@@ -1243,7 +1268,7 @@ const Makeyourownsoto = () => {
                         </div>
                       </div>
 
-                      {/* tombol FINISH */}
+                      {/* FINISH button */}
                       <div className="flex justify-end">
                         <button
                           type="button"
@@ -1359,12 +1384,12 @@ const Makeyourownsoto = () => {
                       "
                     >
                       {step === 0
-                        ? "Pilih kuah soto — klik card atau drag ke mangkok"
+                        ? "Choose the broth — click a card or drag it into the bowl"
                         : step === 1
-                          ? "Pilih isi utama soto — klik card atau drag ke mangkok"
+                          ? "Choose the main filling — click a card or drag it into the bowl"
                           : step === 2
-                            ? "Pilih taburan soto — klik card atau drag ke mangkok"
-                            : "Pilih extra topping soto — klik card atau drag ke mangkok"}
+                            ? "Add a topping — click a card or drag it into the bowl"
+                            : "Choose an extra — click a card or drag it into the bowl"}
                     </p>
                   </div>
 
@@ -1388,7 +1413,7 @@ const Makeyourownsoto = () => {
                         <div className="pointer-events-none absolute -bottom-10 -left-10 h-28 w-28 rounded-full bg-[#e83a2a]/15" />
 
                         <p className="relative z-10 font-title text-[clamp(0.5rem,1vw,0.72rem)] font-regular uppercase tracking-[0.18em] text-[#8a6a3a]">
-                          Your soto is ready!
+                          Your soto creation is ready!
                         </p>
 
                         <h2 className="relative z-10 font-title text-[clamp(1.15rem,3.5vw,2.35rem)] font-regular leading-tight tracking-tight text-[#2a1f0e]">
@@ -1439,7 +1464,7 @@ const Makeyourownsoto = () => {
                               transition-all hover:-translate-y-0.5 active:translate-y-0.5
                             "
                           >
-                            Buat lagi
+                            Make another
                           </button>
 
                           <button
