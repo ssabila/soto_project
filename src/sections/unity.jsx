@@ -7,9 +7,6 @@ import { storyContent } from "../data/storytext";
 //  Transisi 
 import { useSectionTransition } from '../hooks/useSectionTransition'
 
-//  Transisi 
-import { useSectionTransition } from '../hooks/useSectionTransition'
-
 // Bowls
 import sotoMakasar from "../assets/images/coto-makasar.webp";
 import sotoBanjar from "../assets/images/soto-banjar.webp";
@@ -578,7 +575,7 @@ export default function Unity() {
         }}/>
 
         {/* ── Wavy Groovy Lines (Animate Draw) ─────────────────────── */}
-        <svg ref={funkyLinesRef} viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg"
+        <webp ref={funkyLinesRef} viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/webp"
           preserveAspectRatio="xMidYMid slice"
           style={{
             position: "absolute",
@@ -620,7 +617,7 @@ export default function Unity() {
               opacity="0.85"
             />
           ))}
-        </svg>
+        </webp>
 
         {/*  Background Blobs  */}
         {BLOBS.map((b, i) => (
