@@ -4,6 +4,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 import { storyContent } from '../data/storytext';
 
+//  Transisi 
+import { useSectionTransition } from '../hooks/useSectionTransition'
+
 // Bowls
 import sotoMakasar from '../assets/images/coto-makasar.svg';
 import sotoBanjar from '../assets/images/soto-banjar.svg';
@@ -128,6 +131,8 @@ export default function Unity() {
   const spacerRef  = useRef(null);
   const panelRef   = useRef(null);
 
+  const transitionRef = useSectionTransition('unity', 600, { autoScroll: false }) 
+
   const bowlRefs    = useRef([]);
   const blobRefs    = useRef([]);
   const decorRefs   = useRef([]);
@@ -145,13 +150,16 @@ export default function Unity() {
 
   const lines = storyContent.unity.lines;
 
+  
+
   useEffect(() => {
-    const bowls    = bowlRefs.current.filter(Boolean);
-    const blobs    = blobRefs.current.filter(Boolean);
-    const decors   = decorRefs.current.filter(Boolean);
-    const islands  = islandRefs.current.filter(Boolean);
-    const ings     = ingRefs.current.filter(Boolean);
-    const cultures = cultureRefs.current.filter(Boolean);
+    const ctx = gsap.context(() => {
+      const bowls    = bowlRefs.current.filter(Boolean);
+      const blobs    = blobRefs.current.filter(Boolean);
+      const decors   = decorRefs.current.filter(Boolean);
+      const islands  = islandRefs.current.filter(Boolean);
+      const ings     = ingRefs.current.filter(Boolean);
+      const cultures = cultureRefs.current.filter(Boolean);
 
     //  Initial states 
     gsap.set([text1Ref.current, text2Ref.current, text3Ref.current,
@@ -330,16 +338,9 @@ export default function Unity() {
         autoAlpha: 1, scale: 1, rotation: 0,
         duration: 2.5, ease: 'elastic.out(1, 0.5)',
       }, '-=1.5');
+    }, panelRef);
 
-    return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
-      gsap.killTweensOf([
-        ...bowls, ...blobs, ...decors, ...islands, ...ings, ...cultures,
-        text1Ref.current, text2Ref.current, text3Ref.current,
-        text4Ref.current, text5Ref.current, sotoRef.current,
-        '.funky-path'
-      ].filter(Boolean));
-    };
+    return () => ctx.revert();
   }, []);
 
   const S = {
@@ -372,11 +373,13 @@ export default function Unity() {
 
   return (
     <section
-    id="unity"
-    data-section="unity"
-    ref={spacerRef}
-    style={S.outer}
-  >
+      id="unity"
+      data-section="unity"
+      ref={(el) => {
+        spacerRef.current    = el
+        transitionRef.current = el
+      }}
+    >
     <div ref={panelRef} style={S.panel}>
 
         {/*  Texture Overlays  */}

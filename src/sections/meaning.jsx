@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { storyContent } from "../data/storytext";
+import { useSectionTransition } from '../hooks/useSectionTransition'
 
 // Import Assets
 import sotoBetawi    from "../assets/images/soto-betawi.svg";
@@ -148,6 +149,7 @@ function MapNode({ node, scrollYProgress, inRange, outRange }) {
 //  Komponen Utama 
 export default function MeaningSection() {
   const containerRef = useRef(null);
+  const transitionRef = useSectionTransition("meaning", 600, { autoScroll: true })  // ✅ aktifkan auto-scroll ke section ini saat transisi;
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
@@ -188,7 +190,11 @@ export default function MeaningSection() {
 
   return (
     <motion.section
-      ref={containerRef}
+      ref={(el) => {
+        containerRef.current   = el   // untuk framer-motion scroll
+        transitionRef.current  = el   // untuk useSectionTransition
+      }}
+      data-section="meaning" 
       className="relative h-[700vh]"
       style={{ fontFamily: "var(--font-body, 'InriaSerif', serif)" }}
     >
