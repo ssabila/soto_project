@@ -220,7 +220,7 @@ soto_project/
 **Font**
 
 - Beachfly Free Trial - Font display untuk elemen dekoratif
-- Mathreal - Font untuk jedul dan elemen naratif
+- Mathreal - Font untuk judul dan elemen naratif
 - Inria Serif - Font serif untuk body text dan deskripsi
 
 ---
