@@ -33,6 +33,14 @@ const ING_POS = [
   { top: "42%", left: "8%" },
 ];
 
+const ING_POS_MOBILE = [
+  { top: "10%", left: "2%" },
+  { top: "62%", left: "1%" },
+  { top: "18%", right: "1%" },
+  { top: "70%", right: "2%" },
+  { top: "42%", left: "2%" },
+];
+
 const SPILL_COLORS = [
   "#c2410c",
   "#eab308",
@@ -61,11 +69,11 @@ const scTitleWords = "What makes them all".split(" ");
 const scSotoWord = "soto?";
 
 const scDescDesktop =
-  "Soto is a beloved Indonesian soup, a warm bowl of spiced broth layered with tender meats like chicken or beef, fresh vegetables such as bean sprouts and cabbage, and fragrant toppings like garlic and onions.";
+  "Though each region has its own version, they all share the same foundation: a comforting bowl of spiced broth, meat, vegetables, and aromatic seasonings. Soto is a beloved Indonesian soup enjoyed in countless forms across the Indonesian archipelago.";
 
 const scDescMobile =
-  "Soto is a beloved Indonesian soup, a warm bowl of spiced broth layered with tender meats like chicken or beef, fresh vegetables, and fragrant toppings.";
-
+  "Despite their differences, every Soto shares the same foundation: spiced broth, meat, vegetables, and aromatic seasonings.";
+  
 export default function QuestionSection() {
   const pinWrapRef = useRef(null);
   const stageRef = useRef(null);
@@ -308,6 +316,9 @@ export default function QuestionSection() {
       /* SCENE B */
       function resetB() {
         const sbWords = sbWordRefs.current.filter(Boolean);
+        // const currentPos = isMobile
+        //   ? ING_POS_MOBILE[i]
+        //   : ING_POS[i];
 
         gsap.killTweensOf([
           sbLabelRef.current,
@@ -1165,40 +1176,54 @@ export default function QuestionSection() {
               justifyContent: "center",
             }}
           >
-            {INGREDIENTS.map((ing, i) => (
-              <div
-                key={ing.name}
-                ref={(el) => {
-                  if (ingRefs.current[i]) ingRefs.current[i].wrap = el;
-                }}
-                style={{
-                  ...S.ingWrap,
-                  top: ING_POS[i].top,
-                  left: ING_POS[i].left,
-                  right: ING_POS[i].right,
-                }}
-              >
-                <img
-                  ref={(el) => {
-                    if (ingRefs.current[i]) ingRefs.current[i].img = el;
-                  }}
-                  src={ing.src}
-                  alt={ing.name}
-                  style={{ ...S.ingImg, width: ing.size }}
-                />
+  
+            {INGREDIENTS.map((ing, i) => {
+              const currentPos = isMobile
+                ? ING_POS_MOBILE[i]
+                : ING_POS[i];
 
-                <p
+              return (
+                <div
+                  key={ing.name}
                   ref={(el) => {
-                    if (ingRefs.current[i]) ingRefs.current[i].label = el;
+                    if (ingRefs.current[i]) ingRefs.current[i].wrap = el;
                   }}
-                  style={S.ingLabel}
+                  style={{
+                    ...S.ingWrap,
+                    top: currentPos.top,
+                    left: currentPos.left,
+                    right: currentPos.right,
+                  }}
                 >
-                  {ing.name}
-                </p>
-              </div>
-            ))}
+                  <img
+                    ref={(el) => {
+                      if (ingRefs.current[i]) ingRefs.current[i].img = el;
+                    }}
+                    src={ing.src}
+                    alt={ing.name}
+                    style={{
+                      ...S.ingImg,
+                      width:
+                        isMobile
+                          ? ing.size * 0.6
+                          : window.innerWidth <= 1024
+                            ? ing.size * 0.8
+                            : ing.size,
+                    }}
+                  />
 
-            <p ref={sbLabelRef} style={{ ...S.eyebrow, marginBottom: 16 }}>
+                  <p
+                    ref={(el) => {
+                      if (ingRefs.current[i]) ingRefs.current[i].label = el;
+                    }}
+                    style={S.ingLabel}
+                  >
+                    {ing.name}
+                  </p>
+                </div>
+              );
+            })}
+            <p ref={sbLabelRef} style={{ ...S.eyebrow, marginBottom: 16, textAlign:"center", maxWidth: isMobile ? "80%" : "none", lineHeight: 1.3 }}>
               From every corner of the Nusantara
             </p>
 

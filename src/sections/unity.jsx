@@ -588,7 +588,7 @@ export default function Unity() {
         }}/>
 
         {/* ── Wavy Groovy Lines (Animate Draw) ─────────────────────── */}
-        <webp ref={funkyLinesRef} viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/webp"
+        <svg ref={funkyLinesRef} viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="xMidYMid slice"
           style={{
             position: "absolute",
@@ -630,7 +630,7 @@ export default function Unity() {
               opacity="0.85"
             />
           ))}
-        </webp>
+        </svg>
 
         {/*  Background Blobs  */}
         {BLOBS.map((b, i) => (
