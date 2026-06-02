@@ -46,7 +46,7 @@ const introQuoteParts = [
   { text: "In", className: "" },
   { text: "the", className: "" },
   { text: "end,", className: "" },
-  { text: "soto", className: "text-[#f63b1c]" },
+  { text: "soto", className: "text-[#f5db49]" },
   { text: "is", className: "" },
   { text: "not", className: "" },
   { text: "just", className: "" },
@@ -56,18 +56,18 @@ const introQuoteParts = [
   { text: "It", className: "" },
   { text: "is", className: "" },
   { text: "a", className: "" },
-  { text: "shared", className: "italic" },
-  { text: "idea,", className: "italic" },
+  { text: "shared", className: "" },
+  { text: "idea,", className: "text-[#f5db49]" },
   { text: "shaped", className: "" },
   { text: "by", className: "" },
   { text: "local", className: "" },
 
-  { text: "taste,", className: "text-[#ffbd59]" },
+  { text: "taste,", className: "text-[#f5db49]" },
   { text: "local", className: "" },
-  { text: "ingredients,", className: "text-[#ffbd59]" },
+  { text: "ingredients,", className: "text-[#f5db49]" },
   { text: "and", className: "" },
   { text: "local", className: "" },
-  { text: "culture.", className: "text-[#ffbd59]" },
+  { text: "culture.", className: "text-[#f5db49]" },
 ];
 
 export default function ClosingSection() {
