@@ -624,7 +624,7 @@ export default function MeaningSection() {
               animate={{ opacity: [0.55, 0.8, 0.55] }}
               transition={{ repeat: Infinity, duration: 3.5 }}
             >
-              nusantara dalam semangkuk
+              arising from the depths of the bowl
             </motion.span>
 
             <WavyText

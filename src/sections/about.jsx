@@ -8,25 +8,25 @@ import fotoBila from "../assets/images/foto-bila.webp";
 /* data member */
 const members = [
   {
-    id: "bila",
-    greeting: "Halo! aku",
-    name: "Sabila Bintang Kusuma Dewi",
-    nickname: "Bila",
-    photo: fotoBila,
-    rotate: "-3deg",
-    accentColor: "#c2380f",
-    bio: "Namaku Sabila Bintang Kusuma Dewi. Aku mahasiswa tingkat 3 Politeknik Statistika STIS. Dalam web story ini, aku mengerjakan konten dan isi website, mulai dari informasi, sampai narasi tentang beragam masakan soto di Indonesia.",
-  },
-  {
-    id: "dhira",
-    greeting: "Halo! aku",
-    name: "Qurany Nadhira Tsabita",
-    nickname: "Dhira",
-    photo: fotoDhira,
-    rotate: "3deg",
-    accentColor: "#c2380f",
-    bio: "Namaku Qurany Nadhira Tsabita. Aku mahasiswa tingkat 3 Politeknik Statistika STIS. Di web ini aku yang mengerjakan bagian opening, closing, footer dan game interaktif membuat soto, sampai section about us yang kamu lihat sekarang!",
-  },
+  id: "bila",
+  greeting: "Hi! I'm",
+  name: "Sabila Bintang Kusuma Dewi",
+  nickname: "Bila",
+  photo: fotoBila,
+  rotate: "-3deg",
+  accentColor: "#c2380f",
+  bio: "My name is Sabila Bintang Kusuma Dewi, a third-year student at Politeknik Statistika STIS. For this web story, I was responsible for the website's content and storytelling, from informational sections to the narratives exploring the diverse varieties of soto found across Indonesia.",
+},
+{
+  id: "dhira",
+  greeting: "Hi! I'm",
+  name: "Qurany Nadhira Tsabita",
+  nickname: "Dhira",
+  photo: fotoDhira,
+  rotate: "3deg",
+  accentColor: "#c2380f",
+  bio: "My name is Qurany Nadhira Tsabita, a third-year student at Politeknik Statistika STIS. In this project, I worked on the opening and closing sections, the footer, the interactive 'Build Your Own Soto' game, and the About Us section you're viewing right now!",
+},
 ];
 
 /* komponen */

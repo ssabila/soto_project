@@ -18,11 +18,11 @@ import imgStar from "../assets/images/star.svg";
 gsap.registerPlugin(ScrollTrigger);
 
 const INGREDIENTS = [
-  { src: imgBawangM, name: "Bawang Merah", rot: -14, size: 140 },
-  { src: imgBawangP, name: "Bawang Putih", rot: 10, size: 120 },
-  { src: imgSereh, name: "Sereh", rot: -8, size: 160 },
-  { src: imgDaunJeruk, name: "Daun Jeruk", rot: 12, size: 130 },
-  { src: imgKunyit, name: "Kunyit", rot: -6, size: 150 },
+  { src: imgBawangM, name: "Shallots", rot: -14, size: 140 },
+  { src: imgBawangP, name: "Garlic", rot: 10, size: 120 },
+  { src: imgSereh, name: "Lemongrass", rot: -8, size: 160 },
+  { src: imgDaunJeruk, name: "Citrus Leaves", rot: 12, size: 130 },
+  { src: imgKunyit, name: "Turmeric", rot: -6, size: 150 },
 ];
 
 const ING_POS = [
@@ -1199,7 +1199,7 @@ export default function QuestionSection() {
             ))}
 
             <p ref={sbLabelRef} style={{ ...S.eyebrow, marginBottom: 16 }}>
-              Dari seluruh penjuru nusantara
+              From every corner of the Nusantara
             </p>
 
             <div style={S.lineWrap}>
@@ -1233,16 +1233,16 @@ export default function QuestionSection() {
             </div>
 
             <p ref={sbBodyRef} style={{ ...S.bodyText, marginTop: 20 }}>
-              Setiap daerah membawa rempahnya sendiri.
+              Each region brings its own spices.
               <br />
-              Setiap tangan meninggalkan jejaknya sendiri.
+              Every hand leaves its own signature behind.
             </p>
 
             <div ref={mangkokWrapRef} style={S.mangkokWrap}>
               <img
                 ref={sbMangkokRef}
                 src={imgMangkok}
-                alt="Mangkok kosong"
+                alt="Empty Bowl"
                 style={S.mangkokImgInner}
               />
 

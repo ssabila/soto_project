@@ -26,99 +26,104 @@ const IMAGES = [imgBetawi, imgLamongan, imgKudus, imgPadang, imgBanjar, imgMakas
 const DECORS  = [decor1, decor2, decor3, decor4]
 const PARALLAX_FACTOR = 0.3
 
-// ── Extended soto data with rich culinary profiles ──────────────────────────
+//  Soto data with rich culinary profiles 
 const SOTO_PROFILES = [
   {
     id: 'soto-betawi',
     name: 'Soto Betawi',
     region: 'Jakarta',
     provinsi: 'DKI Jakarta',
-    kuah: 'Santan & susu',
-    kuahDesc: 'Creamy, gurih, berwarna putih kekuningan',
+    kuah: 'Coconut Milk & Milk Broth',
+    kuahDesc: 'Creamy, savory, with a pale golden color',
     kuahColor: '#f5e6c3',
-    karakterRasa: ['Gurih', 'Rich', 'Creamy'],
-    ciriKhas: 'Isiannya mewah — jeroan (paru, babat), tomat, kentang goreng, dan emping',
-    sajian: 'Disajikan panas dengan acar mentimun & sambal rawit hijau',
-    icon: '🫙',
+    karakterRasa: ['Savory', 'Rich', 'Creamy'],
+    ciriKhas: 'A luxurious mix of beef offal, tomatoes, fried potatoes, and emping crackers',
+    sajian: 'Served hot with pickled cucumbers and green chili sambal',
+    icon: '',
     accentColor: '#c9880a',
-    tagline: 'Kekayaan rasa ibukota',
+    tagline: 'The rich flavors of the capital city',
   },
+
   {
     id: 'soto-lamongan',
     name: 'Soto Lamongan',
     region: 'Lamongan',
-    provinsi: 'Jawa Timur',
-    kuah: 'Kaldu ayam bening',
-    kuahDesc: 'Jernih kekuningan, ringan namun sarat rempah',
+    provinsi: 'East Java',
+    kuah: 'Clear Chicken Broth',
+    kuahDesc: 'Light golden, delicate yet packed with spices',
     kuahColor: '#fef3c7',
-    karakterRasa: ['Segar', 'Gurih', 'Ringan'],
-    ciriKhas: 'Koya — serbuk kerupuk udang yang ditaburkan di atas kuah, memberi tekstur unik',
-    sajian: 'Lengkap dengan telur rebus, tauge, soun, dan bawang goreng renyah',
-    icon: '🥚',
+    karakterRasa: ['Fresh', 'Savory', 'Light'],
+    ciriKhas: 'Topped with koya — a unique savory powder made from shrimp crackers',
+    sajian: 'Served with boiled egg, bean sprouts, glass noodles, and crispy fried shallots',
+    icon: '',
     accentColor: '#c2380f',
-    tagline: 'Keistimewaan ada di taburannya',
+    tagline: 'Its magic lies in the topping',
   },
+
   {
     id: 'soto-kudus',
     name: 'Soto Kudus',
     region: 'Kudus',
-    provinsi: 'Jawa Tengah',
-    kuah: 'Kaldu sapi/kerbau bening',
-    kuahDesc: 'Jernih, tipis, dengan aroma jahe yang hangat',
+    provinsi: 'Central Java',
+    kuah: 'Clear Beef or Buffalo Broth',
+    kuahDesc: 'Light and clear with a comforting ginger aroma',
     kuahColor: '#fef9ec',
-    karakterRasa: ['Halus', 'Aromatik', 'Ringan'],
-    ciriKhas: 'Menggunakan daging kerbau, bukan sapi — warisan adat lokal yang kaya makna',
-    sajian: 'Disajikan dalam mangkuk kecil (porsi mini), berlapis bawang goreng & daun bawang',
-    icon: '🫕',
+    karakterRasa: ['Delicate', 'Aromatic', 'Light'],
+    ciriKhas: 'Traditionally made with buffalo meat instead of beef, reflecting local heritage',
+    sajian: 'Served in a small bowl, topped with fried shallots and scallions',
+    icon: '',
     accentColor: '#4d7c0f',
-    tagline: 'Kecil mangkuknya, dalam maknanya',
+    tagline: 'Small bowl, deep meaning',
   },
+
   {
     id: 'soto-padang',
     name: 'Soto Padang',
     region: 'Padang',
-    provinsi: 'Sumatera Barat',
-    kuah: 'Kaldu sapi pedas rempah',
-    kuahDesc: 'Merah, tegas, sarat kunyit dan cabai kering',
+    provinsi: 'West Sumatra',
+    kuah: 'Spiced Beef Broth',
+    kuahDesc: 'Reddish broth rich in turmeric and dried chilies',
     kuahColor: '#fce7d0',
-    karakterRasa: ['Pedas', 'Bold', 'Berani'],
-    ciriKhas: 'Daging sapi digoreng kering hingga crispy sebelum dimasukkan ke kuah panas',
-    sajian: 'Dengan bihun, perkedel kentang, dan kerupuk merah khas Padang',
-    icon: '🌶️',
+    karakterRasa: ['Spicy', 'Bold', 'Robust'],
+    ciriKhas: 'Features crispy fried beef slices added to the hot broth just before serving',
+    sajian: 'Served with rice vermicelli, potato fritters, and Padang-style red crackers',
+    icon: '',
     accentColor: '#c2380f',
-    tagline: 'Setiap suapan penuh keberanian',
+    tagline: 'Every spoonful is full of courage',
   },
+
   {
     id: 'soto-banjar',
     name: 'Soto Banjar',
     region: 'Banjarmasin',
-    provinsi: 'Kalimantan Selatan',
-    kuah: 'Kaldu ayam aromatik',
-    kuahDesc: 'Kuning pucat, harum kayu manis, kapulaga, dan cengkih',
+    provinsi: 'South Kalimantan',
+    kuah: 'Aromatic Chicken Broth',
+    kuahDesc: 'Pale yellow with notes of cinnamon, cardamom, and cloves',
     kuahColor: '#fef5e4',
-    karakterRasa: ['Aromatik', 'Hangat', 'Lembut'],
-    ciriKhas: 'Rempah-rempah khas yang tak lazim di soto lain: kayu manis, bunga lawang',
-    sajian: 'Disajikan dengan ketupat atau lontong, telur rebus, dan perkedel',
-    icon: '🪴',
+    karakterRasa: ['Aromatic', 'Warm', 'Gentle'],
+    ciriKhas: 'Distinctive use of spices rarely found in other sotos, such as cinnamon and star anise',
+    sajian: 'Typically served with ketupat or lontong, boiled egg, and potato fritters',
+    icon: '',
     accentColor: '#854F0B',
-    tagline: 'Kehangatan dari tepi sungai Barito',
+    tagline: 'Warmth from the banks of the Barito River',
   },
+
   {
     id: 'coto-makassar',
     name: 'Coto Makassar',
     region: 'Makassar',
-    provinsi: 'Sulawesi Selatan',
-    kuah: 'Kaldu kacang tanah pekat',
-    kuahDesc: 'Coklat gelap, kental, dengan 40+ jenis rempah',
+    provinsi: 'South Sulawesi',
+    kuah: 'Rich Peanut-Based Broth',
+    kuahDesc: 'Dark brown, thick, and infused with more than 40 spices',
     kuahColor: '#e8d5b0',
-    karakterRasa: ['Intens', 'Kaya Rempah', 'Nutty'],
-    ciriKhas: 'Dimasak selama berjam-jam dengan buras (lontong daun pisang) sebagai pasangannya',
-    sajian: 'Wajib dengan buras — bukan ketupat, bukan nasi. Itu hukumnya.',
-    icon: '🥜',
+    karakterRasa: ['Intense', 'Spice-Rich', 'Nutty'],
+    ciriKhas: 'Slow-cooked for hours and traditionally paired with buras (banana leaf rice cakes)',
+    sajian: 'Best enjoyed with buras — neither ketupat nor steamed rice will do',
+    icon: '',
     accentColor: '#633806',
-    tagline: 'Empat puluh rempah dalam satu mangkuk',
+    tagline: 'Forty spices in a single bowl',
   },
-]
+];
 
 const RESPONSIVE_CSS = `
   .journey-card {
@@ -675,11 +680,11 @@ export default function JourneySection() {
                       ))}
                     </div>
 
-                    {/* ── KUAH BLOCK ──────────────────────────────────── */}
+                    {/*  KUAH BLOCK  */}
                     <div className="j-kuah-block" style={S.kuahBlock}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
                         <span style={{ ...S.sectionIcon, color: profile.accentColor }}>◈</span>
-                        <span style={S.sectionLabel}>Karakter Kuah</span>
+                        <span style={S.sectionLabel}>Broth Characteristics</span>
                       </div>
                       <p style={{ ...S.kuahDesc, margin: '3px 0 4px' }}>{profile.kuahDesc}</p>
                       <div
@@ -688,7 +693,7 @@ export default function JourneySection() {
                       />
                     </div>
 
-                    {/* ── INFO ROWS: Sajian & Ciri Khas ─────────────── */}
+                    {/*  INFO ROWS: Sajian & Ciri Khas  */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
 
                       {/* Ciri Khas */}
@@ -697,7 +702,7 @@ export default function JourneySection() {
                         style={{ borderLeftColor: profile.accentColor }}
                       >
                         <span style={{ display: 'block', fontStyle: 'normal', fontSize: 'clamp(0.5rem,0.78vw,0.62rem)', letterSpacing: '0.1em', textTransform: 'uppercase', color: profile.accentColor, marginBottom: '2px', fontWeight: 'bold' }}>
-                          ✦ Ciri Khas
+                          ✦ Signature Features
                         </span>
                         {profile.ciriKhas}
                       </div>
@@ -705,13 +710,13 @@ export default function JourneySection() {
                       {/* Sajian */}
                       <div className="j-sajian-block sajian-block">
                         <span style={{ display: 'block', fontSize: 'clamp(0.5rem,0.78vw,0.62rem)', letterSpacing: '0.1em', textTransform: 'uppercase', color: profile.accentColor, marginBottom: '2px', fontWeight: 'bold' }}>
-                          ⬡ Penyajian
+                          ⬡ Serving Style
                         </span>
                         {profile.sajian}
                       </div>
                     </div>
 
-                    {/* ── STORY LINES ──────────────────────────────────── */}
+                    {/*  STORY LINES  */}
                     <div style={S.divider} />
                     <div className="journey-lines-wrapper" style={S.linesWrapper}>
                       {region.lines.map((line, li) => (
@@ -728,7 +733,7 @@ export default function JourneySection() {
                       ))}
                     </div>
 
-                    {/* ── TAGLINE STAMP ─────────────────────────────── */}
+                    {/*  TAGLINE STAMP  */}
                     <span
                       className="j-tagline journey-tagline tagline-stamp"
                       style={{

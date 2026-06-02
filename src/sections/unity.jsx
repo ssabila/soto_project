@@ -422,6 +422,7 @@ export default function Unity() {
       )
       .to(text3Ref.current, { autoAlpha: 0, y: -40, duration: 1 }, "+=0.8");
 
+       
     //  PHASE 3
     tl.to(text4Ref.current, {
       autoAlpha: 1,
@@ -429,6 +430,18 @@ export default function Unity() {
       duration: 1.4,
       ease: "back.out(1.5)",
     })
+      .to(islands, {
+        autoAlpha: 0,
+        scale: 0,
+        duration: 0.8,
+      }, "<")
+
+      .to(ings, {
+        autoAlpha: 0,
+        scale: 0.5,
+        duration: 0.8,
+      }, "<") 
+
       .to(
         [...bowls, ...ings],
         {
@@ -463,13 +476,13 @@ export default function Unity() {
         "<",
       )
       .to(
-        cultures,
+        [...cultures, bowls[0], bowls[1], bowls[2]],
         {
           autoAlpha: 1,
           scale: 1,
-          x: (i) => CULTURE_TARGETS[i].x,
-          y: (i) => CULTURE_TARGETS[i].y,
-          rotation: (i) => CULTURE_TARGETS[i].r,
+          x: (i) => CULTURE_TARGETS[i % CULTURE_TARGETS.length].x,
+          y: (i) => CULTURE_TARGETS[i % CULTURE_TARGETS.length].y,
+          rotation: (i) => CULTURE_TARGETS[i % CULTURE_TARGETS.length].r,
           stagger: { amount: 0.7, from: "random" },
           duration: 1.8,
           ease: "back.out(2)",
@@ -695,7 +708,7 @@ export default function Unity() {
               borderRadius: "24px",
               border: "1.5px dashed #FFF1D6",
               backgroundColor: COLORS[i % COLORS.length],
-              opacity: 0,
+              opacity: 0.5,
             }}
           >
             <img
@@ -787,7 +800,7 @@ export default function Unity() {
               lineHeight: 1,
               textTransform: "uppercase",
               fontStyle: "italic",
-              WebkitTextStroke: "0.025px #c2b2aa",
+              WebkitTextStroke: "0.025px #fff3ec",
               filter: "drop-shadow(6px 6px 0 rgba(69,26,3,0.6))",
             }}
           >
@@ -802,11 +815,11 @@ export default function Unity() {
               fontFamily: "var(--font-title)",
               fontSize: "clamp(3rem, 9vw, 9rem)",
               fontWeight: 900,
-              color: "#4d7c0f",
+              color: "#f3f728",
               lineHeight: 1,
               textTransform: "uppercase",
               letterSpacing: "-0.03em",
-              WebkitTextStroke: "0.025px #c2b2aa",
+              WebkitTextStroke: "0.025px #38302b",
               filter: "drop-shadow(6px 6px 0 rgba(69,26,3,0.5))",
             }}
           >

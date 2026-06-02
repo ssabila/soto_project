@@ -30,9 +30,6 @@ export const storyContent = {
       region: "Jakarta",
       name: "Soto Betawi",
       lines: [
-        "In the capital, richness defines the flavor.",
-        "Creamy, bold, layered—",
-        "shaped by a city of endless influences.",
       ],
     },
     {
@@ -40,9 +37,6 @@ export const storyContent = {
       region: "East Java",
       name: "Soto Lamongan",
       lines: [
-        "Further east, simplicity becomes strength.",
-        "A clear broth, elevated by koya—",
-        "subtle, yet unforgettable.",
       ],
     },
     {
@@ -50,9 +44,6 @@ export const storyContent = {
       region: "Central Java",
       name: "Soto Kudus",
       lines: [
-        "Served in smaller portions…",
-        "not because it lacks—",
-        "but because it is enough.",
       ],
     },
     {
@@ -60,10 +51,6 @@ export const storyContent = {
       region: "Sumatra",
       name: "Soto Padang",
       lines: [
-        "From the west, boldness takes over.",
-        "Crispy beef, rich broth—",
-        "a flavor that speaks with confidence.",
-        "Strong. Direct. Unapologetic.",
       ],
     },
     {
@@ -71,9 +58,6 @@ export const storyContent = {
       region: "Kalimantan",
       name: "Soto Banjar",
       lines: [
-        "Across the rivers, the flavor softens.",
-        "Light, aromatic, and comforting—",
-        "a quiet expression of warmth.",
       ],
     },
     {
@@ -81,10 +65,6 @@ export const storyContent = {
       region: "Sulawesi",
       name: "Coto Makassar",
       lines: [
-        "In the south, depth defines the taste.",
-        "Rich, nutty, and intense—",
-        "built from spices and time.",
-        "A flavor that lingers.",
       ],
     },
   ],
