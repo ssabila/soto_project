@@ -277,7 +277,7 @@ function IngredientCard({
       ].join(" ")}
     >
       {selected && (
-        <span className="absolute right-1 top-1 z-20 rounded-full border-2 border-[#2a1f0e] bg-[#fafdda] px-1 text-[0.55rem] font-black text-[#2a1f0e]">
+        <span className="absolute right-1 top-1 z-20 rounded-full border-2 border-[#2a1f0e] bg-[#fafdda] px-1 text-[0.55rem] font-regular text-[#2a1f0e]">
           ✓
         </span>
       )}
@@ -313,7 +313,7 @@ function IngredientCard({
 
       <span
         className={[
-          "pointer-events-none mt-1 text-center font-title font-black leading-tight tracking-[-0.02em]",
+          "pointer-events-none mt-1 text-center font-body font-black leading-tight tracking-[-0.02em]",
           selected ? "text-[#2a1f0e]" : "text-[#5a3e28]",
           compact
             ? "text-[0.55rem] sm:text-[0.6rem]"
@@ -324,7 +324,7 @@ function IngredientCard({
       </span>
 
       {!compact && item.desc && (
-        <span className="pointer-events-none mt-[2px] text-center font-title text-[clamp(0.42rem,0.8vw,0.58rem)] font-black text-[#8a6a3a]">
+        <span className="pointer-events-none mt-[2px] text-center font-body text-[clamp(0.42rem,0.8vw,0.58rem)] font-bold text-[#8a6a3a]">
           {item.desc}
         </span>
       )}
@@ -350,7 +350,7 @@ function SidePanel({
         side === "left" ? "left-[1.8%]" : "right-[1.8%]",
       ].join(" ")}
     >
-      <p className="border-b border-[#d4a574] pb-2 text-center font-title text-[clamp(0.6rem,1.15vw,0.88rem)] font-black uppercase tracking-wide text-[#8a6a3a]">
+      <p className="border-b border-[#d4a574] pb-2 text-center font-title text-[clamp(0.6rem,1.15vw,0.88rem)] font-regular uppercase tracking-wide text-[#8a6a3a]">
         {title}
       </p>
 
@@ -379,10 +379,10 @@ function MobileIngredientTray({
   return (
     <div className="absolute bottom-[2.4%] left-1/2 z-40 flex w-[92%] -translate-x-1/2 flex-col gap-2 md:hidden">
       <div className="mx-auto rounded-full bg-[rgba(42,31,14,0.86)] px-3 py-1 text-center">
-        <p className="font-title text-[0.55rem] font-black uppercase tracking-[0.12em] text-[#fafdda]">
+        <p className="font-title text-[0.55rem] font-regular uppercase tracking-[0.12em] text-[#fafdda]">
           {title}
         </p>
-        <p className="font-title text-[0.5rem] font-black text-[#ffcf8a]">
+        <p className="font-title text-[0.5rem] font-regular text-[#ffcf8a]">
           {hint}
         </p>
       </div>
@@ -413,7 +413,7 @@ function StepTab({ label, active, done, locked, onClick }) {
       className={[
         "shrink min-w-0 rounded-full border-[2px]",
         "px-[clamp(6px,1.9vw,22px)] py-[clamp(5px,1.4vw,10px)]",
-        "font-title text-[clamp(0.52rem,2.25vw,1rem)] font-black leading-none transition-all duration-200",
+        "font-title text-[clamp(0.52rem,2.25vw,1rem)] font-regular leading-none transition-all duration-200",
         active
           ? "border-[#2a1f0e] bg-[#ff9721] text-[#2a1f0e]"
           : done
@@ -1009,7 +1009,7 @@ const Makeyourownsoto = () => {
                 onClick={handlePlay}
                 className="
                   cursor-pointer select-none rounded-full border-[3px] border-[#2a1f0e]
-                  bg-[#fafdda] font-title font-black tracking-[-0.02em] text-[#2a1f0e]
+                  bg-[#fafdda] font-title font-regular tracking-[-0.02em] text-[#2a1f0e]
                   shadow-[0_7px_0_rgba(42,31,14,0.25)] transition-all duration-200 ease-out
                   hover:-translate-y-1 hover:scale-105 hover:bg-[#ff9721]
                   hover:shadow-[0_10px_0_rgba(42,31,14,0.28)]
@@ -1105,7 +1105,7 @@ const Makeyourownsoto = () => {
           py-[clamp(5px,1.5vw,11px)]
           font-title
           text-[clamp(0.65rem,2.8vw,1.18rem)]
-          font-black
+          font-regular
           text-[#2a1f0e]
           shadow-[0_4px_0_rgba(42,31,14,0.25)]
           transition-all
@@ -1123,7 +1123,7 @@ const Makeyourownsoto = () => {
                           className={[
                             "shrink-0 rounded-full border-[2.5px] border-[#2a1f0e]",
                             "px-[clamp(11px,3.2vw,28px)] py-[clamp(5px,1.5vw,11px)]",
-                            "font-title text-[clamp(0.65rem,2.8vw,1.18rem)] font-black",
+                            "font-title text-[clamp(0.65rem,2.8vw,1.18rem)] font-regular text-[#2a1f0e]",
                             "shadow-[0_4px_0_rgba(42,31,14,0.25)] transition-all active:translate-y-0.5",
                             hasRequiredBase
                               ? "bg-[#e83a2a] text-[#fafdda] hover:-translate-y-0.5 hover:bg-[#ff5040]"
@@ -1195,7 +1195,7 @@ const Makeyourownsoto = () => {
           py-[clamp(7px,1.2vw,11px)]
           font-title
           text-[clamp(0.9rem,1.9vw,1.18rem)]
-          font-black
+          font-regular 
           text-[#2a1f0e]
           shadow-[0_5px_0_rgba(42,31,14,0.25)]
           transition-all
@@ -1251,7 +1251,7 @@ const Makeyourownsoto = () => {
                           className={[
                             "shrink-0 rounded-full border-[3px] border-[#2a1f0e]",
                             "px-[clamp(14px,3.6vw,28px)] py-[clamp(7px,1.2vw,11px)]",
-                            "font-title text-[clamp(0.9rem,1.9vw,1.18rem)] font-black",
+                            "font-title text-[clamp(0.9rem,1.9vw,1.18rem)] font-regular",
                             "shadow-[0_5px_0_rgba(42,31,14,0.25)] transition-all active:translate-y-0.5",
                             hasRequiredBase
                               ? "bg-[#e83a2a] text-[#fafdda] hover:-translate-y-0.5 hover:bg-[#ff5040]"
@@ -1338,8 +1338,8 @@ const Makeyourownsoto = () => {
                     className={[
                       "pointer-events-none absolute left-1/2 z-[70] -translate-x-1/2",
                       "rounded-full bg-[rgba(42,31,14,0.94)] px-[clamp(16px,2.5vw,24px)] py-[clamp(8px,1vw,12px)]",
-                      "font-title text-[clamp(0.72rem,1.2vw,0.92rem)] font-black text-[#fafdda]",
-                      "transition-all duration-300 whitespace-nowrap shadow-[0_5px_0_rgba(0,0,0,0.18)]",
+                      "font-body text-[clamp(0.72rem,1.2vw,0.92rem)] font-bold text-[#fafdda]",
+                      "transition-all duration-300 whitespace-nowrap shadow-[0_5px_0_rgba(0,0,0,0)]",
                       toast.show
                         ? "top-[17%] opacity-100 md:top-[14%]"
                         : "top-[15%] opacity-0 md:top-[12%]",
@@ -1354,8 +1354,8 @@ const Makeyourownsoto = () => {
                       className="
                         whitespace-nowrap rounded-full bg-[rgba(42,31,14,0.9)]
                         px-[clamp(16px,2.5vw,24px)] py-[clamp(8px,1vw,12px)]
-                        font-title text-[clamp(0.72rem,1.15vw,0.95rem)] font-normal text-[#fafdda]
-                        shadow-[0_4px_0_rgba(0,0,0,0.18)]
+                        font-body text-[clamp(0.72rem,1.15vw,0.95rem)] font-normal text-[#fafdda]
+                        shadow-[0_4px_0_rgba(0,0,0,0)]
                       "
                     >
                       {step === 0
@@ -1387,11 +1387,11 @@ const Makeyourownsoto = () => {
                         <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[#ff9721]/25" />
                         <div className="pointer-events-none absolute -bottom-10 -left-10 h-28 w-28 rounded-full bg-[#e83a2a]/15" />
 
-                        <p className="relative z-10 font-title text-[clamp(0.5rem,1vw,0.72rem)] font-black uppercase tracking-[0.18em] text-[#8a6a3a]">
+                        <p className="relative z-10 font-title text-[clamp(0.5rem,1vw,0.72rem)] font-regular uppercase tracking-[0.18em] text-[#8a6a3a]">
                           Your soto is ready!
                         </p>
 
-                        <h2 className="relative z-10 font-title text-[clamp(1.15rem,3.5vw,2.35rem)] font-black leading-tight tracking-tight text-[#2a1f0e]">
+                        <h2 className="relative z-10 font-title text-[clamp(1.15rem,3.5vw,2.35rem)] font-regular leading-tight tracking-tight text-[#2a1f0e]">
                           {result.name}
                         </h2>
 
@@ -1402,7 +1402,7 @@ const Makeyourownsoto = () => {
                           tambahan={result.tambahan}
                         />
 
-                        <p className="relative z-10 max-w-[34rem] font-title text-[clamp(0.52rem,1vw,0.76rem)] font-black leading-snug text-[#5a3e28]">
+                        <p className="relative z-10 max-w-[34rem] font-body text-[clamp(0.52rem,1vw,0.76rem)] font-bold leading-snug text-[#5a3e28]">
                           {result.copy}
                         </p>
 
@@ -1417,7 +1417,7 @@ const Makeyourownsoto = () => {
                             .map((item) => (
                               <span
                                 key={item.id}
-                                className="rounded-full border border-[#d4a574] bg-[#fffef5] px-2 py-1 font-title text-[clamp(0.45rem,0.85vw,0.62rem)] font-black text-[#5a3e28]"
+                                className="rounded-full border border-[#d4a574] bg-[#fffef5] px-2 py-1 font-body text-[clamp(0.45rem,0.85vw,0.62rem)] font-bold text-[#5a3e28]"
                               >
                                 {item.label}
                               </span>
@@ -1434,7 +1434,7 @@ const Makeyourownsoto = () => {
                               px-[clamp(10px,2.5vw,20px)]
                               py-[5px]
                               font-title text-[clamp(0.6rem,1.2vw,0.82rem)]
-                              font-black text-[#2a1f0e]
+                              font-regular text-[#2a1f0e]
                               shadow-[0_4px_0_rgba(42,31,14,0.25)]
                               transition-all hover:-translate-y-0.5 active:translate-y-0.5
                             "
@@ -1451,7 +1451,7 @@ const Makeyourownsoto = () => {
                               px-[clamp(10px,2.5vw,20px)]
                               py-[5px]
                               font-title text-[clamp(0.6rem,1.2vw,0.82rem)]
-                              font-black text-[#2a1f0e]
+                              font-regular text-[#2a1f0e]
                               shadow-[0_4px_0_rgba(42,31,14,0.18)]
                               transition-all hover:-translate-y-0.5 hover:bg-white active:translate-y-0.5
                             "

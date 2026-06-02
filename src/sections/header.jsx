@@ -640,7 +640,7 @@ const OpeningSection = () => {
   <div
     className="
       font-title
-      font-black
+      font-regular
       text-[#2a1f0e]
       leading-[0.9]
       tracking-[-0.025em]
@@ -775,7 +775,7 @@ const OpeningSection = () => {
                     mb-[clamp(-1rem,-1.5vw,-0.6rem)]
                     text-center
                     font-title
-                    font-black
+                    font-regular
                     leading-none
                     tracking-[-0.025em]
                     text-[#2a1f0e]
@@ -839,7 +839,7 @@ const OpeningSection = () => {
               whitespace-nowrap
               text-center
               font-title
-              font-black
+              font-regular
               leading-none
               tracking-[-0.025em]
               text-[#2a1f0e]
@@ -881,7 +881,7 @@ const OpeningSection = () => {
               whitespace-nowrap
               text-center
               font-title
-              font-black
+              font-regular
               leading-none
               tracking-[-0.025em]
               text-[#c2380f]
@@ -902,7 +902,7 @@ const OpeningSection = () => {
               whitespace-nowrap
               text-center
               font-title
-              font-black
+              font-regular
               leading-none
               tracking-[-0.025em]
               text-[#2a1f0e]
@@ -942,7 +942,7 @@ const OpeningSection = () => {
               whitespace-nowrap
               text-center
               font-title
-              font-black
+              font-regular
               leading-none
               tracking-[-0.025em]
               text-[#ff9721]

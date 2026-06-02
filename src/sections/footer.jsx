@@ -119,7 +119,7 @@ export default function FooterSection() {
                 mb-1
                 font-title
                 text-[clamp(13px,3.4vw,15px)]
-                font-black
+                font-regular
                 tracking-[0.04em]
                 text-[#3f3727]
 
@@ -207,7 +207,7 @@ export default function FooterSection() {
               className="
                 font-title
                 text-[clamp(1.45rem,2.8vw,2.05rem)]
-                font-black
+                font-regular
                 leading-[0.95]
                 tracking-[-0.02em]
                 text-[#3f3727]
@@ -259,7 +259,7 @@ export default function FooterSection() {
               className="
                 font-title
                 text-[clamp(13px,3.4vw,15px)]
-                font-black
+                font-regular
                 tracking-[0.04em]
                 text-[#3f3727]
 

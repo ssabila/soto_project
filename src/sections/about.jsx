@@ -394,7 +394,7 @@ export default function AboutUs() {
                     fontSize: "clamp(2rem, 4.6vw, 3.8rem)",
                     color: "#2a1f0e",
                     lineHeight: 1,
-                    marginBottom: "-0.15em",
+                    marginBottom: "0.15em",
                     opacity: 0.88,
                   }}
                 >
@@ -405,11 +405,11 @@ export default function AboutUs() {
                   ref={(el) => {
                     nameRefs.current[idx] = el;
                   }}
-                  className="font-title font-black"
+                  className="font-title font-regular"
                   style={{
                     fontSize: "clamp(2.7rem, 5vw, 5.25rem)",
                     lineHeight: 0.95,
-                    letterSpacing: "-0.055em",
+                    letterSpacing: "0.055em",
                     color: "#2a1f0e",
                     WebkitTextStroke: "0.5px #2a1f0e",
                     margin: 0,
@@ -437,7 +437,7 @@ export default function AboutUs() {
                   ref={(el) => {
                     pillRefs.current[idx] = el;
                   }}
-                  className="about-pill font-title font-bold"
+                  className="about-pill font-title font-regular"
                   style={{
                     display: "inline-block",
                     border: `2px solid ${member.accentColor}`,
@@ -522,7 +522,7 @@ export default function AboutUs() {
           .about-text h2 {
             font-size: clamp(3rem, 4.75vw, 5.25rem) !important;
             max-width: 1040px !important;
-            letter-spacing: -0.055em !important;
+            letter-spacing: 0.055em !important;
           }
 
           .about-bio-box {
@@ -557,7 +557,7 @@ export default function AboutUs() {
           .about-text h2 {
             font-size: clamp(2.55rem, 4.55vw, 4.8rem) !important;
             max-width: 920px !important;
-            letter-spacing: -0.055em !important;
+            letter-spacing: 0.055em !important;
           }
 
           .about-bio-box {
@@ -623,7 +623,7 @@ export default function AboutUs() {
             text-align: center !important;
             max-width: 600px !important;
             width: 100% !important;
-            letter-spacing: -0.055em !important;
+            letter-spacing: 0.055em !important;
           }
 
           .about-bio-box {
@@ -737,7 +737,7 @@ export default function AboutUs() {
             text-align: center !important;
             max-width: 500px !important;
             width: 100% !important;
-            letter-spacing: -0.055em !important;
+            letter-spacing: 0.055em !important;
           }
 
           .about-bio-box {
@@ -770,7 +770,7 @@ export default function AboutUs() {
             font-size: clamp(2.05rem, 9vw, 3.45rem) !important;
             line-height: 0.95 !important;
             max-width: 460px !important;
-            letter-spacing: -0.055em !important;
+            letter-spacing: 0.055em !important;
           }
 
           .about-bio-box {

@@ -503,7 +503,7 @@ export default function ClosingSection() {
       md:whitespace-nowrap
 
       font-title
-      font-black
+      font-regular
       leading-[0.88]
       tracking-[-0.035em]
       text-[#2c1309]
@@ -533,7 +533,7 @@ export default function ClosingSection() {
       md:max-w-none
 
       font-title
-      font-black
+      font-regular
       italic
       leading-[0.92]
       tracking-[-0.04em]
@@ -670,7 +670,7 @@ export default function ClosingSection() {
               -translate-y-1/2
 
               font-title
-              font-black
+              font-regular
               leading-[0.95]
               tracking-[-0.035em]
               text-[#fafdda]

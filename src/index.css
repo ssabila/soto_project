@@ -5,9 +5,15 @@
 @font-face {
   font-family: "Beachfly";
   src:
-    url("./assets/fonts/BeachflyFreeTrial.woff2") format("woff2"),
-    url("./assets/fonts/BeachflyFreeTrial.woff") format("woff"),
-    url("./assets/fonts/BeachflyFreeTrial.ttf") format("truetype");
+    url("./assets/fonts/Beachfly Free Trial.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Mathreal";
+  src:
+    url("./assets/fonts/Mathreal.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -15,8 +21,6 @@
 @font-face {
   font-family: "InriaSerif";
   src:
-    url("./assets/fonts/InriaSerif-Regular.woff2") format("woff2"),
-    url("./assets/fonts/InriaSerif-Regular.woff") format("woff"),
     url("./assets/fonts/InriaSerif-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
@@ -25,7 +29,7 @@
 /* ─── Theme Configuration (pengganti tailwind.config.js) ─── */
 @theme {
   /* Font Family */
-  --font-title: "Beachfly", serif;
+  --font-title: "Mathreal", serif;
   --font-body: "InriaSerif", serif;
 
   /* Brand Colors */

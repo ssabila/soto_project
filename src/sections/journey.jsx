@@ -151,7 +151,7 @@ const RESPONSIVE_CSS = `
     max-width: 100% !important;
   }
   .journey-title-first {
-    font-family: Beachfly, serif !important;
+    font-family: Beachfly, serif;
     font-size: clamp(2rem, 4.2vw, 5rem) !important;
     font-weight: normal !important;
     line-height: 1 !important;
@@ -159,7 +159,7 @@ const RESPONSIVE_CSS = `
     flex-shrink: 0 !important;
   }
   .journey-title-rest {
-    font-family: InriaSerif, serif !important;
+    font-family: Mathreal, serif !important;
     font-size: clamp(1.45rem, 2.9vw, 3.7rem) !important;
     font-weight: normal !important;
     line-height: 1 !important;

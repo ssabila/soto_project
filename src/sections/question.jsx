@@ -48,7 +48,7 @@ const SPILL_COLORS = [
 
 const qLines = storyContent.question.lines;
 
-const introWords = "What is soto?".split(" ");
+const introWords = "What is soto??".split(" ");
 
 const q0Parts = qLines[0].split("…");
 const saLine1Words = q0Parts[0].trim().split(" ");
@@ -1425,7 +1425,7 @@ const S = {
     right: "clamp(20px,5vw,80px)",
     fontSize: "6.5rem",
     color: Q.yellow,
-    fontFamily: "Beachfly, Playfair Display, serif",
+    fontFamily: "Playfair Display, serif",
     textShadow: `3px 3px 0 ${Q.gold}`,
     lineHeight: 1,
     userSelect: "none",
@@ -1474,7 +1474,7 @@ const S = {
   eyebrow: {
     fontFamily: "InriaSerif, Lora, serif",
     fontSize: "clamp(0.58rem,1vw,0.72rem)",
-    letterSpacing: "0.42em",
+    letterSpacing: "0.8em",
     textTransform: "uppercase",
     color: Q.rust,
     marginBottom: 20,
@@ -1496,12 +1496,12 @@ const S = {
 
   headWord: {
     display: "inline-block",
-    fontFamily: "Beachfly, Playfair Display, serif",
-    fontWeight: 900,
+    fontFamily: "Mathreal, Playfair Display, serif",
+    fontWeight: 400,
     fontSize: "clamp(4.2rem,10vw,9.2rem)",
     color: Q.ink,
     lineHeight: 1.0,
-    letterSpacing: "-0.025em",
+    letterSpacing: "0.05em",
     paddingRight: "0.14em",
     willChange: "transform, opacity",
   },
@@ -1618,11 +1618,11 @@ const S = {
 
   sotoWord: {
     display: "inline-block",
-    fontFamily: "Beachfly, Playfair Display, serif",
-    fontWeight: 900,
+    fontFamily: "Mathreal, Playfair Display, serif",
+    fontWeight: 400,
     color: Q.orange,
     fontStyle: "italic",
-    letterSpacing: "-0.025em",
+    letterSpacing: "0.025em",
     lineHeight: 0.9,
     willChange: "transform, opacity",
   },

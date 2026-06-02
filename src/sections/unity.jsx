@@ -787,7 +787,7 @@ export default function Unity() {
               lineHeight: 1,
               textTransform: "uppercase",
               fontStyle: "italic",
-              WebkitTextStroke: "2px #fff",
+              WebkitTextStroke: "0.025px #c2b2aa",
               filter: "drop-shadow(6px 6px 0 rgba(69,26,3,0.6))",
             }}
           >
@@ -806,7 +806,7 @@ export default function Unity() {
               lineHeight: 1,
               textTransform: "uppercase",
               letterSpacing: "-0.03em",
-              WebkitTextStroke: "2px #FFF5E1",
+              WebkitTextStroke: "0.025px #c2b2aa",
               filter: "drop-shadow(6px 6px 0 rgba(69,26,3,0.5))",
             }}
           >
@@ -868,7 +868,7 @@ export default function Unity() {
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
-              WebkitTextStroke: "4px #451a03",
+              WebkitTextStroke: "0.5px #451a03",
               filter: "drop-shadow(10px 10px 0 rgba(69,26,3,0.35))",
             }}
           >
