@@ -165,8 +165,9 @@ soto_project/
 ├── src/
 │   ├── assets/
 │   │   ├── fonts/
-│   │   │   ├── BeachflyFreeTrial.woff2
-│   │   │   ├── InriaSerif-Regular.woff2
+│   │   │   ├── BeachflyFreeTrial.ttf
+│   │   │   ├── InriaSerif-Regular.ttf
+│   │   │   ├── Mathreal.ttf
 │   │   │   └── ...
 │   │   └── images/
 │   │       ├── soto-betawi.webp
@@ -218,7 +219,8 @@ soto_project/
 
 **Font**
 
-- Beachfly Free Trial - Font display untuk judul dan elemen dekoratif
+- Beachfly Free Trial - Font display untuk elemen dekoratif
+- Mathreal - Font untuk jedul dan elemen naratif
 - Inria Serif - Font serif untuk body text dan deskripsi
 
 ---
@@ -277,7 +279,7 @@ Untuk pertanyaan atau informasi lebih lanjut, silakan hubungi:
 
 ## Lisensi
 
-Proyek ini dibuat untuk keperluan  Web Design Paradoks di Politeknik Statistika STIS. Font Beachfly digunakan berdasarkan lisensi Free Trial.
+Proyek ini dibuat untuk keperluan  Web Design Paradoks di Politeknik Statistika STIS. Font Beachfly, Mathreal dan Inria Serif digunakan berdasarkan lisensi Free Trial.
 
 ---
 
