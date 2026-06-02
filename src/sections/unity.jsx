@@ -4,6 +4,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { storyContent } from "../data/storytext";
 
+//  Transisi 
+import { useSectionTransition } from '../hooks/useSectionTransition'
+
 // Bowls
 import sotoMakasar from "../assets/images/coto-makasar.webp";
 import sotoBanjar from "../assets/images/soto-banjar.webp";
@@ -202,14 +205,16 @@ const BOWL_PHASE2 = [
 //  Component
 
 export default function Unity() {
-  const spacerRef = useRef(null);
-  const panelRef = useRef(null);
+  const spacerRef  = useRef(null);
+  const panelRef   = useRef(null);
 
-  const bowlRefs = useRef([]);
-  const blobRefs = useRef([]);
-  const decorRefs = useRef([]);
-  const islandRefs = useRef([]);
-  const ingRefs = useRef([]);
+  const transitionRef = useSectionTransition('unity', 600, { autoScroll: false }) 
+
+  const bowlRefs    = useRef([]);
+  const blobRefs    = useRef([]);
+  const decorRefs   = useRef([]);
+  const islandRefs  = useRef([]);
+  const ingRefs     = useRef([]);
   const cultureRefs = useRef([]);
   const funkyLinesRef = useRef(null);
 
@@ -222,13 +227,16 @@ export default function Unity() {
 
   const lines = storyContent.unity.lines;
 
+  
+
   useEffect(() => {
-    const bowls = bowlRefs.current.filter(Boolean);
-    const blobs = blobRefs.current.filter(Boolean);
-    const decors = decorRefs.current.filter(Boolean);
-    const islands = islandRefs.current.filter(Boolean);
-    const ings = ingRefs.current.filter(Boolean);
-    const cultures = cultureRefs.current.filter(Boolean);
+    const ctx = gsap.context(() => {
+      const bowls    = bowlRefs.current.filter(Boolean);
+      const blobs    = blobRefs.current.filter(Boolean);
+      const decors   = decorRefs.current.filter(Boolean);
+      const islands  = islandRefs.current.filter(Boolean);
+      const ings     = ingRefs.current.filter(Boolean);
+      const cultures = cultureRefs.current.filter(Boolean);
 
     //  Initial states
     gsap.set(
@@ -472,139 +480,49 @@ export default function Unity() {
 
     //  PHASE 4 ─ Grand Vortex
     tl.to([...bowls, ...ings, ...islands, ...cultures], {
-      x: 0,
-      y: 0,
-      scale: 0.05,
-      rotation: "+=480",
-      autoAlpha: 0,
-      stagger: { amount: 1.5, from: "random" },
-      duration: 4,
-      ease: "power3.in",
-    })
-      .to(
-        blobs,
-        {
-          scale: 0.05,
-          rotation: "-=360",
-          autoAlpha: 0,
-          stagger: 0.05,
-          duration: 4,
-          ease: "power3.in",
-        },
-        "<",
-      )
-      .to(
-        decors,
-        {
-          scale: 0.1,
-          autoAlpha: 0,
-          rotation: "+=180",
-          stagger: 0.06,
-          duration: 2.5,
-          ease: "power2.in",
-        },
-        "<0.5",
-      )
-      .to(
-        ".funky-path",
-        {
-          autoAlpha: 0,
-          duration: 1.5, // Garis menghilang
-        },
-        "<0.5",
-      );
+        x: 0, y: 0, scale: 0.05, rotation: '+=480', autoAlpha: 0,
+        stagger: { amount: 1.5, from: 'random' },
+        duration: 4, ease: 'power3.in',
+      })
+      .to(blobs, {
+        scale: 0.05, rotation: '-=360', autoAlpha: 0,
+        stagger: 0.05, duration: 4, ease: 'power3.in',
+      }, '<')
+      .to(decors, {
+        scale: 0.1, autoAlpha: 0, rotation: '+=180',
+        stagger: 0.06, duration: 2.5, ease: 'power2.in',
+      }, '<0.5')
+      .to('.funky-path', {
+        autoAlpha: 0, duration: 1.5 // Garis menghilang
+      }, '<0.5');
 
-    //  PHASE 5
-    tl.to(text5Ref.current, {
-      autoAlpha: 1,
-      y: 0,
-      duration: 2,
-      ease: "expo.out",
-    });
+    // ═══ PHASE 5 ─ "Yet they all share the same name." ══════════════════
+    tl.to(text5Ref.current, { autoAlpha: 1, y: 0, duration: 2, ease: 'expo.out' });
 
-    //  PHASE 6 ─ Final state, stay on screen
-    tl.to(text5Ref.current, { autoAlpha: 0, y: -40, duration: 1 }, "+=0.6")
-      .to(
-        blobs,
-        {
-          autoAlpha: 0.5,
-          scale: (i) => [1.8, 2.2, 1.5, 2.5, 1.3, 1.9, 2.0, 1.6][i] ?? 1.5,
-          rotation: "+=180",
-          stagger: 0.07,
-          duration: 3,
-          ease: "expo.out",
-        },
-        "<",
-      )
-      .to(
-        decors,
-        {
-          autoAlpha: 0.65,
-          scale: 1,
-          rotation: "+=20",
-          stagger: 0.1,
-          duration: 2.5,
-          ease: "back.out(1.4)",
-        },
-        "<",
-      )
-      .to(
-        bowls,
-        {
-          x: (i) => [-500, 420, -380, 460, -440, 390][i] ?? 0,
-          y: (i) => [-320, -340, 340, 320, 120, -130][i] ?? 0,
-          scale: 0.5,
-          autoAlpha: 0.25,
-          rotation: "+=360",
-          stagger: 0.1,
-          duration: 2.5,
-          ease: "back.out(1.2)",
-        },
-        "<0.3",
-      )
-      .to(
-        sotoRef.current,
-        {
-          autoAlpha: 1,
-          scale: 1,
-          rotation: 0,
-          duration: 2.5,
-          ease: "elastic.out(1, 0.5)",
-        },
-        "-=1.5",
-      )
+    // ═══ PHASE 6 ─ SOTO grand finale ════════════════════════════════════
+    tl.to(text5Ref.current, { autoAlpha: 0, y: -40, duration: 1 }, '+=0.6')
+      .to(blobs, {
+        autoAlpha: 0.5,
+        scale: (i) => [1.8, 2.2, 1.5, 2.5, 1.3, 1.9, 2.0, 1.6][i] ?? 1.5,
+        rotation: '+=180', stagger: 0.07, duration: 3, ease: 'expo.out',
+      }, '<')
+      .to(decors, {
+        autoAlpha: 0.65, scale: 1, rotation: '+=20',
+        stagger: 0.1, duration: 2.5, ease: 'back.out(1.4)',
+      }, '<')
+      .to(bowls, {
+        x: (i) => [-500, 420, -380, 460, -440, 390][i] ?? 0,
+        y: (i) => [-320, -340, 340, 320, 120, -130][i] ?? 0,
+        scale: 0.5, autoAlpha: 0.25, rotation: '+=360',
+        stagger: 0.1, duration: 2.5, ease: 'back.out(1.2)',
+      }, '<0.3')
+      .to(sotoRef.current, {
+        autoAlpha: 1, scale: 1, rotation: 0,
+        duration: 2.5, ease: 'elastic.out(1, 0.5)',
+      }, '-=1.5');
+    }, panelRef);
 
-      // HOLD FINAL FRAME
-      // Ini yang bikin layar tetap di final state Unity sebelum masuk Closing.
-      .to({}, { duration: 2.2 });
-
-    const text1 = text1Ref.current;
-    const text2 = text2Ref.current;
-    const text3 = text3Ref.current;
-    const text4 = text4Ref.current;
-    const text5 = text5Ref.current;
-    const soto = sotoRef.current;
-
-    return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
-      gsap.killTweensOf(
-        [
-          ...bowls,
-          ...blobs,
-          ...decors,
-          ...islands,
-          ...ings,
-          ...cultures,
-          text1,
-          text2,
-          text3,
-          text4,
-          text5,
-          soto,
-          ".funky-path",
-        ].filter(Boolean),
-      );
-    };
+    return () => ctx.revert();
   }, []);
 
   const S = {
@@ -636,43 +554,28 @@ export default function Unity() {
   };
 
   return (
-    <section id="unity" data-section="unity" ref={spacerRef} style={S.outer}>
-      <div ref={panelRef} style={S.panel}>
-        {/*  Texture Overlays  */}
-        <img
-          src={retroPattern}
-          alt=""
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            opacity: 0.4,
-            mixBlendMode: "multiply",
-            zIndex: 0,
-          }}
-        />
-        <img
-          src={grainOverlay}
-          alt=""
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            opacity: 0.22,
-            mixBlendMode: "multiply",
-            zIndex: 0,
-          }}
-        />
+    <section
+      id="unity"
+      data-section="unity"
+      ref={(el) => {
+        spacerRef.current    = el
+        transitionRef.current = el
+      }}
+    >
+    <div ref={panelRef} style={S.panel}>
 
-        {/*  Wavy Groovy Lines (Animate Draw)  */}
-        <svg
-          ref={funkyLinesRef}
-          viewBox="0 0 1200 800"
-          xmlns="http://www.w3.org/2000/svg"
+        {/* ── Texture Overlays ─────────────────────────────────────── */}
+        <img src={retroPattern} alt="" style={{
+          position:'absolute', inset:0, width:'100%', height:'100%',
+          objectFit:'cover', opacity:0.4, mixBlendMode:'multiply', zIndex:0,
+        }}/>
+        <img src={grainOverlay} alt="" style={{
+          position:'absolute', inset:0, width:'100%', height:'100%',
+          objectFit:'cover', opacity:0.22, mixBlendMode:'multiply', zIndex:0,
+        }}/>
+
+        {/* ── Wavy Groovy Lines (Animate Draw) ─────────────────────── */}
+        <svg ref={funkyLinesRef} viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="xMidYMid slice"
           style={{
             position: "absolute",

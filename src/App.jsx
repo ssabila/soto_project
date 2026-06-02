@@ -18,9 +18,6 @@ function App() {
       {/* Navigator */}
       <ScrollNavigator />
 
-      {/* Transisi antar section */}
-      <SectionTransitions />
-
       {/* HEADER */}
       <header className="w-full overflow-clip">
         <OpeningSection />
