@@ -112,10 +112,7 @@ export function useSectionTransition(sectionName, delay = 400, options = {}) {
       clearTimeout(timer)
       if (selfEl) gsap.set(selfEl, { opacity: 1, visibility: 'visible' })
       if (trigger) {
-        try { trigger.kill() } 
-        catch (err) {
-          console.warn("Failed to kill trigger:", err)
-        }
+        try { trigger.kill() } catch (_) {}
       }
     }
   }, [sectionName, delay, autoScroll])

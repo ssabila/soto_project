@@ -483,60 +483,74 @@ export default function ClosingSection() {
         />
 
         {/* TITLE */}
-        <div
-          className="
-            flex
-            flex-col
-            items-center
-            justify-center
-          "
-        >
-          <h1
-            ref={titleLine1Ref}
-            className="
-              whitespace-nowrap
-              font-title
-              font-black
-              leading-none
-              tracking-[-0.035em]
-              text-[#2c1309]
-              [-webkit-text-stroke:0.45px_currentColor]
-              [text-shadow:1px_1px_0_rgba(44,19,9,0.18)]
+<div
+  className="
+    flex
+    flex-col
+    items-center
+    justify-center
+    w-full
+    max-w-[calc(100vw-2rem)]
+    px-4
+    text-center
+    overflow-visible
+  "
+>
+  <h1
+    ref={titleLine1Ref}
+    className="
+      whitespace-normal
+      md:whitespace-nowrap
 
-              text-[clamp(2.35rem,8vw,6.4rem)]
-              sm:text-[clamp(2.8rem,7.8vw,6.8rem)]
-              md:text-[clamp(3.8rem,7vw,7.2rem)]
-              lg:text-[clamp(4.5rem,6.6vw,7.7rem)]
-              xl:text-[clamp(5rem,6.3vw,8.2rem)]
-            "
-          >
-            Every bowl tells a story.
-          </h1>
+      font-title
+      font-black
+      leading-[0.88]
+      tracking-[-0.035em]
+      text-[#2c1309]
+      [-webkit-text-stroke:0.35px_currentColor]
+      [text-shadow:1px_1px_0_rgba(44,19,9,0.18)]
 
-          <h2
-            ref={titleLine2Ref}
-            className="
-              mt-[clamp(0.35rem,1vh,0.8rem)]
-              whitespace-nowrap
-              font-title
-              font-black
-              italic
-              leading-none
-              tracking-[-0.04em]
-              text-[#c2380f]
-              [-webkit-text-stroke:0.35px_currentColor]
-              [text-shadow:1px_1px_0_rgba(194,56,15,0.15)]
+      text-[clamp(2rem,10vw,3.4rem)]
+      sm:text-[clamp(2.5rem,8vw,5rem)]
+      md:text-[clamp(3.8rem,7vw,7.2rem)]
+      lg:text-[clamp(4.5rem,6.6vw,7.7rem)]
+      xl:text-[clamp(5rem,6.3vw,8.2rem)]
+    "
+  >
+    Every bowl tells a story.
+  </h1>
 
-              text-[clamp(1.8rem,6.4vw,4.6rem)]
-              sm:text-[clamp(2.25rem,6vw,5rem)]
-              md:text-[clamp(3rem,5.6vw,5.6rem)]
-              lg:text-[clamp(3.5rem,5.1vw,6rem)]
-              xl:text-[clamp(3.9rem,4.8vw,6.4rem)]
-            "
-          >
-            Now, it's your turn to create one.
-          </h2>
-        </div>
+  <h2
+    ref={titleLine2Ref}
+    className="
+      mt-[clamp(0.5rem,1.4vh,0.9rem)]
+
+      whitespace-normal
+      md:whitespace-nowrap
+
+      max-w-[22rem]
+      sm:max-w-[30rem]
+      md:max-w-none
+
+      font-title
+      font-black
+      italic
+      leading-[0.92]
+      tracking-[-0.04em]
+      text-[#c2380f]
+      [-webkit-text-stroke:0.3px_currentColor]
+      [text-shadow:1px_1px_0_rgba(194,56,15,0.15)]
+
+      text-[clamp(1.55rem,8vw,2.8rem)]
+      sm:text-[clamp(2rem,6.5vw,4rem)]
+      md:text-[clamp(3rem,5.6vw,5.6rem)]
+      lg:text-[clamp(3.5rem,5.1vw,6rem)]
+      xl:text-[clamp(3.9rem,4.8vw,6.4rem)]
+    "
+  >
+    Now, it's your turn to create one.
+  </h2>
+</div>
 
         {/* MIDDLE LINE */}
         <div

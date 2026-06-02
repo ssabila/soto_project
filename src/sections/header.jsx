@@ -614,64 +614,68 @@ const OpeningSection = () => {
       {/* OPENING TEXT */}
       <div
         className="
-          text-group
-          absolute
-          z-30
+    text-group
+    absolute
+    z-30
 
-          left-[clamp(0.75rem,4vw,4rem)]
-          right-[clamp(0.75rem,4vw,4rem)]
-          top-[clamp(5rem,17vh,10rem)]
-          w-auto
+    left-[clamp(1rem,5vw,4rem)]
+    right-[clamp(1rem,5vw,4rem)]
+    top-[clamp(5rem,15vh,8rem)]
+    w-auto
+    max-w-[calc(100vw-2rem)]
 
-          md:left-[clamp(2rem,5vw,5rem)]
-          md:right-auto
-          md:top-[clamp(8rem,22vh,13rem)]
-          md:w-[calc(100%-4rem)]
+    md:left-[clamp(2rem,5vw,5rem)]
+    md:right-auto
+    md:top-[clamp(8rem,22vh,13rem)]
+    md:w-[calc(100%-4rem)]
+    md:max-w-none
 
-          lg:left-[clamp(3rem,5.5vw,6rem)]
-          lg:top-[clamp(8rem,20vh,13rem)]
+    lg:left-[clamp(3rem,5.5vw,6rem)]
+    lg:top-[clamp(8rem,20vh,13rem)]
 
-          xl:left-[clamp(4rem,6vw,7rem)]
-          xl:top-[clamp(7rem,18vh,13rem)]
-        "
-      >
-        <div
-          className="
-            font-title
-            font-black
-            text-[#2a1f0e]
-            leading-none
-            tracking-[-0.025em]
-            [-webkit-text-stroke:0.45px_currentColor]
-            [text-shadow:1px_1px_0_rgba(42,31,14,0.18)]
+    xl:left-[clamp(4rem,6vw,7rem)]
+    xl:top-[clamp(7rem,18vh,13rem)]
+  "
+>
+  <div
+    className="
+      font-title
+      font-black
+      text-[#2a1f0e]
+      leading-[0.9]
+      tracking-[-0.025em]
+      [-webkit-text-stroke:0.35px_currentColor]
+      [text-shadow:1px_1px_0_rgba(42,31,14,0.18)]
 
-            text-[clamp(2.45rem,13vw,3.8rem)]
-            sm:text-[clamp(4rem,9vw,7.5rem)]
-            md:text-[clamp(4.2rem,7.5vw,8rem)]
-            lg:text-[clamp(4.4rem,7vw,8.5rem)]
-            xl:text-[clamp(4.6rem,7vw,9.2rem)]
-          "
-        >
-          <div className="overflow-hidden">
-            <div className="type-line line-1 whitespace-nowrap">
-              Across <span className="text-[#25a734] italic">thousands</span>
-            </div>
-          </div>
+      text-[clamp(2.25rem,12vw,3.35rem)]
+      sm:text-[clamp(3.4rem,8.5vw,6.5rem)]
+      md:text-[clamp(4.2rem,7.5vw,8rem)]
+      lg:text-[clamp(4.4rem,7vw,8.5rem)]
+      xl:text-[clamp(4.6rem,7vw,9.2rem)]
+    "
+  >
+    <div className="overflow-visible md:overflow-hidden">
+      <div className="type-line line-1 whitespace-normal md:whitespace-nowrap">
+        Across <span className="text-[#25a734] italic">thousands</span>
+      </div>
+    </div>
 
-          <div className="overflow-hidden">
-            <div className="type-line line-2 whitespace-nowrap text-[#2a1f0e]">
-              of islands...
-            </div>
-          </div>
+    <div className="overflow-visible md:overflow-hidden">
+      <div className="type-line line-2 whitespace-normal md:whitespace-nowrap text-[#2a1f0e]">
+        of islands...
+      </div>
+    </div>
 
-          <div className="overflow-hidden">
-            <div className="type-line line-3 whitespace-nowrap">
-              flavors are <span className="text-[#c2380f] italic">never</span>
-            </div>
-          </div>
+    <div className="overflow-visible md:overflow-hidden">
+      <div className="type-line line-3 whitespace-normal md:whitespace-nowrap">
+        flavors are <span className="text-[#c2380f] italic">never</span>
+      </div>
+    </div>
 
-          <div className="overflow-hidden">
-            <div className="type-line line-4 whitespace-nowrap">the same.</div>
+    <div className="overflow-visible md:overflow-hidden">
+      <div className="type-line line-4 whitespace-normal md:whitespace-nowrap">
+        the same.
+      </div>
           </div>
         </div>
       </div>
